@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>MathMind AI | Learn • Think • Solve</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<div class="background-blur blur1"></div>
+<div class="background-blur blur2"></div>
+<div class="background-blur blur3"></div>
+
+<div class="app">
+
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+
+<header class="header">
+
+<div class="logo-section">
+
+<div class="logo-circle">
+
+🧠
+
+</div>
+
+<div>
+
+<h1>
+
+MathMind AI
+
+</h1>
+
+<p>
+
+Interactive Mathematics Learning Platform
+
+</p>
+
+</div>
+
+</div>
+
+<nav class="nav">
+
+<a href="#">Home</a>
+
+<a href="#">Topics</a>
+
+<a href="#">Progress</a>
+
+<a href="#">About</a>
+
+</nav>
+
+</header>
+
+<!-- ===================================================== -->
+<!-- HOME SCREEN -->
+<!-- ===================================================== -->
+<p style="text-align:center; color:#64748b; margin:12px 0 24px;">
+    Created by: <strong>Rahul Patra</strong> ·
+    <a href="mailto:rahulpatra7257@gmail.com">
+      rahulpatra7257@gmail.com
+    </a>
+  </p>
+
+<section
+id="welcome-screen"
+class="screen active">
+
+<div class="hero">
+
+<div class="hero-left">
+
+<div class="hero-badge">
+
+🚀 AI Powered Learning
+
+</div>
+
+<h1>
+
+Master Mathematics
+
+<br>
+
+<span>
+
+One Question at a Time
+
+</span>
+
+</h1>
+
+<p>
+
+Practice hundreds of carefully designed questions inspired by
+Singapore Mathematics, Olympiad Problems, and school curriculum.
+
+Improve your speed, reasoning, and confidence through
+interactive quizzes and instant feedback.
+
+</p>
+
+<div class="hero-features">
+
+<div class="feature-card">
+
+<div>
+
+🎯
+
+</div>
+
+<span>
+
+Adaptive Questions
+
+</span>
+
+</div>
+
+<div class="feature-card">
+
+<div>
+
+⚡
+
+</div>
+
+<span>
+
+XP & Levels
+
+</span>
+
+</div>
+
+<div class="feature-card">
+
+<div>
+
+🏆
+
+</div>
+
+<span>
+
+Achievements
+
+</span>
+
+</div>
+
+<div class="feature-card">
+
+<div>
+
+📈
+
+</div>
+
+<span>
+
+Performance Analytics
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="welcome-card">
+
+<h2>
+
+Start Your Learning Journey
+
+</h2>
+
+<p>
+
+Choose your preferences and begin solving exciting maths problems.
+
+</p>
+
+<div class="form-group">
+
+<label>
+
+Student Name
+
+</label>
+
+<input
+type="text"
+id="student-name"
+placeholder="Enter your name">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Choose Topic
+
+</label>
+
+<select id="topic">
+
+<option value="">Select Topic</option>
+
+<option value="addition">➕ Addition</option>
+
+<option value="subtraction">➖ Subtraction</option>
+
+<option value="multiplication">✖ Multiplication</option>
+
+<option value="division">➗ Division</option>
+
+<option value="fractions">🍰 Fractions</option>
+
+<option value="decimals">🔢 Decimals</option>
+
+<option value="percentages">%</option>
+
+<option value="ratio">Ratio & Proportion</option>
+
+<option value="factors">Factors & Multiples</option>
+
+<option value="algebra">Algebra</option>
+
+<option value="mixed">
+
+🎲 Mixed Challenge
+
+</option>
+
+<option value="challenge">
+
+🚀 Challenge Mode
+
+</option>
+
+</select>
+
+</div>
+
+<div
+id="challenge-info"
+class="challenge-box hidden">
+
+<h3>
+
+🚀 Challenge Mode
+
+</h3>
+
+<ul>
+
+<li>
+
+Questions 1–5 → Easy
+
+</li>
+
+<li>
+
+Questions 6–10 → Medium
+
+</li>
+
+<li>
+
+Questions 11–15 → Hard
+
+</li>
+
+<li>
+
+Questions 16–20 → Expert
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Difficulty
+
+</label>
+
+<select id="difficulty">
+
+<option value="easy">
+
+Easy
+
+</option>
+
+<option value="medium">
+
+Medium
+
+</option>
+
+<option value="hard">
+
+Hard
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Question Format
+
+</label>
+
+<select id="question-format">
+
+<option value="mcq">
+
+Multiple Choice
+
+</option>
+
+<option value="descriptive">
+
+Descriptive
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Timer
+
+</label>
+
+<select id="timer-choice">
+
+<option value="no">
+
+No Timer
+
+</option>
+
+<option value="yes">
+
+30 Seconds / Question
+
+</option>
+
+</select>
+
+</div>
+
+<button
+id="start-button"
+class="start-btn"
+onclick="startQuiz()">
+
+Start Learning 🚀
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="stats-preview">
+
+<div class="preview-card">
+
+<h2>
+
+300+
+
+</h2>
+
+<p>
+
+Question Templates
+
+</p>
+
+</div>
+
+<div class="preview-card">
+
+<h2>
+
+10+
+
+</h2>
+
+<p>
+
+Math Topics
+
+</p>
+
+</div>
+
+<div class="preview-card">
+
+<h2>
+
+4
+
+</h2>
+
+<p>
+
+Difficulty Levels
+
+</p>
+
+</div>
+
+<div class="preview-card">
+
+<h2>
+
+∞
+
+</h2>
+
+<p>
+
+Random Questions
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- END PART 1 -->
+<!-- DO NOT CLOSE BODY/HTML -->
+<!-- ========================= -->
+ <!-- ========================================================= -->
+<!-- QUIZ SCREEN -->
+<!-- ========================================================= -->
+
+<section
+id="quiz-screen"
+class="screen hidden">
+
+<div class="quiz-container">
+
+<!-- ========================================== -->
+<!-- TOP BAR -->
+<!-- ========================================== -->
+
+<div class="quiz-header">
+
+<button
+class="back-btn"
+onclick="goBackHome()">
+
+← Home
+
+</button>
+
+<div
+id="welcome-message"
+class="welcome-message">
+
+Welcome!
+
+</div>
+
+<div class="header-right">
+
+<div class="xp-box">
+
+⚡ XP
+
+<span id="xp">
+
+0
+
+</span>
+
+</div>
+
+<div class="level-box">
+
+🏆 Level
+
+<span id="level">
+
+1
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- PROGRESS -->
+<!-- ========================================== -->
+
+<div class="progress-card">
+
+<div class="progress-top">
+
+<div>
+
+Question
+
+<strong id="question-number">
+
+1
+
+</strong>
+
+/
+
+<strong>
+
+20
+
+</strong>
+
+</div>
+
+<div id="progress-percent">
+
+5%
+
+</div>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+id="progress-fill"
+class="progress-fill">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- DASHBOARD -->
+<!-- ========================================== -->
+
+<div class="dashboard">
+
+<div class="dashboard-card">
+
+<div class="dashboard-icon">
+
+⭐
+
+</div>
+
+<div>
+
+<p>
+
+Score
+
+</p>
+
+<h3 id="score">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<div class="dashboard-icon">
+
+🔥
+
+</div>
+
+<div>
+
+<p>
+
+Current Streak
+
+</p>
+
+<h3 id="streak">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<div class="dashboard-icon">
+
+🏅
+
+</div>
+
+<div>
+
+<p>
+
+Best Streak
+
+</p>
+
+<h3 id="best-streak">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<div class="dashboard-icon">
+
+🎯
+
+</div>
+
+<div>
+
+<p>
+
+Accuracy
+
+</p>
+
+<h3 id="accuracy">
+
+100%
+
+</h3>
+
+</div>
+
+</div>
+
+<div
+id="timer-box"
+class="dashboard-card hidden">
+
+<div class="dashboard-icon">
+
+⏰
+
+</div>
+
+<div>
+
+<p>
+
+Time Left
+
+</p>
+
+<h3>
+
+<span id="timer">
+
+30
+
+</span>
+
+s
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- CHALLENGE LEVEL -->
+<!-- ========================================== -->
+
+<div
+id="challenge-level"
+class="challenge-banner hidden">
+
+🚀
+
+Current Level :
+
+<strong
+id="challenge-level-text">
+
+Easy
+
+</strong>
+
+</div>
+
+<!-- ========================================== -->
+<!-- CURRENT TOPIC -->
+<!-- ========================================== -->
+
+<div class="topic-row">
+
+<div
+id="current-topic"
+class="topic-badge">
+
+➕
+
+Addition
+
+</div>
+
+<div
+id="question-type"
+class="question-badge">
+
+📝
+
+Direct Question
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- QUESTION CARD START -->
+<!-- ========================================== -->
+
+<div class="question-card">
+
+<div class="question-number-circle">
+
+<span id="question-circle">
+
+1
+
+</span>
+
+</div>
+
+<h2
+id="question"
+class="question-text">
+
+Loading Question...
+
+</h2>
+
+<!-- ========================================== -->
+<!-- PART 2A ENDS HERE -->
+<!-- DO NOT CLOSE question-card -->
+<!-- WAIT FOR PART 2B -->
+<!-- ========================================== -->
+ <!-- ========================================== -->
+<!-- ANSWER AREA -->
+<!-- ========================================== -->
+
+<div
+id="descriptive-answer-area"
+class="answer-area">
+
+<label for="answer">
+
+Type Your Answer
+
+</label>
+
+<input
+type="text"
+id="answer"
+placeholder="Enter your answer here">
+
+<button
+id="submit-answer-button"
+class="primary-btn"
+onclick="checkAnswer()">
+
+Submit Answer
+
+</button>
+
+</div>
+
+<!-- ========================================== -->
+<!-- MCQ AREA -->
+<!-- ========================================== -->
+
+<div
+id="mcq-answer-area"
+class="mcq-area hidden">
+
+<p class="mcq-title">
+
+Choose the Correct Answer
+
+</p>
+
+<div
+id="mcq-options"
+class="mcq-options">
+
+<!-- JavaScript will generate MCQs -->
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- ACTION BUTTONS -->
+<!-- ========================================== -->
+
+<div class="action-buttons">
+
+<button
+class="secondary-btn"
+onclick="showHint()">
+
+💡 Hint
+
+</button>
+
+<button
+class="secondary-btn"
+onclick="skipQuestion()">
+
+⏭ Skip
+
+</button>
+
+<button
+class="danger-btn"
+onclick="endQuiz()">
+
+🛑 End Quiz
+
+</button>
+
+</div>
+
+<!-- ========================================== -->
+<!-- HINT -->
+<!-- ========================================== -->
+
+<div
+id="hint-box"
+class="hint-box hidden">
+
+<div class="hint-header">
+
+💡 Hint
+
+</div>
+
+<p>
+
+Think carefully before checking!
+
+</p>
+
+</div>
+
+<!-- ========================================== -->
+<!-- FEEDBACK -->
+<!-- ========================================== -->
+
+<div
+id="feedback"
+class="feedback-box hidden">
+
+<div id="feedback-icon">
+
+✅
+
+</div>
+
+<div id="feedback-text">
+
+Correct!
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- EXPLANATION -->
+<!-- ========================================== -->
+
+<div
+id="explanation"
+class="explanation-box hidden">
+
+<h3>
+
+📚 Explanation
+
+</h3>
+
+<p id="explanation-text">
+
+Explanation will appear here after answering.
+
+</p>
+
+</div>
+
+<!-- ========================================== -->
+<!-- QUESTION NAVIGATION -->
+<!-- ========================================== -->
+
+<div class="question-navigation">
+
+<button
+id="next-question-btn"
+class="next-btn hidden"
+onclick="nextQuestion()">
+
+Next Question →
+
+</button>
+
+</div>
+
+<!-- ========================================== -->
+<!-- LIVE STATS -->
+<!-- ========================================== -->
+
+<div class="live-performance">
+
+<div class="performance-card">
+
+<div>
+
+✅
+
+</div>
+
+<div>
+
+<p>
+
+Correct
+
+</p>
+
+<h3 id="correct-count">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="performance-card">
+
+<div>
+
+❌
+
+</div>
+
+<div>
+
+<p>
+
+Wrong
+
+</p>
+
+<h3 id="wrong-count">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="performance-card">
+
+<div>
+
+⚡
+
+</div>
+
+<div>
+
+<p>
+
+XP Earned
+
+</p>
+
+<h3 id="earned-xp">
+
+0
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="performance-card">
+
+<div>
+
+🏆
+
+</div>
+
+<div>
+
+<p>
+
+Badge
+
+</p>
+
+<h3 id="current-badge">
+
+None
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- MOTIVATION BAR -->
+<!-- ========================================== -->
+
+<div class="motivation-bar">
+
+<p id="motivation-text">
+
+🌟 Believe in yourself. Every question makes you stronger!
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- END OF QUIZ SCREEN -->
+<!-- PART 2 COMPLETE -->
+<!-- PART 3 STARTS WITH RESULT SCREEN -->
+<!-- ========================================== -->
+ <!-- ========================================================= -->
+<!-- RESULT SCREEN -->
+<!-- ========================================================= -->
+
+<section
+id="result-screen"
+class="screen hidden">
+
+<div class="result-container">
+
+<div class="result-header">
+
+<div class="result-icon">
+
+🎉
+
+</div>
+
+<h1>
+
+Congratulations!
+
+</h1>
+
+<p>
+
+You have successfully completed your MathMind AI Quiz.
+
+</p>
+
+</div>
+
+<!-- ======================================== -->
+<!-- FINAL SCORE -->
+<!-- ======================================== -->
+
+<div class="score-summary">
+
+<div class="score-circle">
+
+<h1 id="final-score">
+
+20
+
+</h1>
+
+<span>
+
+/
+
+</span>
+
+<h1 id="final-total">
+
+20
+
+</h1>
+
+</div>
+
+<div class="percentage-box">
+
+<h2 id="final-percentage">
+
+100%
+
+</h2>
+
+<p>
+
+Overall Accuracy
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ======================================== -->
+<!-- PERFORMANCE DASHBOARD -->
+<!-- ======================================== -->
+
+<div class="result-dashboard">
+
+<div class="result-card">
+
+<div class="emoji">
+
+⭐
+
+</div>
+
+<h2 id="result-score">
+
+20
+
+</h2>
+
+<p>
+
+Correct Answers
+
+</p>
+
+</div>
+
+<div class="result-card">
+
+<div class="emoji">
+
+❌
+
+</div>
+
+<h2 id="result-wrong">
+
+0
+
+</h2>
+
+<p>
+
+Wrong Answers
+
+</p>
+
+</div>
+
+<div class="result-card">
+
+<div class="emoji">
+
+🔥
+
+</div>
+
+<h2 id="result-streak">
+
+10
+
+</h2>
+
+<p>
+
+Best Streak
+
+</p>
+
+</div>
+
+<div class="result-card">
+
+<div class="emoji">
+
+⚡
+
+</div>
+
+<h2 id="result-xp">
+
+450
+
+</h2>
+
+<p>
+
+XP Earned
+
+</p>
+
+</div>
+
+<div class="result-card">
+
+<div class="emoji">
+
+🏆
+
+</div>
+
+<h2 id="result-level">
+
+3
+
+</h2>
+
+<p>
+
+Current Level
+
+</p>
+
+</div>
+
+<div class="result-card">
+
+<div class="emoji">
+
+🎯
+
+</div>
+
+<h2 id="result-accuracy">
+
+95%
+
+</h2>
+
+<p>
+
+Accuracy
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ======================================== -->
+<!-- PERFORMANCE MESSAGE -->
+<!-- ======================================== -->
+
+<div class="performance-message">
+
+<h2>
+
+💬 Teacher's Feedback
+
+</h2>
+
+<p id="personal-feedback-text">
+
+Amazing work!
+
+</p>
+
+</div>
+
+<!-- ======================================== -->
+<!-- STRENGTH -->
+<!-- ======================================== -->
+
+<div class="performance-message">
+
+<h2>
+
+💪 Your Strength
+
+</h2>
+
+<p id="strength-text">
+
+Excellent calculation speed.
+
+</p>
+
+</div>
+
+<!-- ======================================== -->
+<!-- IMPROVEMENT -->
+<!-- ======================================== -->
+
+<div class="performance-message">
+
+<h2>
+
+📚 What Should You Practise?
+
+</h2>
+
+<p id="practice-text">
+
+Continue practising harder questions.
+
+</p>
+
+</div>
+
+<!-- ======================================== -->
+<!-- ACHIEVEMENTS -->
+<!-- ======================================== -->
+
+<div class="achievement-section">
+
+<h2>
+
+🏆 Achievements
+
+</h2>
+
+<div
+id="badges-container"
+class="badges-grid">
+
+<div class="badge">
+
+🥉
+
+<p>
+
+Bronze
+
+</p>
+
+</div>
+
+<div class="badge">
+
+🥈
+
+<p>
+
+Silver
+
+</p>
+
+</div>
+
+<div class="badge">
+
+🥇
+
+<p>
+
+Gold
+
+</p>
+
+</div>
+
+<div class="badge">
+
+💎
+
+<p>
+
+Diamond
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ======================================== -->
+<!-- NEXT GOALS -->
+<!-- ======================================== -->
+
+<div class="goal-section">
+
+<h2>
+
+🎯 Next Goal
+
+</h2>
+
+<div class="goal-card">
+
+Reach
+
+<strong>
+
+1000 XP
+
+</strong>
+
+to unlock the
+
+<strong>
+
+Math Wizard
+
+</strong>
+
+Badge!
+
+</div>
+
+</div>
+
+<!-- ======================================== -->
+<!-- ACTION BUTTONS -->
+<!-- ======================================== -->
+
+<div class="result-buttons">
+
+<button
+class="primary-btn"
+onclick="restartQuiz()">
+
+🔄 Play Again
+
+</button>
+
+<button
+class="secondary-btn"
+onclick="goBackHome()">
+
+🏠 Home
+
+</button>
+
+<button
+class="secondary-btn"
+onclick="window.print()">
+
+🖨 Print Report
+
+</button>
+
+</div>
+
+<!-- ======================================== -->
+<!-- FOOTER -->
+<!-- ======================================== -->
+
+<div class="footer">
+
+<h3>
+
+🧠 MathMind AI
+
+</h3>
+
+<p>
+
+Learn • Think • Solve
+
+</p>
+
+<p>
+
+Version 2.0
+
+</p>
+
+<p>
+    Created by: <strong>Rahul Patra</strong><br>
+    <a href="mailto:rahulpatra7257@gmail.com">
+      rahulpatra7257@gmail.com
+    </a>
+  </p>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- ======================================== -->
+<!-- JAVASCRIPT FILES -->
+<!-- ======================================== -->
+
+<script src="addition.js"></script>
+
+<script src="subtraction.js"></script>
+
+<script src="multiplication.js"></script>
+
+<script src="division.js"></script>
+
+<script src="fractions.js"></script>
+
+<script src="decimals.js"></script>
+
+<script src="percentages.js"></script>
+
+<script src="ratio-proportion.js"></script>
+
+<script src="factors-multiples.js"></script>
+
+<script src="algebra.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
