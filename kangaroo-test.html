@@ -3,182 +3,1611 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Original Grade 3-4 Kangaroo-style mathematics practice test.">
   <title>Kangaroo Practice | Grade 3-4</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-:root { --ink:#18243d; --muted:#65718a; --blue:#3867f4; --violet:#7757df; --paper:#fff; --canvas:#f1f5ff; --line:#dce5fc; --correct:#16875a; --wrong:#d04e56; }
-* { box-sizing:border-box; }
-body { margin:0; min-height:100vh; background:radial-gradient(circle at 12% 10%,#dce7ff 0,transparent 28rem),radial-gradient(circle at 88% 80%,#eadfff 0,transparent 28rem),var(--canvas); color:var(--ink); font-family:Nunito,system-ui,sans-serif; }
-button,a { font:inherit; }
-.shell { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:28px 0 64px; }
-.back-link { color:var(--muted); font-weight:800; text-decoration:none; }
-.screen { margin-top:24px; }
-.hidden { display:none !important; }
-.intro-screen,.result-screen { max-width:720px; margin:52px auto 0; padding:48px; text-align:center; background:rgba(255,255,255,.88); border:1px solid rgba(255,255,255,.95); border-radius:32px; box-shadow:0 24px 70px rgba(53,78,150,.14); }
-.hero-mark { display:grid; place-items:center; width:78px; height:78px; margin:0 auto 18px; border-radius:24px; background:#eef2ff; font-size:40px; }
-.eyebrow { margin:0; color:var(--blue); font-size:12px; font-weight:900; letter-spacing:.14em; }
-h1 { margin:10px 0 14px; font-size:clamp(32px,5vw,52px); line-height:1.05; }
-.intro-copy { margin:0 auto; max-width:620px; color:var(--muted); font-size:18px; line-height:1.65; }
-.test-facts { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:32px 0 18px; }
-.test-facts div { padding:17px; border:1px solid var(--line); border-radius:18px; background:#f9fbff; }
-.test-facts strong,.test-facts span { display:block; }.test-facts strong { font-size:27px; }.test-facts span { color:var(--muted); font-weight:700; }
-.scoring-note { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:18px 0 28px; color:var(--muted); font-size:14px; }.scoring-note span { padding:8px 11px; border-radius:100px; background:#f0f3fa; }
-.primary-button,.secondary-button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:52px; padding:0 22px; border:0; border-radius:14px; background:linear-gradient(135deg,var(--blue),var(--violet)); color:#fff; font-weight:900; cursor:pointer; text-decoration:none; box-shadow:0 9px 18px rgba(60,83,209,.22); }.primary-button:hover { transform:translateY(-1px); }
-.small-note { margin:20px 0 0; color:var(--muted); font-size:13px; }.secondary-button { background:#edf2ff; color:var(--blue); box-shadow:none; }
-.test-header { display:flex; justify-content:space-between; align-items:center; gap:18px; }.question-status { margin:4px 0 0; font-weight:900; font-size:20px; }.timer-wrap { display:flex; align-items:center; gap:8px; padding:11px 15px; border-radius:14px; background:#fff; color:var(--blue); box-shadow:0 8px 22px rgba(51,75,135,.10); }.timer-wrap strong { font-variant-numeric:tabular-nums; }
-.progress-track { height:9px; margin:19px 0 27px; overflow:hidden; border-radius:999px; background:#dbe4fb; }.progress-track div { height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,var(--blue),#9b62ed); transition:width .25s ease; }
-.question-card { padding:34px; background:var(--paper); border-radius:28px; box-shadow:0 18px 52px rgba(51,75,135,.13); }.question-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--muted); font-size:14px; font-weight:800; }.point-badge { padding:7px 10px; border-radius:9px; background:#fff3d9; color:#a56200; }.question-card h2 { margin:18px 0 22px; font-size:clamp(21px,3vw,28px); line-height:1.35; }
-.illustration { min-height:150px; margin:0 0 24px; padding:14px; overflow:auto; border:1px solid var(--line); border-radius:20px; background:#f9fbff; text-align:center; }.illustration svg { width:min(100%,560px); height:auto; max-height:260px; }
-.options { display:grid; grid-template-columns:1fr; gap:10px; }.option { display:flex; align-items:center; gap:13px; width:100%; padding:14px 15px; border:2px solid var(--line); border-radius:15px; background:#fff; color:var(--ink); cursor:pointer; text-align:left; font-weight:800; }.option:hover { border-color:#a8bcfb; background:#f7f9ff; }.option.selected { border-color:var(--blue); background:#edf2ff; }.option-letter { display:grid; place-items:center; flex:0 0 28px; width:28px; height:28px; border-radius:50%; background:#e9efff; color:var(--blue); font-size:13px; }.option.selected .option-letter { background:var(--blue); color:#fff; }
-.test-controls { display:flex; justify-content:space-between; gap:14px; margin-top:24px; }.text-button { padding:0 10px; border:0; color:var(--muted); background:transparent; font-weight:900; cursor:pointer; }.text-button:disabled { opacity:.4; cursor:not-allowed; }
-.score-orb { display:grid; place-items:center; width:164px; height:164px; margin:28px auto; border:12px solid #dce6ff; border-radius:50%; background:#f8faff; }.score-orb strong { font-size:47px; line-height:1; color:var(--blue); }.score-orb span { color:var(--muted); font-weight:800; }.review-list { display:grid; gap:10px; margin:30px 0; text-align:left; }.review-item { display:flex; justify-content:space-between; gap:15px; padding:14px; border-radius:14px; background:#f8faff; font-weight:800; }.review-item.correct { border-left:5px solid var(--correct); }.review-item.wrong { border-left:5px solid var(--wrong); }.review-item small { color:var(--muted); }.result-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
-@media (max-width:600px) { .shell { width:min(100% - 20px,960px); padding-top:18px; }.intro-screen,.result-screen,.question-card { padding:26px 18px; border-radius:22px; }.test-facts { gap:7px; }.test-facts div { padding:12px 6px; }.test-header { align-items:flex-start; }.timer-wrap { padding:8px 10px; }.question-card h2 { font-size:21px; }.question-meta { align-items:flex-start; flex-direction:column; }.illustration { padding:8px; }.option { padding:12px; } }
 
-</style>
+  <style>
+    :root {
+      --ink:#18243d;
+      --muted:#65718a;
+      --blue:#3867f4;
+      --violet:#7757df;
+      --paper:#fff;
+      --canvas:#f1f5ff;
+      --line:#dce5fc;
+      --correct:#16875a;
+      --wrong:#d04e56;
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 12% 10%,#dce7ff 0,transparent 28rem),
+        radial-gradient(circle at 88% 80%,#eadfff 0,transparent 28rem),
+        var(--canvas);
+      color:var(--ink);
+      font-family:Nunito,system-ui,sans-serif;
+    }
+
+    button,a { font:inherit; }
+
+    .shell {
+      width:min(960px,calc(100% - 32px));
+      margin:0 auto;
+      padding:28px 0 64px;
+    }
+
+    .back-link {
+      color:var(--muted);
+      font-weight:800;
+      text-decoration:none;
+    }
+
+    .screen { margin-top:24px; }
+    .hidden { display:none !important; }
+
+    .intro-screen,
+    .result-screen {
+      max-width:720px;
+      margin:52px auto 0;
+      padding:48px;
+      text-align:center;
+      background:rgba(255,255,255,.88);
+      border-radius:32px;
+      box-shadow:0 24px 70px rgba(53,78,150,.14);
+    }
+
+    .hero-mark {
+      display:grid;
+      place-items:center;
+      width:78px;
+      height:78px;
+      margin:0 auto 18px;
+      border-radius:24px;
+      background:#eef2ff;
+      font-size:40px;
+    }
+
+    .eyebrow {
+      margin:0;
+      color:var(--blue);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.14em;
+    }
+
+    h1 {
+      margin:10px 0 14px;
+      font-size:clamp(32px,5vw,52px);
+      line-height:1.05;
+    }
+
+    .intro-copy {
+      margin:0 auto;
+      max-width:620px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.65;
+    }
+
+    .test-facts {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:32px 0 18px;
+    }
+
+    .test-facts div {
+      padding:17px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#f9fbff;
+    }
+
+    .test-facts strong,
+    .test-facts span {
+      display:block;
+    }
+
+    .test-facts strong { font-size:27px; }
+
+    .test-facts span {
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .scoring-note {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin:18px 0 28px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .scoring-note span {
+      padding:8px 11px;
+      border-radius:100px;
+      background:#f0f3fa;
+    }
+
+    .primary-button,
+    .secondary-button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:52px;
+      padding:0 22px;
+      border:0;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      box-shadow:0 9px 18px rgba(60,83,209,.22);
+    }
+
+    .secondary-button {
+      background:#edf2ff;
+      color:var(--blue);
+      box-shadow:none;
+    }
+
+    .test-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+    }
+
+    .question-status {
+      margin:4px 0 0;
+      font-weight:900;
+      font-size:20px;
+    }
+
+    .timer-wrap {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:11px 15px;
+      border-radius:14px;
+      background:#fff;
+      color:var(--blue);
+    }
+
+    .progress-track {
+      height:9px;
+      margin:19px 0 27px;
+      overflow:hidden;
+      border-radius:999px;
+      background:#dbe4fb;
+    }
+
+    .progress-track div {
+      height:100%;
+      width:0;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--blue),#9b62ed);
+    }
+
+    .question-card {
+      padding:34px;
+      background:var(--paper);
+      border-radius:28px;
+      box-shadow:0 18px 52px rgba(51,75,135,.13);
+    }
+
+    .question-meta {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .point-badge {
+      padding:7px 10px;
+      border-radius:9px;
+      background:#fff3d9;
+      color:#a56200;
+    }
+
+    .question-card h2 {
+      margin:18px 0 22px;
+      font-size:clamp(21px,3vw,28px);
+      line-height:1.35;
+    }
+
+    .illustration {
+      min-height:150px;
+      margin:0 0 24px;
+      padding:14px;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#f9fbff;
+      text-align:center;
+    }
+
+    .illustration svg {
+      width:min(100%,560px);
+      height:auto;
+      max-height:260px;
+    }
+
+    .options {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .option {
+      display:flex;
+      align-items:center;
+      gap:13px;
+      width:100%;
+      padding:14px 15px;
+      border:2px solid var(--line);
+      border-radius:15px;
+      background:#fff;
+      color:var(--ink);
+      cursor:pointer;
+      text-align:left;
+      font-weight:800;
+    }
+
+    .option.selected {
+      border-color:var(--blue);
+      background:#edf2ff;
+    }
+
+    .option-letter {
+      display:grid;
+      place-items:center;
+      flex:0 0 28px;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:#e9efff;
+      color:var(--blue);
+      font-size:13px;
+    }
+
+    .option.selected .option-letter {
+      background:var(--blue);
+      color:#fff;
+    }
+
+    .test-controls {
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .text-button {
+      padding:0 10px;
+      border:0;
+      color:var(--muted);
+      background:transparent;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .score-orb {
+      display:grid;
+      place-items:center;
+      width:164px;
+      height:164px;
+      margin:28px auto;
+      border:12px solid #dce6ff;
+      border-radius:50%;
+      background:#f8faff;
+    }
+
+    .score-orb strong {
+      font-size:47px;
+      line-height:1;
+      color:var(--blue);
+    }
+
+    .review-list {
+      display:grid;
+      gap:10px;
+      margin:30px 0;
+      text-align:left;
+    }
+
+    .review-item {
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      padding:14px;
+      border-radius:14px;
+      background:#f8faff;
+      font-weight:800;
+    }
+
+    .review-item.correct { border-left:5px solid var(--correct); }
+    .review-item.wrong { border-left:5px solid var(--wrong); }
+
+    .result-actions {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+    }
+
+    @media (max-width:600px) {
+      .shell { width:min(100% - 20px,960px); }
+      .intro-screen,.result-screen,.question-card { padding:26px 18px; }
+      .question-meta { align-items:flex-start; flex-direction:column; }
+    }
+  </style>
 </head>
+
 <body>
   <main class="shell">
-    <a class="back-link" href="index.html">â Back to MathMind AI</a>
+    <a class="back-link" href="index.html">← Back to MathMind AI</a>
 
     <section id="intro-screen" class="screen intro-screen">
-      <div class="hero-mark" aria-hidden="true">ð¦</div>
+      <div class="hero-mark">🦘</div>
       <p class="eyebrow">GRADE 3-4 PRACTICE</p>
       <h1>Kangaroo Challenge</h1>
-      <p class="intro-copy">A 24-question mathematical reasoning test with original visual puzzles, number sense, logic, and spatial-thinking problems.</p>
-      <div class="test-facts" aria-label="Test details">
+      <p class="intro-copy">
+        A 24-question mathematical reasoning test with visual puzzles,
+        number sense, logic, and spatial-thinking problems.
+      </p>
+
+      <div class="test-facts">
         <div><strong>24</strong><span>questions</span></div>
         <div><strong>60</strong><span>minutes</span></div>
         <div><strong>5</strong><span>choices each</span></div>
       </div>
+
       <div class="scoring-note">
-        <span>Questions 1-8: <b>3 points</b></span>
-        <span>Questions 9-16: <b>4 points</b></span>
-        <span>Questions 17-24: <b>5 points</b></span>
+        <span>Questions 1–8: <b>3 points</b></span>
+        <span>Questions 9–16: <b>4 points</b></span>
+        <span>Questions 17–24: <b>5 points</b></span>
       </div>
-      <button id="start-test" class="primary-button">Start Kangaroo Test <span>â</span></button>
-      <p class="small-note">Every test selects 24 questions from a bank of 150 original pattern configurations.</p>
+
+      <button id="start-test" class="primary-button">
+        Start Kangaroo Test →
+      </button>
     </section>
 
-    <section id="test-screen" class="screen hidden" aria-live="polite">
+    <section id="test-screen" class="screen hidden">
       <header class="test-header">
         <div>
           <p class="eyebrow">KANGAROO CHALLENGE</p>
           <p id="question-status" class="question-status">Question 1 of 24</p>
         </div>
-        <div class="timer-wrap"><span aria-hidden="true">â±</span><strong id="timer">60:00</strong></div>
+
+        <div class="timer-wrap">
+          <span>⏱</span>
+          <strong id="timer">60:00</strong>
+        </div>
       </header>
-      <div class="progress-track" aria-label="Test progress"><div id="progress-fill"></div></div>
+
+      <div class="progress-track">
+        <div id="progress-fill"></div>
+      </div>
 
       <article class="question-card">
-        <div class="question-meta"><span id="point-value" class="point-badge">3 points</span><span id="pattern-label">Visual reasoning</span></div>
-        <h2 id="question-text">Loading questionâ¦</h2>
-        <div id="illustration" class="illustration" aria-label="Question illustration"></div>
-        <div id="options" class="options" role="radiogroup" aria-label="Answer choices"></div>
+        <div class="question-meta">
+          <span id="point-value" class="point-badge">3 points</span>
+          <span id="pattern-label">Visual reasoning</span>
+        </div>
+
+        <h2 id="question-text">Loading question…</h2>
+        <div id="illustration" class="illustration"></div>
+        <div id="options" class="options"></div>
       </article>
 
       <footer class="test-controls">
-        <button id="previous-button" class="text-button" type="button">â Previous</button>
-        <button id="next-button" class="primary-button" type="button">Next question â</button>
+        <button id="previous-button" class="text-button" type="button">
+          ← Previous
+        </button>
+
+        <button id="next-button" class="primary-button" type="button">
+          Next question →
+        </button>
       </footer>
     </section>
 
-    <section id="result-screen" class="screen hidden">
-      <div class="hero-mark" aria-hidden="true">ð</div>
+    <section id="result-screen" class="screen result-screen hidden">
+      <div class="hero-mark">🎉</div>
       <p class="eyebrow">TEST COMPLETE</p>
       <h1>Your Kangaroo Challenge result</h1>
-      <div class="score-orb"><strong id="score-value">0</strong><span>points</span></div>
+
+      <div class="score-orb">
+        <strong id="score-value">0</strong>
+        <span>points</span>
+      </div>
+
       <p id="result-summary" class="intro-copy"></p>
       <div id="review-list" class="review-list"></div>
+
       <div class="result-actions">
         <button id="try-again" class="primary-button">Try another test</button>
         <a class="secondary-button" href="index.html">Return to MathMind AI</a>
       </div>
     </section>
   </main>
-  <script>
-"use strict";
 
-/* Original Kangaroo-style Grade 3-4 bank: 24 distinct reasoning families Ã 7 variants = 168 patterns.
-   A test always uses exactly one question from every family, so no question type or diagram repeats. */
-const TOTAL = 24;
-const LETTERS = ["A", "B", "C", "D", "E"];
-const $ = (id) => document.getElementById(id);
-const range = (n) => Array.from({length:n}, (_, i) => i);
-const shuffle = (items) => { const a=[...items]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-const points = (index) => index < 8 ? 3 : index < 16 ? 4 : 5;
-const choices = (answer, alternatives) => shuffle([...new Set([String(answer), ...alternatives.map(String)])]).slice(0, 5);
-const numbers = (answer, step = 1) => choices(answer, [-3,-2,-1,1,2,3].map((n) => Math.max(0, answer+n*step)));
-const svg = (content, w=520, h=190) => `<svg viewBox="0 0 ${w} ${h}" role="img" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
-const label = (x,y,value,size=16,fill="#24334f") => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-size="${size}" font-weight="800" fill="${fill}">${value}</text>`;
-const dot = (x,y,r=14,fill="#5B8DEF") => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
-const palette=["#5B8DEF", "#FF9F68", "#8D6CE8", "#37B98C", "#E5669B", "#F1BE4C"];
-
-function draw(d) {
-  if(d.type === "count") { let s=""; range(d.count).forEach(i=>{const x=70+(i%8)*55,y=58+Math.floor(i/8)*56;s+=d.shape==="star"?`<polygon points="${x},${y-20} ${x+6},${y-6} ${x+21},${y-6} ${x+9},${y+4} ${x+14},${y+20} ${x},${y+11} ${x-14},${y+20} ${x-9},${y+4} ${x-21},${y-6} ${x-6},${y-6}" fill="${d.color}"/>`:dot(x,y,17,d.color);}); return svg(`<rect x="12" y="12" width="496" height="166" rx="20" fill="#f6f8ff"/>${s}`); }
-  if(d.type === "value") { let marks=""; range(d.shells).forEach(i=>marks+=`<path d="M${72+i*62} 116 Q${92+i*62} 48 ${112+i*62} 116Z" fill="#f4b183" stroke="#a86d3d" stroke-width="3"/>`); range(d.marbles).forEach(i=>marks+=dot(96+i*43,148,13,"#37B98C")); return svg(`${marks}${label(390,75,"shell = 5",18,"#9b5d29")}${label(390,112,"marble = 1",18,"#258260")}${label(260,176,"Find the total value",16,"#65718a")}`); }
-  if(d.type === "line") { let s=`<line x1="55" y1="90" x2="468" y2="90" stroke="#405271" stroke-width="4"/>`; range(d.count).forEach(i=>{const x=65+i*395/(d.count-1),v=d.start+i*d.step;s+=`<line x1="${x}" y1="73" x2="${x}" y2="107" stroke="#405271" stroke-width="3"/>${label(x,142,i===d.missing?"?":v,19,i===d.missing?"#E05A68":"#24334f")}`;}); return svg(s); }
-  if(d.type === "rect") { const w=d.w*35,h=d.h*35,x=260-w/2,y=95-h/2; return svg(`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="#dce8ff" stroke="#5273cb" stroke-width="4"/>${label(260,30,`${d.w} units`,18,"#2E5FEA")}${label(260,173,`${d.h} units`,18,"#2E5FEA")}`); }
-  if(d.type === "shapes") { const out=d.items.map((item,i)=>{const x=60+i*75;if(item==="?")return label(x,105,"?",34,"#E05A68");if(item==="circle")return dot(x,95,20,"#5B8DEF");if(item==="square")return `<rect x="${x-19}" y="76" width="38" height="38" rx="5" fill="#FF9F68"/>`;return `<polygon points="${x},70 ${x+23},113 ${x-23},113" fill="#37B98C"/>`;}).join(""); return svg(`<rect x="18" y="42" width="484" height="108" rx="18" fill="#f5f8ff"/>${out}`); }
-  if(d.type === "clock") { const cx=260,cy=95,rad=82,a1=(((d.hour%12)+d.minute/60)*30-90)*Math.PI/180,a2=(d.minute*6-90)*Math.PI/180;let ticks="";range(12).forEach(i=>{const a=(i*30-90)*Math.PI/180;ticks+=label(cx+Math.cos(a)*76,cy+Math.sin(a)*76+5,i===0?12:i,13);});return svg(`<circle cx="${cx}" cy="${cy}" r="${rad}" fill="#fff" stroke="#5B8DEF" stroke-width="4"/>${ticks}<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a1)*40}" y2="${cy+Math.sin(a1)*40}" stroke="#263550" stroke-width="7" stroke-linecap="round"/><line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a2)*61}" y2="${cy+Math.sin(a2)*61}" stroke="#E5669B" stroke-width="4" stroke-linecap="round"/>${dot(cx,cy,6,"#263550")}`); }
-  if(d.type === "pizza") { const cx=260,cy=95,r=76;let p="";range(d.slices).forEach(i=>{const a=-Math.PI/2+i*2*Math.PI/d.slices,b=a+2*Math.PI/d.slices,p1=[cx+r*Math.cos(a),cy+r*Math.sin(a)],p2=[cx+r*Math.cos(b),cy+r*Math.sin(b)];p+=`<path d="M ${cx} ${cy} L ${p1[0]} ${p1[1]} A ${r} ${r} 0 0 1 ${p2[0]} ${p2[1]} Z" fill="${i<d.shaded?'#FFB15E':'#fff4db'}" stroke="#986331" stroke-width="2"/>`;});return svg(p); }
-  if(d.type === "tiles") { let s="";range(d.rows).forEach(y=>range(d.cols).forEach(x=>s+=`<rect x="${150+x*34}" y="${30+y*34}" width="32" height="32" rx="3" fill="${(x+y)%2?'#dce8ff':'#8ba9ef'}"/>`));return svg(s); }
-  if(d.type === "coins") { let s="";range(d.count).forEach(i=>{const x=78+(i%7)*59,y=58+Math.floor(i/7)*62;s+=`<circle cx="${x}" cy="${y}" r="22" fill="#f2c14e" stroke="#bc8520" stroke-width="3"/>${label(x,y+6,d.value,13,"#704900")}`;});return svg(s); }
-  if(d.type === "seats") { let s="";range(d.total).forEach(i=>{const x=75+(i%8)*52,y=46+Math.floor(i/8)*60,o=i<d.occupied;s+=`<rect x="${x}" y="${y}" width="36" height="35" rx="6" fill="${o?'#5B8DEF':'#edf2ff'}" stroke="#708ad0"/>${o?`<circle cx="${x+18}" cy="${y+14}" r="8" fill="#dce8ff"/>`:""}`;});return svg(s); }
-  if(d.type === "legs") { const animal=(x,y,legs,fill)=>`<ellipse cx="${x}" cy="${y}" rx="30" ry="21" fill="${fill}"/>${range(legs).map(i=>`<line x1="${x-18+i*(36/(legs-1||1))}" y1="${y+16}" x2="${x-18+i*(36/(legs-1||1))}" y2="${y+38}" stroke="#263550" stroke-width="4"/>`).join("")}`;return svg(`${range(d.cats).map(i=>animal(110+i*105,80,4,"#FF9F68")).join("")}${range(d.spiders).map(i=>animal(280+i*105,80,8,"#8D6CE8")).join("")}${label(260,168,"Cats have 4 legs; spiders have 8 legs.",16,"#65718a")}`); }
-  if(d.type === "digits") { return svg(d.digits.map((v,i)=>`<rect x="${120+i*96}" y="55" width="72" height="75" rx="12" fill="#eaf0ff" stroke="#6e8ade" stroke-width="3"/>${label(156+i*96,103,v,34,"#2E5FEA")}`).join("")); }
-  if(d.type === "cards") { return svg(d.cards.map((v,i)=>`<rect x="${100+i*86}" y="47" width="65" height="88" rx="11" fill="#fff" stroke="#e5669b" stroke-width="4"/>${label(132+i*86,100,v,30,"#ca3f76")}`).join("")); }
-  if(d.type === "calendar") { let s=`<rect x="130" y="25" width="260" height="145" rx="15" fill="#fff" stroke="#6f8bd3" stroke-width="3"/><rect x="130" y="25" width="260" height="34" rx="15" fill="#5B8DEF"/>${label(260,48,d.month,17,"white")}`;range(7).forEach(i=>s+=label(150+i*36,78,["M","T","W","T","F","S","S"][i],13,"#65718a"));range(21).forEach(i=>{const x=150+(i%7)*36,y=105+Math.floor(i/7)*25;s+=label(x,y,i+1,14,i+1===d.today?"#E05A68":"#24334f");});return svg(s); }
-  if(d.type === "fold") { return svg(`<rect x="150" y="35" width="170" height="120" rx="8" fill="#eaf0ff" stroke="#5B8DEF" stroke-width="4"/><line x1="235" y1="35" x2="235" y2="155" stroke="#E5669B" stroke-width="3" stroke-dasharray="7 6"/>${dot(d.dotX,95,9,"#E5669B")}${label(d.dotX,68,`${d.fromLeft} units`,12,"#c53e76")}${label(235,178,"Sheet width: 10 units",15,"#65718a")}`); }
-  if(d.type === "coordinate") { let s="";for(let i=0;i<=6;i++){s+=`<line x1="${110+i*48}" y1="25" x2="${110+i*48}" y2="169" stroke="#c3d1f4"/><line x1="110" y1="${25+i*24}" x2="398" y2="${25+i*24}" stroke="#c3d1f4"/>`;if(i<6){s+=label(134+i*48,187,i,12,"#65718a");s+=label(91,157-i*24,i,12,"#65718a");}}const sx=110+d.x*48,sy=169-d.y*24,ex=110+d.endX*48,ey=169-d.endY*24;return svg(`<line x1="110" y1="169" x2="410" y2="169" stroke="#405271" stroke-width="3"/><line x1="110" y1="178" x2="110" y2="15" stroke="#405271" stroke-width="3"/>${s}<path d="M ${sx} ${sy} L ${ex} ${sy} L ${ex} ${ey}" fill="none" stroke="#E5669B" stroke-width="5" stroke-linecap="round"/>${dot(sx,sy,11,"#37B98C")}${label(sx,sy+5,"S",12,"white")}${dot(ex,ey,11,"#E5669B")}${label(ex,ey+5,"?",12,"white")}`); }
-  if(d.type === "share") { let s="";range(d.children).forEach(i=>{const x=105+i*103;s+=`<circle cx="${x}" cy="65" r="20" fill="${palette[i]}"/><path d="M${x-26} 130 Q${x} 91 ${x+26} 130Z" fill="${palette[i]}"/>`;});range(d.cookies).forEach(i=>s+=`<circle cx="${70+(i%10)*42}" cy="164" r="12" fill="#eeb262" stroke="#af732f" stroke-width="2"/>`);return svg(s); }
-  if(d.type === "wall") { const [a,b,c,d,e,f]=d.values;return svg(`<rect x="230" y="30" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>${label(260,58,f,20)}<rect x="195" y="82" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>${label(225,110,d,20)}<rect x="265" y="82" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>${label(295,110,e,20)}<rect x="160" y="134" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>${label(190,162,a,20)}<rect x="230" y="134" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>${label(260,162,b,20)}<rect x="300" y="134" width="60" height="42" fill="#fff0f5" stroke="#e5669b"/>${label(330,162,c===null?'?':c,20,c===null?'#e05a68':'#24334f')}`); }
-  if(d.type === "ruler") { let s=`<line x1="70" y1="100" x2="450" y2="100" stroke="#405271" stroke-width="4"/>`;range(11).forEach(i=>{const x=70+i*38;s+=`<line x1="${x}" y1="${i%5===0?66:78}" x2="${x}" y2="110" stroke="#405271" stroke-width="3"/>${i%5===0?label(x,137,i,14):""}`;});s+=`<rect x="${70+d.start*38}" y="55" width="${d.length*38}" height="28" rx="8" fill="#37B98C"/>`;return svg(s); }
-  if(d.type === "bag") { let circles="";range(d.red).forEach(i=>circles+=dot(190+(i%3)*34,85+Math.floor(i/3)*34,13,"#E5669B"));range(d.blue).forEach(i=>circles+=dot(300+(i%3)*34,85+Math.floor(i/3)*34,13,"#5B8DEF"));return svg(`<path d="M145 45 Q260 10 375 45 L355 160 Q260 180 165 160Z" fill="#f5f8ff" stroke="#708ad0" stroke-width="4"/>${circles}${label(235,176,"red",14,"#c53e76")}${label(320,176,"blue",14,"#2e5fea")}`); }
-  if(d.type === "shapearea") { let s="";d.cells.forEach(([x,y])=>s+=`<rect x="${150+x*34}" y="${30+y*34}" width="32" height="32" rx="3" fill="#8ba9ef"/>`);return svg(s); }
-  if(d.type === "age") { return svg(`<circle cx="160" cy="75" r="35" fill="#FF9F68"/>${label(160,82,"L",22,"white")}<circle cx="360" cy="75" r="35" fill="#5B8DEF"/>${label(360,82,"M",22,"white")}<path d="M205 75 H315" stroke="#64748b" stroke-width="4"/><path d="M315 75 l-12 -9 M315 75 l-12 9" stroke="#64748b" stroke-width="4"/>${label(260,150,"Use the clues in the question",17,"#65718a")}`); }
-  return "";
-}
-
-function f0(v){const n=6+v;return {name:"Visual counting",prompt:"How many stars are shown?",answer:n,options:numbers(n),diagram:{type:"count",count:n,shape:"star",color:palette[v%palette.length]}};}
-function f1(v){const shells=2+(v%3),marbles=2+(v%5),answer=shells*5+marbles;return {name:"Picture values",prompt:"Each shell is worth 5 and each marble is worth 1. What is the total value?",answer,options:numbers(answer),diagram:{type:"value",shells,marbles}};}
-function f2(v){const step=1+(v%4),start=v%3,missing=2+(v%3),answer=start+step*missing;return {name:"Number line",prompt:"What number belongs at the question mark?",answer,options:numbers(answer,step),diagram:{type:"line",start,step,missing,count:7}};}
-function f3(v){const w=3+(v%5),h=2+((v+2)%4),answer=2*(w+h);return {name:"Perimeter",prompt:`The rectangle is ${w} units wide and ${h} units high. What is its perimeter?`,answer,options:numbers(answer,2),diagram:{type:"rect",w,h}};}
-function f4(v){const types=["circle","square","triangle"],shift=v%3,items=range(6).map(i=>types[(i+shift)%3]),missing=2+(v%3),answer=items[missing];items[missing]="?";return {name:"Shape pattern",prompt:"Which shape replaces the question mark?",answer,options:shuffle(["circle","square","triangle","star","hexagon"]),diagram:{type:"shapes",items}};}
-function f5(v){const h=1+v,mins=[0,15,30,45][v%4],answer=`${h}:${String(mins).padStart(2,"0")}`;return {name:"Time",prompt:"What time is shown on the clock?",answer,options:choices(answer,[`${h%12+1}:${String(mins).padStart(2,"0")}`,`${h}:${String((mins+15)%60).padStart(2,"0")}`,`${h===1?12:h-1}:${String(mins).padStart(2,"0")}`,`${h}:${String((mins+30)%60).padStart(2,"0")}`]),diagram:{type:"clock",hour:h,minute:mins}};}
-function f6(v){const slices=[4,6,8,10][v%4],shaded=1+(v%(slices-1)),answer=`${shaded}/${slices}`;return {name:"Fractions",prompt:"What fraction of the pizza is shaded?",answer,options:choices(answer,[`${slices-shaded}/${slices}`,`${shaded+1}/${slices}`,`${shaded}/${slices+2}`,"1/2","1/1"]),diagram:{type:"pizza",slices,shaded}};}
-function f7(v){const cols=3+(v%4),rows=2+((v+1)%3),answer=cols*rows;return {name:"Arrays",prompt:`How many small square tiles are in the rectangle?`,answer,options:numbers(answer),diagram:{type:"tiles",cols,rows}};}
-function f8(v){const value=[2,5,10][v%3],count=3+v,answer=value*count;return {name:"Money",prompt:`Each coin is worth ${value} points. What is the value of all the coins?`,answer,options:numbers(answer,value),diagram:{type:"coins",value,count}};}
-function f9(v){const total=16,occupied=5+v,answer=total-occupied;return {name:"Empty seats",prompt:`There are ${total} seats. How many are empty?`,answer,options:numbers(answer),diagram:{type:"seats",total,occupied}};}
-function f10(v){const cats=1+(v%3),spiders=1+((v+1)%2),answer=cats*4+spiders*8;return {name:"Animal legs",prompt:"How many legs do all the animals have altogether?",answer,options:numbers(answer,2),diagram:{type:"legs",cats,spiders}};}
-function f11(v){const presets=[[2,5,8],[3,6,9],[1,4,7],[2,6,9],[3,5,8],[1,6,8],[2,4,9]],digits=presets[v];const perms=[[digits[0],digits[1],digits[2]],[digits[0],digits[2],digits[1]],[digits[1],digits[0],digits[2]],[digits[1],digits[2],digits[0]],[digits[2],digits[0],digits[1]],[digits[2],digits[1],digits[0]]].map(a=>Number(a.join(""))),answer=Math.max(...perms);return {name:"Place value",prompt:"Use all three digit cards once. What is the greatest three-digit number you can make?",answer,options:choices(answer,perms),diagram:{type:"digits",digits}};}
-function f12(v){const cards=[2+v,4+v,6+v],answer=cards.reduce((a,b)=>a+b,0);return {name:"Number cards",prompt:"Add the three number cards. What is the total?",answer,options:numbers(answer,2),diagram:{type:"cards",cards}};}
-function f13(v){const today=2+v,days=7+(v%3)*7,answer=today+days;return {name:"Calendar",prompt:`Today is the ${today}${today===1?'st':today===2?'nd':today===3?'rd':'th'} of the month. What date will it be in ${days} days?`,answer,options:numbers(answer,7),diagram:{type:"calendar",month:"This month",today}};}
-function f14(v){const fromLeft=1+(v%4),answer=10-fromLeft,dotX=150+fromLeft*17;return {name:"Mirror fold",prompt:`The sheet is 10 units wide and is folded along its middle line. The pink dot is ${fromLeft} units from the left edge. How far is the reflected dot from the left edge after opening the sheet?`,answer,options:numbers(answer),diagram:{type:"fold",dotX,fromLeft}};}
-function f15(v){const x=1+(v%2),y=1+(v%3),right=1+(v%3),up=1+((v+1)%3),endX=x+right,endY=y+up,answer=`(${endX}, ${endY})`;return {name:"Coordinates",prompt:`Start at S = (${x}, ${y}). Follow the pink route: ${right} units right, then ${up} units up. What is the finishing coordinate?`,answer,options:choices(answer,[`(${endX}, ${endY-1})`,`(${endX-1}, ${endY})`,`(${x}, ${y})`,`(${endY}, ${endX})`,`(${endX+1}, ${endY+1})`]),diagram:{type:"coordinate",x,y,endX,endY}};}
-function f16(v){const children=3+(v%3),cookies=children*(3+(v%4)),answer=cookies/children;return {name:"Equal sharing",prompt:`${cookies} cookies are shared equally among ${children} children. How many cookies does each child get?`,answer,options:numbers(answer),diagram:{type:"share",children,cookies}};}
-function f17(v){const a=1+(v%4),b=2+(v%4),c=a+b,d=b+c,e=c+d,f=d+e;return {name:"Number wall",prompt:"In this number wall, each box equals the sum of the two boxes directly below it. What number belongs in the pink box?",answer:c,options:numbers(c),diagram:{type:"wall",values:[a,b,null,d,e,f]}};}
-function f18(v){const start=1+(v%3),length=3+(v%5),answer=length;return {name:"Measurement",prompt:`The green strip starts at the ${start} mark and ends at the ${start+length} mark. How many units long is it?`,answer,options:numbers(answer),diagram:{type:"ruler",start,length}};}
-function f19(v){const first=2+v*3,answer=first+3;return {name:"Number sequence",prompt:`The sequence starts ${first}, ${first+1}, ${first+2}, â¦ What is the fourth number?`,answer,options:numbers(answer),diagram:{type:"line",start:first,step:1,missing:3,count:6}};}
-function f20(v){const red=2+(v%4),blue=2+((v+2)%4),answer=red+blue;return {name:"Bag of counters",prompt:"How many counters are in the bag altogether?",answer,options:numbers(answer),diagram:{type:"bag",red,blue}};}
-function f21(v){const cells=[[1,0],[2,0],[0,1],[1,1],[2,1],[2,2],[3,2]].slice(0,4+(v%4)),answer=cells.length;return {name:"Square counting",prompt:"How many blue unit squares make up the shape?",answer,options:numbers(answer),diagram:{type:"shapearea",cells}};}
-function f22(v){const lia=5+v,mia=lia+2,answer=mia+3;return {name:"Ages",prompt:`Lia is ${lia} years old. Mia is 2 years older than Lia. How old will Mia be in 3 years?`,answer,options:numbers(answer),diagram:{type:"age"}};}
-function f23(v){const a=3+(v%4),b=2+(v%5),answer=a*b;return {name:"Repeated addition",prompt:`There are ${a} trays with ${b} muffins on each tray. How many muffins are there altogether?`,answer,options:numbers(answer,b),diagram:{type:"tiles",cols:a,rows:b}};}
-
-const families=[f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23];
-const bank=families.flatMap((factory,family)=>range(7).map(variant=>({id:`K-${family+1}-${variant+1}`,family,create:()=>factory(variant)})));
-let state={questions:[],answers:[],index:0,started:0,timer:null};
-
-function newTest(){state.questions=shuffle(families.map((factory,family)=>({family,create:()=>factory(Math.floor(Math.random()*7))}))).map((item,index)=>({...item.create(),points:points(index)}));state.answers=Array(TOTAL).fill(null);state.index=0;state.started=Date.now();}
-function render(){const q=state.questions[state.index];$("question-status").textContent=`Question ${state.index+1} of ${TOTAL}`;$("point-value").textContent=`${q.points} points`;$("pattern-label").textContent=q.name;$("question-text").textContent=q.prompt;$("illustration").innerHTML=draw(q.diagram);$("progress-fill").style.width=`${(state.index+1)*100/TOTAL}%`;$("previous-button").disabled=state.index===0;$("next-button").textContent=state.index===TOTAL-1?"Finish test â":"Next question â";const box=$("options");box.replaceChildren();q.options.forEach((option,index)=>{const b=document.createElement("button");b.type="button";b.className="option"+(String(option)===state.answers[state.index]?" selected":"");b.innerHTML=`<span class="option-letter">${LETTERS[index]}</span><span>${option}</span>`;b.addEventListener("click",()=>{state.answers[state.index]=String(option);render();});box.appendChild(b);});}
-function startTimer(){clearInterval(state.timer);$("timer").textContent="60:00";state.timer=setInterval(()=>{const left=Math.max(0,3600-Math.floor((Date.now()-state.started)/1000));$("timer").textContent=`${String(Math.floor(left/60)).padStart(2,"0")}:${String(left%60).padStart(2,"0")}`;if(!left)finish();},1000);}
-function finish(){clearInterval(state.timer);$("test-screen").classList.add("hidden");$("result-screen").classList.remove("hidden");let score=24,correct=0;const review=$("review-list");review.replaceChildren();state.questions.forEach((q,i)=>{const ok=String(q.answer)===state.answers[i];if(ok){correct++;score+=q.points;}else if(state.answers[i]!==null)score-=q.points/4;const item=document.createElement("div");item.className=`review-item ${ok?"correct":"wrong"}`;item.innerHTML=`<span>Question ${i+1}: ${ok?"Correct":"Correct answer: "+q.answer}</span><small>${ok?`+${q.points}`:state.answers[i]===null?"Not answered":`â${(q.points/4).toFixed(2)}`}</small>`;review.appendChild(item);});$("score-value").textContent=Number.isInteger(score)?score:score.toFixed(2);$("result-summary").textContent=`You answered ${correct} of ${TOTAL} questions correctly. Every question type in this test was different.`;}
-function start(){newTest();$("intro-screen").classList.add("hidden");$("result-screen").classList.add("hidden");$("test-screen").classList.remove("hidden");render();startTimer();window.scrollTo({top:0,behavior:"smooth"});}
-$("start-test").addEventListener("click",start);$("try-again").addEventListener("click",start);$("previous-button").addEventListener("click",()=>{if(state.index){state.index--;render();}});$("next-button").addEventListener("click",()=>{if(state.index===TOTAL-1)finish();else{state.index++;render();}});
-
-</script>
+<script>
+    "use strict";
+    
+    const TOTAL = 24;
+    const LETTERS = ["A", "B", "C", "D", "E"];
+    
+    const $ = (id) => document.getElementById(id);
+    const range = (n) => Array.from({length:n}, (_, i) => i);
+    
+    const shuffle = (items) => {
+      const a = [...items];
+    
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+    
+      return a;
+    };
+    
+    const points = (index) => index < 8 ? 3 : index < 16 ? 4 : 5;
+    
+    /* This always keeps the correct answer and four different wrong answers. */
+    const choices = (answer, alternatives) => {
+      const correct = String(answer);
+    
+      const wrongs = shuffle(
+        [...new Set(alternatives.map(String))]
+          .filter((option) => option !== correct)
+      ).slice(0, 4);
+    
+      return shuffle([correct, ...wrongs]);
+    };
+    
+    /* This makes five numerical options and guarantees the correct one is present. */
+    const numbers = (answer, step = 1) => {
+      const wrongs = [];
+      let distance = 1;
+    
+      while (wrongs.length < 4) {
+        const lower = answer - distance * step;
+        const higher = answer + distance * step;
+    
+        if (lower >= 0 && lower !== answer) wrongs.push(lower);
+        if (higher !== answer) wrongs.push(higher);
+    
+        distance++;
+      }
+    
+      return choices(answer, wrongs);
+    };
+    
+    const svg = (content, w = 520, h = 190) =>
+      `<svg viewBox="0 0 ${w} ${h}" role="img" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
+    
+    const label = (x, y, value, size = 16, fill = "#24334f") =>
+      `<text x="${x}" y="${y}" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-size="${size}" font-weight="800" fill="${fill}">${value}</text>`;
+    
+    const dot = (x, y, r = 14, fill = "#5B8DEF") =>
+      `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
+    
+    const palette = [
+      "#5B8DEF",
+      "#FF9F68",
+      "#8D6CE8",
+      "#37B98C",
+      "#E5669B",
+      "#F1BE4C"
+    ];
+    
+    function draw(d) {
+      if (d.type === "count") {
+        let s = "";
+    
+        range(d.count).forEach((i) => {
+          const x = 70 + (i % 8) * 55;
+          const y = 58 + Math.floor(i / 8) * 56;
+    
+          s += `
+            <polygon
+              points="${x},${y - 20} ${x + 6},${y - 6} ${x + 21},${y - 6}
+              ${x + 9},${y + 4} ${x + 14},${y + 20} ${x},${y + 11}
+              ${x - 14},${y + 20} ${x - 9},${y + 4} ${x - 21},${y - 6}
+              ${x - 6},${y - 6}"
+              fill="${d.color}"
+            />
+          `;
+        });
+    
+        return svg(`
+          <rect x="12" y="12" width="496" height="166" rx="20" fill="#f6f8ff"/>
+          ${s}
+        `);
+      }
+    
+      if (d.type === "value") {
+        let marks = "";
+    
+        range(d.shells).forEach((i) => {
+          marks += `
+            <path
+              d="M${72 + i * 62} 116 Q${92 + i * 62} 48 ${112 + i * 62} 116Z"
+              fill="#f4b183"
+              stroke="#a86d3d"
+              stroke-width="3"
+            />
+          `;
+        });
+    
+        range(d.marbles).forEach((i) => {
+          marks += dot(96 + i * 43, 148, 13, "#37B98C");
+        });
+    
+        return svg(`
+          ${marks}
+          ${label(390, 75, "shell = 5", 18, "#9b5d29")}
+          ${label(390, 112, "marble = 1", 18, "#258260")}
+          ${label(260, 176, "Find the total value", 16, "#65718a")}
+        `);
+      }
+    
+      if (d.type === "line") {
+        let s = `
+          <line x1="55" y1="90" x2="468" y2="90" stroke="#405271" stroke-width="4"/>
+        `;
+    
+        range(d.count).forEach((i) => {
+          const x = 65 + i * 395 / (d.count - 1);
+          const value = d.start + i * d.step;
+    
+          s += `
+            <line x1="${x}" y1="73" x2="${x}" y2="107" stroke="#405271" stroke-width="3"/>
+            ${label(x, 142, i === d.missing ? "?" : value, 19, i === d.missing ? "#E05A68" : "#24334f")}
+          `;
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "rect") {
+        const width = d.w * 35;
+        const height = d.h * 35;
+        const x = 260 - width / 2;
+        const y = 95 - height / 2;
+    
+        return svg(`
+          <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="8"
+            fill="#dce8ff" stroke="#5273cb" stroke-width="4"/>
+          ${label(260, 30, `${d.w} units`, 18, "#2E5FEA")}
+          ${label(260, 173, `${d.h} units`, 18, "#2E5FEA")}
+        `);
+      }
+    
+      if (d.type === "shapes") {
+        const out = d.items.map((item, i) => {
+          const x = 60 + i * 75;
+    
+          if (item === "?") return label(x, 105, "?", 34, "#E05A68");
+          if (item === "circle") return dot(x, 95, 20, "#5B8DEF");
+    
+          if (item === "square") {
+            return `<rect x="${x - 19}" y="76" width="38" height="38" rx="5" fill="#FF9F68"/>`;
+          }
+    
+          return `<polygon points="${x},70 ${x + 23},113 ${x - 23},113" fill="#37B98C"/>`;
+        }).join("");
+    
+        return svg(`
+          <rect x="18" y="42" width="484" height="108" rx="18" fill="#f5f8ff"/>
+          ${out}
+        `);
+      }
+    
+      if (d.type === "clock") {
+        const cx = 260;
+        const cy = 95;
+        const radius = 82;
+        const hourAngle = (((d.hour % 12) + d.minute / 60) * 30 - 90) * Math.PI / 180;
+        const minuteAngle = (d.minute * 6 - 90) * Math.PI / 180;
+    
+        let ticks = "";
+    
+        range(12).forEach((i) => {
+          const angle = (i * 30 - 90) * Math.PI / 180;
+          ticks += label(
+            cx + Math.cos(angle) * 76,
+            cy + Math.sin(angle) * 76 + 5,
+            i === 0 ? 12 : i,
+            13
+          );
+        });
+    
+        return svg(`
+          <circle cx="${cx}" cy="${cy}" r="${radius}" fill="#fff" stroke="#5B8DEF" stroke-width="4"/>
+          ${ticks}
+          <line x1="${cx}" y1="${cy}"
+            x2="${cx + Math.cos(hourAngle) * 40}"
+            y2="${cy + Math.sin(hourAngle) * 40}"
+            stroke="#263550" stroke-width="7" stroke-linecap="round"/>
+          <line x1="${cx}" y1="${cy}"
+            x2="${cx + Math.cos(minuteAngle) * 61}"
+            y2="${cy + Math.sin(minuteAngle) * 61}"
+            stroke="#E5669B" stroke-width="4" stroke-linecap="round"/>
+          ${dot(cx, cy, 6, "#263550")}
+        `);
+      }
+    
+      if (d.type === "pizza") {
+        const cx = 260;
+        const cy = 95;
+        const radius = 76;
+        let pieces = "";
+    
+        range(d.slices).forEach((i) => {
+          const a = -Math.PI / 2 + i * 2 * Math.PI / d.slices;
+          const b = a + 2 * Math.PI / d.slices;
+    
+          const p1 = [cx + radius * Math.cos(a), cy + radius * Math.sin(a)];
+          const p2 = [cx + radius * Math.cos(b), cy + radius * Math.sin(b)];
+    
+          pieces += `
+            <path
+              d="M ${cx} ${cy} L ${p1[0]} ${p1[1]}
+              A ${radius} ${radius} 0 0 1 ${p2[0]} ${p2[1]} Z"
+              fill="${i < d.shaded ? "#FFB15E" : "#fff4db"}"
+              stroke="#986331"
+              stroke-width="2"
+            />
+          `;
+        });
+    
+        return svg(pieces);
+      }
+    
+      if (d.type === "tiles") {
+        let s = "";
+    
+        range(d.rows).forEach((y) => {
+          range(d.cols).forEach((x) => {
+            s += `
+              <rect x="${150 + x * 34}" y="${30 + y * 34}"
+                width="32" height="32" rx="3"
+                fill="${(x + y) % 2 ? "#dce8ff" : "#8ba9ef"}"/>
+            `;
+          });
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "muffinTrays") {
+        let s = "";
+    
+        range(d.trays).forEach((row) => {
+          const y = 18 + row * 34;
+    
+          s += `
+            <rect x="72" y="${y}" width="376" height="29" rx="10"
+              fill="#e8eefc" stroke="#7188c7" stroke-width="2"/>
+            ${label(48, y + 20, `Tray ${row + 1}`, 12, "#65718a")}
+          `;
+    
+          range(d.muffins).forEach((col) => {
+            const x = 102 + col * 60;
+    
+            s += `
+              <path
+                d="M${x - 15} ${y + 21} L${x - 10} ${y + 4}
+                Q${x} ${y - 6} ${x + 10} ${y + 4}
+                L${x + 15} ${y + 21}Z"
+                fill="#d98a4a"
+                stroke="#9a5827"
+                stroke-width="2"
+              />
+              <circle cx="${x}" cy="${y + 4}" r="6" fill="#f5c07a"/>
+            `;
+          });
+        });
+    
+        return svg(s, 520, 230);
+      }
+    
+      if (d.type === "coins") {
+        let s = "";
+    
+        range(d.count).forEach((i) => {
+          const x = 78 + (i % 7) * 59;
+          const y = 58 + Math.floor(i / 7) * 62;
+    
+          s += `
+            <circle cx="${x}" cy="${y}" r="22" fill="#f2c14e" stroke="#bc8520" stroke-width="3"/>
+            ${label(x, y + 6, d.value, 13, "#704900")}
+          `;
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "seats") {
+        let s = "";
+    
+        range(d.total).forEach((i) => {
+          const x = 75 + (i % 8) * 52;
+          const y = 46 + Math.floor(i / 8) * 60;
+          const occupied = i < d.occupied;
+    
+          s += `
+            <rect x="${x}" y="${y}" width="36" height="35" rx="6"
+              fill="${occupied ? "#5B8DEF" : "#edf2ff"}" stroke="#708ad0"/>
+            ${occupied ? `<circle cx="${x + 18}" cy="${y + 14}" r="8" fill="#dce8ff"/>` : ""}
+          `;
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "legs") {
+        const animal = (x, y, legs, fill) => `
+          <ellipse cx="${x}" cy="${y}" rx="30" ry="21" fill="${fill}"/>
+          ${range(legs).map((i) => `
+            <line
+              x1="${x - 18 + i * (36 / (legs - 1 || 1))}"
+              y1="${y + 16}"
+              x2="${x - 18 + i * (36 / (legs - 1 || 1))}"
+              y2="${y + 38}"
+              stroke="#263550"
+              stroke-width="4"
+            />
+          `).join("")}
+        `;
+    
+        return svg(`
+          ${range(d.cats).map((i) => animal(110 + i * 105, 80, 4, "#FF9F68")).join("")}
+          ${range(d.spiders).map((i) => animal(280 + i * 105, 80, 8, "#8D6CE8")).join("")}
+          ${label(260, 168, "Cats have 4 legs; spiders have 8 legs.", 16, "#65718a")}
+        `);
+      }
+    
+      if (d.type === "digits") {
+        return svg(
+          d.digits.map((value, i) => `
+            <rect x="${120 + i * 96}" y="55" width="72" height="75" rx="12"
+              fill="#eaf0ff" stroke="#6e8ade" stroke-width="3"/>
+            ${label(156 + i * 96, 103, value, 34, "#2E5FEA")}
+          `).join("")
+        );
+      }
+    
+      if (d.type === "cards") {
+        return svg(
+          d.cards.map((value, i) => `
+            <rect x="${100 + i * 86}" y="47" width="65" height="88" rx="11"
+              fill="#fff" stroke="#e5669b" stroke-width="4"/>
+            ${label(132 + i * 86, 100, value, 30, "#ca3f76")}
+          `).join("")
+        );
+      }
+    
+      if (d.type === "calendar") {
+        let s = `
+          <rect x="130" y="25" width="260" height="145" rx="15" fill="#fff" stroke="#6f8bd3" stroke-width="3"/>
+          <rect x="130" y="25" width="260" height="34" rx="15" fill="#5B8DEF"/>
+          ${label(260, 48, d.month, 17, "white")}
+        `;
+    
+        range(7).forEach((i) => {
+          s += label(150 + i * 36, 78, ["M", "T", "W", "T", "F", "S", "S"][i], 13, "#65718a");
+        });
+    
+        range(21).forEach((i) => {
+          const x = 150 + (i % 7) * 36;
+          const y = 105 + Math.floor(i / 7) * 25;
+    
+          s += label(x, y, i + 1, 14, i + 1 === d.today ? "#E05A68" : "#24334f");
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "sequence") {
+        const values = range(4).map((i) => d.start + i * d.step);
+    
+        return svg(
+          values.map((value, i) => {
+            const x = 95 + i * 110;
+    
+            return `
+              <rect x="${x - 43}" y="53" width="86" height="78" rx="16"
+                fill="${i === 3 ? "#fff0f5" : "#eaf0ff"}"
+                stroke="${i === 3 ? "#e5669b" : "#6e8ade"}"
+                stroke-width="3"/>
+              ${label(x, 101, i === 3 ? "?" : value, 31, i === 3 ? "#e05a68" : "#2e5fea")}
+              ${i < 3 ? `
+                <path
+                  d="M${x + 50} 92 H${x + 69}
+                  M${x + 69} 92 l-8 -7
+                  M${x + 69} 92 l-8 7"
+                  stroke="#65718a"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              ` : ""}
+            `;
+          }).join("") +
+          label(260, 170, `Add ${d.step} each time`, 16, "#65718a")
+        );
+      }
+    
+      if (d.type === "fold") {
+        return svg(`
+          <rect x="150" y="35" width="170" height="120" rx="8"
+            fill="#eaf0ff" stroke="#5B8DEF" stroke-width="4"/>
+          <line x1="235" y1="35" x2="235" y2="155"
+            stroke="#E5669B" stroke-width="3" stroke-dasharray="7 6"/>
+          ${dot(d.dotX, 95, 9, "#E5669B")}
+          ${label(d.dotX, 68, `${d.fromLeft} units`, 12, "#c53e76")}
+          ${label(235, 178, "Sheet width: 10 units", 15, "#65718a")}
+        `);
+      }
+    
+      if (d.type === "coordinate") {
+        let s = "";
+    
+        for (let i = 0; i <= 6; i++) {
+          s += `
+            <line x1="${110 + i * 48}" y1="25" x2="${110 + i * 48}" y2="169" stroke="#c3d1f4"/>
+            <line x1="110" y1="${25 + i * 24}" x2="398" y2="${25 + i * 24}" stroke="#c3d1f4"/>
+          `;
+    
+          if (i < 6) {
+            s += label(134 + i * 48, 187, i, 12, "#65718a");
+            s += label(91, 157 - i * 24, i, 12, "#65718a");
+          }
+        }
+    
+        const sx = 110 + d.x * 48;
+        const sy = 169 - d.y * 24;
+        const ex = 110 + d.endX * 48;
+        const ey = 169 - d.endY * 24;
+    
+        return svg(`
+          <line x1="110" y1="169" x2="410" y2="169" stroke="#405271" stroke-width="3"/>
+          <line x1="110" y1="178" x2="110" y2="15" stroke="#405271" stroke-width="3"/>
+          ${s}
+          <path d="M ${sx} ${sy} L ${ex} ${sy} L ${ex} ${ey}"
+            fill="none" stroke="#E5669B" stroke-width="5" stroke-linecap="round"/>
+          ${dot(sx, sy, 11, "#37B98C")}
+          ${label(sx, sy + 5, "S", 12, "white")}
+          ${dot(ex, ey, 11, "#E5669B")}
+          ${label(ex, ey + 5, "?", 12, "white")}
+        `);
+      }
+    
+      if (d.type === "share") {
+        let s = "";
+    
+        range(d.children).forEach((i) => {
+          const x = 105 + i * 103;
+    
+          s += `
+            <circle cx="${x}" cy="65" r="20" fill="${palette[i]}"/>
+            <path d="M${x - 26} 130 Q${x} 91 ${x + 26} 130Z" fill="${palette[i]}"/>
+          `;
+        });
+    
+        range(d.cookies).forEach((i) => {
+          s += `
+            <circle
+              cx="${70 + (i % 10) * 42}"
+              cy="${154 + Math.floor(i / 10) * 28}"
+              r="10"
+              fill="#eeb262"
+              stroke="#af732f"
+              stroke-width="2"
+            />
+          `;
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "wall") {
+        const [a, b, c, leftMiddle, rightMiddle, top] = d.values;
+    
+        return svg(`
+          <rect x="230" y="30" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>
+          ${label(260, 58, top, 20)}
+    
+          <rect x="195" y="82" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>
+          ${label(225, 110, leftMiddle, 20)}
+    
+          <rect x="265" y="82" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>
+          ${label(295, 110, rightMiddle, 20)}
+    
+          <rect x="160" y="134" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>
+          ${label(190, 162, a, 20)}
+    
+          <rect x="230" y="134" width="60" height="42" fill="#eaf0ff" stroke="#6684ce"/>
+          ${label(260, 162, b, 20)}
+    
+          <rect x="300" y="134" width="60" height="42" fill="#fff0f5" stroke="#e5669b"/>
+          ${label(330, 162, c === null ? "?" : c, 20, c === null ? "#e05a68" : "#24334f")}
+        `);
+      }
+    
+      if (d.type === "ruler") {
+        let s = `<line x1="70" y1="100" x2="450" y2="100" stroke="#405271" stroke-width="4"/>`;
+    
+        range(11).forEach((i) => {
+          const x = 70 + i * 38;
+    
+          s += `
+            <line x1="${x}" y1="${i % 5 === 0 ? 66 : 78}" x2="${x}" y2="110"
+              stroke="#405271" stroke-width="3"/>
+            ${i % 5 === 0 ? label(x, 137, i, 14) : ""}
+          `;
+        });
+    
+        s += `
+          <rect x="${70 + d.start * 38}" y="55"
+            width="${d.length * 38}" height="28" rx="8" fill="#37B98C"/>
+        `;
+    
+        return svg(s);
+      }
+    
+      if (d.type === "bag") {
+        let circles = "";
+    
+        range(d.red).forEach((i) => {
+          circles += dot(
+            190 + (i % 3) * 34,
+            85 + Math.floor(i / 3) * 34,
+            13,
+            "#E5669B"
+          );
+        });
+    
+        range(d.blue).forEach((i) => {
+          circles += dot(
+            300 + (i % 3) * 34,
+            85 + Math.floor(i / 3) * 34,
+            13,
+            "#5B8DEF"
+          );
+        });
+    
+        return svg(`
+          <path d="M145 45 Q260 10 375 45 L355 160 Q260 180 165 160Z"
+            fill="#f5f8ff" stroke="#708ad0" stroke-width="4"/>
+          ${circles}
+          ${label(235, 176, "red", 14, "#c53e76")}
+          ${label(320, 176, "blue", 14, "#2e5fea")}
+        `);
+      }
+    
+      if (d.type === "shapearea") {
+        let s = "";
+    
+        d.cells.forEach(([x, y]) => {
+          s += `
+            <rect x="${150 + x * 34}" y="${30 + y * 34}"
+              width="32" height="32" rx="3" fill="#8ba9ef"/>
+          `;
+        });
+    
+        return svg(s);
+      }
+    
+      if (d.type === "age") {
+        return svg(`
+          <circle cx="160" cy="75" r="35" fill="#FF9F68"/>
+          ${label(160, 82, "L", 22, "white")}
+    
+          <circle cx="360" cy="75" r="35" fill="#5B8DEF"/>
+          ${label(360, 82, "M", 22, "white")}
+    
+          <path d="M205 75 H315" stroke="#64748b" stroke-width="4"/>
+          <path d="M315 75 l-12 -9 M315 75 l-12 9" stroke="#64748b" stroke-width="4"/>
+          ${label(260, 150, "Use the clues in the question", 17, "#65718a")}
+        `);
+      }
+    
+      return "";
+    }
+    
+    function f0(v) {
+      const answer = 6 + v;
+    
+      return {
+        name:"Visual counting",
+        prompt:"How many stars are shown?",
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"count", count:answer, color:palette[v % palette.length] }
+      };
+    }
+    
+    function f1(v) {
+      const shells = 2 + (v % 3);
+      const marbles = 2 + (v % 5);
+      const answer = shells * 5 + marbles;
+    
+      return {
+        name:"Picture values",
+        prompt:"Each shell is worth 5 and each marble is worth 1. What is the total value?",
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"value", shells, marbles }
+      };
+    }
+    
+    function f2(v) {
+      const step = 1 + (v % 4);
+      const start = v % 3;
+      const missing = 2 + (v % 3);
+      const answer = start + step * missing;
+    
+      return {
+        name:"Number line",
+        prompt:"What number belongs at the question mark?",
+        answer,
+        options:numbers(answer, step),
+        diagram:{ type:"line", start, step, missing, count:7 }
+      };
+    }
+    
+    function f3(v) {
+      const w = 3 + (v % 5);
+      const h = 2 + ((v + 2) % 4);
+      const answer = 2 * (w + h);
+    
+      return {
+        name:"Perimeter",
+        prompt:`The rectangle is ${w} units wide and ${h} units high. What is its perimeter?`,
+        answer,
+        options:numbers(answer, 2),
+        diagram:{ type:"rect", w, h }
+      };
+    }
+    
+    function f4(v) {
+      const types = ["circle", "square", "triangle"];
+      const shift = v % 3;
+      const items = range(6).map((i) => types[(i + shift) % 3]);
+      const missing = 2 + (v % 3);
+      const answer = items[missing];
+    
+      items[missing] = "?";
+    
+      return {
+        name:"Shape pattern",
+        prompt:"Which shape replaces the question mark?",
+        answer,
+        options:shuffle(["circle", "square", "triangle", "star", "hexagon"]),
+        diagram:{ type:"shapes", items }
+      };
+    }
+    
+    function f5(v) {
+      const hour = 1 + v;
+      const minute = [0, 15, 30, 45][v % 4];
+      const answer = `${hour}:${String(minute).padStart(2, "0")}`;
+    
+      return {
+        name:"Time",
+        prompt:"What time is shown on the clock?",
+        answer,
+        options:choices(answer, [
+          `${hour % 12 + 1}:${String(minute).padStart(2, "0")}`,
+          `${hour}:${String((minute + 15) % 60).padStart(2, "0")}`,
+          `${hour === 1 ? 12 : hour - 1}:${String(minute).padStart(2, "0")}`,
+          `${hour}:${String((minute + 30) % 60).padStart(2, "0")}`
+        ]),
+        diagram:{ type:"clock", hour, minute }
+      };
+    }
+    
+    function f6(v) {
+      const slices = [4, 6, 8, 10][v % 4];
+      const shaded = 1 + (v % (slices - 1));
+      const answer = `${shaded}/${slices}`;
+    
+      return {
+        name:"Fractions",
+        prompt:"What fraction of the pizza is shaded?",
+        answer,
+        options:choices(answer, [
+          `${slices - shaded}/${slices}`,
+          `${shaded + 1}/${slices}`,
+          `${shaded}/${slices + 2}`,
+          "1/2",
+          "1/1"
+        ]),
+        diagram:{ type:"pizza", slices, shaded }
+      };
+    }
+    
+    function f7(v) {
+      const cols = 3 + (v % 4);
+      const rows = 2 + ((v + 1) % 3);
+      const answer = cols * rows;
+    
+      return {
+        name:"Arrays",
+        prompt:"How many small square tiles are in the rectangle?",
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"tiles", cols, rows }
+      };
+    }
+    
+    function f8(v) {
+      const value = [2, 5, 10][v % 3];
+      const count = 3 + v;
+      const answer = value * count;
+    
+      return {
+        name:"Money",
+        prompt:`Each coin is worth ${value} points. What is the value of all the coins?`,
+        answer,
+        options:numbers(answer, value),
+        diagram:{ type:"coins", value, count }
+      };
+    }
+    
+    function f9(v) {
+      const total = 16;
+      const occupied = 5 + v;
+      const answer = total - occupied;
+    
+      return {
+        name:"Empty seats",
+        prompt:`There are ${total} seats. How many are empty?`,
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"seats", total, occupied }
+      };
+    }
+    
+    function f10(v) {
+      const cats = 1 + (v % 3);
+      const spiders = 1 + ((v + 1) % 2);
+      const answer = cats * 4 + spiders * 8;
+    
+      return {
+        name:"Animal legs",
+        prompt:"How many legs do all the animals have altogether?",
+        answer,
+        options:numbers(answer, 2),
+        diagram:{ type:"legs", cats, spiders }
+      };
+    }
+    
+    function f11(v) {
+      const presets = [
+        [2, 5, 8],
+        [3, 6, 9],
+        [1, 4, 7],
+        [2, 6, 9],
+        [3, 5, 8],
+        [1, 6, 8],
+        [2, 4, 9]
+      ];
+    
+      const digits = presets[v];
+    
+      const permutations = [
+        [digits[0], digits[1], digits[2]],
+        [digits[0], digits[2], digits[1]],
+        [digits[1], digits[0], digits[2]],
+        [digits[1], digits[2], digits[0]],
+        [digits[2], digits[0], digits[1]],
+        [digits[2], digits[1], digits[0]]
+      ].map((array) => Number(array.join("")));
+    
+      const answer = Math.max(...permutations);
+    
+      return {
+        name:"Place value",
+        prompt:"Use all three digit cards once. What is the greatest three-digit number you can make?",
+        answer,
+        options:choices(answer, permutations),
+        diagram:{ type:"digits", digits }
+      };
+    }
+    
+    function f12(v) {
+      const cards = [2 + v, 4 + v, 6 + v];
+      const answer = cards.reduce((a, b) => a + b, 0);
+    
+      return {
+        name:"Number cards",
+        prompt:"Add the three number cards. What is the total?",
+        answer,
+        options:numbers(answer, 2),
+        diagram:{ type:"cards", cards }
+      };
+    }
+    
+    function f13(v) {
+      const today = 2 + v;
+      const days = 7 + (v % 3) * 7;
+      const answer = today + days;
+    
+      return {
+        name:"Calendar",
+        prompt:`Today is the ${today}${today === 1 ? "st" : today === 2 ? "nd" : today === 3 ? "rd" : "th"} of the month. What date will it be in ${days} days?`,
+        answer,
+        options:numbers(answer, 7),
+        diagram:{ type:"calendar", month:"This month", today }
+      };
+    }
+    
+    function f14(v) {
+      const fromLeft = 1 + (v % 4);
+      const answer = 10 - fromLeft;
+      const dotX = 150 + fromLeft * 17;
+    
+      return {
+        name:"Mirror fold",
+        prompt:`The sheet is 10 units wide and is folded along its middle line. The pink dot is ${fromLeft} units from the left edge. How far is the reflected dot from the left edge after opening the sheet?`,
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"fold", dotX, fromLeft }
+      };
+    }
+    
+    function f15(v) {
+      const x = 1 + (v % 2);
+      const y = 1 + (v % 3);
+      const right = 1 + (v % 3);
+      const up = 1 + ((v + 1) % 3);
+      const endX = x + right;
+      const endY = y + up;
+      const answer = `(${endX}, ${endY})`;
+    
+      return {
+        name:"Coordinates",
+        prompt:`Start at S = (${x}, ${y}). Follow the pink route: ${right} units right, then ${up} units up. What is the finishing coordinate?`,
+        answer,
+        options:choices(answer, [
+          `(${endX}, ${endY - 1})`,
+          `(${endX - 1}, ${endY})`,
+          `(${x}, ${y})`,
+          `(${endY}, ${endX})`,
+          `(${endX + 1}, ${endY + 1})`
+        ]),
+        diagram:{ type:"coordinate", x, y, endX, endY }
+      };
+    }
+    
+    function f16(v) {
+      const children = 3 + (v % 3);
+      const cookies = children * (3 + (v % 4));
+      const answer = cookies / children;
+    
+      return {
+        name:"Equal sharing",
+        prompt:`${cookies} cookies are shared equally among ${children} children. How many cookies does each child get?`,
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"share", children, cookies }
+      };
+    }
+    
+    function f17(v) {
+      const a = 1 + (v % 4);
+      const b = 2 + (v % 4);
+      const c = 4 + (v % 5);
+    
+      const leftMiddle = a + b;
+      const rightMiddle = b + c;
+      const top = leftMiddle + rightMiddle;
+    
+      return {
+        name:"Number wall",
+        prompt:"Each box is the sum of the two boxes directly below it. What number belongs in the pink box?",
+        answer:c,
+        options:numbers(c),
+        diagram:{ type:"wall", values:[a, b, null, leftMiddle, rightMiddle, top] }
+      };
+    }
+    
+    function f18(v) {
+      const start = 1 + (v % 3);
+      const length = 3 + (v % 5);
+    
+      return {
+        name:"Measurement",
+        prompt:`The green strip starts at the ${start} mark and ends at the ${start + length} mark. How many units long is it?`,
+        answer:length,
+        options:numbers(length),
+        diagram:{ type:"ruler", start, length }
+      };
+    }
+    
+    function f19(v) {
+      const first = 2 + v * 3;
+      const step = 1 + (v % 3);
+      const answer = first + step * 3;
+    
+      return {
+        name:"Number sequence",
+        prompt:`The pattern adds ${step} each time. What is the missing fourth number?`,
+        answer,
+        options:numbers(answer, step),
+        diagram:{ type:"sequence", start:first, step }
+      };
+    }
+    
+    function f20(v) {
+      const red = 2 + (v % 4);
+      const blue = 2 + ((v + 2) % 4);
+      const answer = red + blue;
+    
+      return {
+        name:"Bag of counters",
+        prompt:"How many counters are in the bag altogether?",
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"bag", red, blue }
+      };
+    }
+    
+    function f21(v) {
+      const cells = [
+        [1, 0],
+        [2, 0],
+        [0, 1],
+        [1, 1],
+        [2, 1],
+        [2, 2],
+        [3, 2]
+      ].slice(0, 4 + (v % 4));
+    
+      return {
+        name:"Square counting",
+        prompt:"How many blue unit squares make up the shape?",
+        answer:cells.length,
+        options:numbers(cells.length),
+        diagram:{ type:"shapearea", cells }
+      };
+    }
+    
+    function f22(v) {
+      const lia = 5 + v;
+      const mia = lia + 2;
+      const answer = mia + 3;
+    
+      return {
+        name:"Ages",
+        prompt:`Lia is ${lia} years old. Mia is 2 years older than Lia. How old will Mia be in 3 years?`,
+        answer,
+        options:numbers(answer),
+        diagram:{ type:"age" }
+      };
+    }
+    
+    function f23(v) {
+      const trays = 3 + (v % 4);
+      const muffins = 2 + (v % 5);
+      const answer = trays * muffins;
+    
+      return {
+        name:"Repeated addition",
+        prompt:`There are ${trays} trays with ${muffins} muffins on each tray. How many muffins are there altogether?`,
+        answer,
+        options:numbers(answer, muffins),
+        diagram:{ type:"muffinTrays", trays, muffins }
+      };
+    }
+    
+    const families = [
+      f0, f1, f2, f3, f4, f5,
+      f6, f7, f8, f9, f10, f11,
+      f12, f13, f14, f15, f16, f17,
+      f18, f19, f20, f21, f22, f23
+    ];
+    
+    /* Checks all 168 variants before the test can start. */
+    function validateBank() {
+      families.forEach((factory) => {
+        range(7).forEach((variant) => {
+          const question = factory(variant);
+          const options = question.options.map(String);
+    
+          if (
+            options.length !== 5 ||
+            new Set(options).size !== 5 ||
+            !options.includes(String(question.answer))
+          ) {
+            throw new Error(`Invalid choices in ${question.name}.`);
+          }
+        });
+      });
+    }
+    
+    validateBank();
+    
+    let state = {
+      questions:[],
+      answers:[],
+      index:0,
+      started:0,
+      timer:null
+    };
+    
+    function newTest() {
+      const selectedFamilies = shuffle([...families]);
+    
+      state.questions = selectedFamilies.map((factory, index) => ({
+        ...factory(Math.floor(Math.random() * 7)),
+        points:points(index)
+      }));
+    
+      state.answers = Array(TOTAL).fill(null);
+      state.index = 0;
+      state.started = Date.now();
+    }
+    
+    function render() {
+      const q = state.questions[state.index];
+    
+      $("question-status").textContent = `Question ${state.index + 1} of ${TOTAL}`;
+      $("point-value").textContent = `${q.points} points`;
+      $("pattern-label").textContent = q.name;
+      $("question-text").textContent = q.prompt;
+      $("illustration").innerHTML = draw(q.diagram);
+      $("progress-fill").style.width = `${(state.index + 1) * 100 / TOTAL}%`;
+    
+      $("previous-button").disabled = state.index === 0;
+      $("next-button").textContent = state.index === TOTAL - 1
+        ? "Finish test →"
+        : "Next question →";
+    
+      const box = $("options");
+      box.replaceChildren();
+    
+      q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+    
+        button.type = "button";
+        button.className = "option" + (
+          String(option) === state.answers[state.index] ? " selected" : ""
+        );
+    
+        button.innerHTML = `
+          <span class="option-letter">${LETTERS[index]}</span>
+          <span>${option}</span>
+        `;
+    
+        button.addEventListener("click", () => {
+          state.answers[state.index] = String(option);
+          render();
+        });
+    
+        box.appendChild(button);
+      });
+    }
+    
+    function startTimer() {
+      clearInterval(state.timer);
+      $("timer").textContent = "60:00";
+    
+      state.timer = setInterval(() => {
+        const left = Math.max(
+          0,
+          3600 - Math.floor((Date.now() - state.started) / 1000)
+        );
+    
+        $("timer").textContent =
+          `${String(Math.floor(left / 60)).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
+    
+        if (!left) finish();
+      }, 1000);
+    }
+    
+    function finish() {
+      clearInterval(state.timer);
+    
+      $("test-screen").classList.add("hidden");
+      $("result-screen").classList.remove("hidden");
+    
+      let score = 24;
+      let correct = 0;
+    
+      const review = $("review-list");
+      review.replaceChildren();
+    
+      state.questions.forEach((q, i) => {
+        const ok = String(q.answer) === state.answers[i];
+    
+        if (ok) {
+          correct++;
+          score += q.points;
+        } else if (state.answers[i] !== null) {
+          score -= q.points / 4;
+        }
+    
+        const item = document.createElement("div");
+        item.className = `review-item ${ok ? "correct" : "wrong"}`;
+    
+        item.innerHTML = `
+          <span>Question ${i + 1}: ${ok ? "Correct" : "Correct answer: " + q.answer}</span>
+          <small>
+            ${
+              ok
+                ? `+${q.points}`
+                : state.answers[i] === null
+                  ? "Not answered"
+                  : `−${(q.points / 4).toFixed(2)}`
+            }
+          </small>
+        `;
+    
+        review.appendChild(item);
+      });
+    
+      $("score-value").textContent = Number.isInteger(score)
+        ? score
+        : score.toFixed(2);
+    
+      $("result-summary").textContent =
+        `You answered ${correct} of ${TOTAL} questions correctly. Every question type in this test was different.`;
+    }
+    
+    function start() {
+      newTest();
+    
+      $("intro-screen").classList.add("hidden");
+      $("result-screen").classList.add("hidden");
+      $("test-screen").classList.remove("hidden");
+    
+      render();
+      startTimer();
+    
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+    }
+    
+    $("start-test").addEventListener("click", start);
+    $("try-again").addEventListener("click", start);
+    
+    $("previous-button").addEventListener("click", () => {
+      if (state.index > 0) {
+        state.index--;
+        render();
+      }
+    });
+    
+    $("next-button").addEventListener("click", () => {
+      if (state.index === TOTAL - 1) {
+        finish();
+      } else {
+        state.index++;
+        render();
+      }
+    });
+    </script>
 </body>
 </html>
-
