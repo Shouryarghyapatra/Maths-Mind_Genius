@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Original Grade 3-4 Kangaroo-style mathematics practice test.">
+  <title>Kangaroo Practice | Grade 3-4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+:root { --ink:#18243d; --muted:#65718a; --blue:#3867f4; --violet:#7757df; --paper:#fff; --canvas:#f1f5ff; --line:#dce5fc; --correct:#16875a; --wrong:#d04e56; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; background:radial-gradient(circle at 12% 10%,#dce7ff 0,transparent 28rem),radial-gradient(circle at 88% 80%,#eadfff 0,transparent 28rem),var(--canvas); color:var(--ink); font-family:Nunito,system-ui,sans-serif; }
+button,a { font:inherit; }
+.shell { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:28px 0 64px; }
+.back-link { color:var(--muted); font-weight:800; text-decoration:none; }
+.screen { margin-top:24px; }
+.hidden { display:none !important; }
+.intro-screen,.result-screen { max-width:720px; margin:52px auto 0; padding:48px; text-align:center; background:rgba(255,255,255,.88); border:1px solid rgba(255,255,255,.95); border-radius:32px; box-shadow:0 24px 70px rgba(53,78,150,.14); }
+.hero-mark { display:grid; place-items:center; width:78px; height:78px; margin:0 auto 18px; border-radius:24px; background:#eef2ff; font-size:40px; }
+.eyebrow { margin:0; color:var(--blue); font-size:12px; font-weight:900; letter-spacing:.14em; }
+h1 { margin:10px 0 14px; font-size:clamp(32px,5vw,52px); line-height:1.05; }
+.intro-copy { margin:0 auto; max-width:620px; color:var(--muted); font-size:18px; line-height:1.65; }
+.test-facts { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:32px 0 18px; }
+.test-facts div { padding:17px; border:1px solid var(--line); border-radius:18px; background:#f9fbff; }
+.test-facts strong,.test-facts span { display:block; }.test-facts strong { font-size:27px; }.test-facts span { color:var(--muted); font-weight:700; }
+.scoring-note { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:18px 0 28px; color:var(--muted); font-size:14px; }.scoring-note span { padding:8px 11px; border-radius:100px; background:#f0f3fa; }
+.primary-button,.secondary-button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:52px; padding:0 22px; border:0; border-radius:14px; background:linear-gradient(135deg,var(--blue),var(--violet)); color:#fff; font-weight:900; cursor:pointer; text-decoration:none; box-shadow:0 9px 18px rgba(60,83,209,.22); }.primary-button:hover { transform:translateY(-1px); }
+.small-note { margin:20px 0 0; color:var(--muted); font-size:13px; }.secondary-button { background:#edf2ff; color:var(--blue); box-shadow:none; }
+.test-header { display:flex; justify-content:space-between; align-items:center; gap:18px; }.question-status { margin:4px 0 0; font-weight:900; font-size:20px; }.timer-wrap { display:flex; align-items:center; gap:8px; padding:11px 15px; border-radius:14px; background:#fff; color:var(--blue); box-shadow:0 8px 22px rgba(51,75,135,.10); }.timer-wrap strong { font-variant-numeric:tabular-nums; }
+.progress-track { height:9px; margin:19px 0 27px; overflow:hidden; border-radius:999px; background:#dbe4fb; }.progress-track div { height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,var(--blue),#9b62ed); transition:width .25s ease; }
+.question-card { padding:34px; background:var(--paper); border-radius:28px; box-shadow:0 18px 52px rgba(51,75,135,.13); }.question-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--muted); font-size:14px; font-weight:800; }.point-badge { padding:7px 10px; border-radius:9px; background:#fff3d9; color:#a56200; }.question-card h2 { margin:18px 0 22px; font-size:clamp(21px,3vw,28px); line-height:1.35; }
+.illustration { min-height:150px; margin:0 0 24px; padding:14px; overflow:auto; border:1px solid var(--line); border-radius:20px; background:#f9fbff; text-align:center; }.illustration svg { width:min(100%,560px); height:auto; max-height:260px; }
+.options { display:grid; grid-template-columns:1fr; gap:10px; }.option { display:flex; align-items:center; gap:13px; width:100%; padding:14px 15px; border:2px solid var(--line); border-radius:15px; background:#fff; color:var(--ink); cursor:pointer; text-align:left; font-weight:800; }.option:hover { border-color:#a8bcfb; background:#f7f9ff; }.option.selected { border-color:var(--blue); background:#edf2ff; }.option-letter { display:grid; place-items:center; flex:0 0 28px; width:28px; height:28px; border-radius:50%; background:#e9efff; color:var(--blue); font-size:13px; }.option.selected .option-letter { background:var(--blue); color:#fff; }
+.test-controls { display:flex; justify-content:space-between; gap:14px; margin-top:24px; }.text-button { padding:0 10px; border:0; color:var(--muted); background:transparent; font-weight:900; cursor:pointer; }.text-button:disabled { opacity:.4; cursor:not-allowed; }
+.score-orb { display:grid; place-items:center; width:164px; height:164px; margin:28px auto; border:12px solid #dce6ff; border-radius:50%; background:#f8faff; }.score-orb strong { font-size:47px; line-height:1; color:var(--blue); }.score-orb span { color:var(--muted); font-weight:800; }.review-list { display:grid; gap:10px; margin:30px 0; text-align:left; }.review-item { display:flex; justify-content:space-between; gap:15px; padding:14px; border-radius:14px; background:#f8faff; font-weight:800; }.review-item.correct { border-left:5px solid var(--correct); }.review-item.wrong { border-left:5px solid var(--wrong); }.review-item small { color:var(--muted); }.result-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+@media (max-width:600px) { .shell { width:min(100% - 20px,960px); padding-top:18px; }.intro-screen,.result-screen,.question-card { padding:26px 18px; border-radius:22px; }.test-facts { gap:7px; }.test-facts div { padding:12px 6px; }.test-header { align-items:flex-start; }.timer-wrap { padding:8px 10px; }.question-card h2 { font-size:21px; }.question-meta { align-items:flex-start; flex-direction:column; }.illustration { padding:8px; }.option { padding:12px; } }
+
+</style>
+</head>
+<body>
+  <main class="shell">
+    <a class="back-link" href="index.html">Ã¢ÂÂ Back to MathMind AI</a>
+
+    <section id="intro-screen" class="screen intro-screen">
+      <div class="hero-mark" aria-hidden="true">Ã°ÂÂ¦Â</div>
+      <p class="eyebrow">GRADE 3-4 PRACTICE</p>
+      <h1>Kangaroo Challenge</h1>
+      <p class="intro-copy">A 24-question mathematical reasoning test with original visual puzzles, number sense, logic, and spatial-thinking problems.</p>
+      <div class="test-facts" aria-label="Test details">
+        <div><strong>24</strong><span>questions</span></div>
+        <div><strong>60</strong><span>minutes</span></div>
+        <div><strong>5</strong><span>choices each</span></div>
+      </div>
+      <div class="scoring-note">
+        <span>Questions 1-8: <b>3 points</b></span>
+        <span>Questions 9-16: <b>4 points</b></span>
+        <span>Questions 17-24: <b>5 points</b></span>
+      </div>
+      <button id="start-test" class="primary-button">Start Kangaroo Test <span>Ã¢ÂÂ</span></button>
+      <p class="small-note">Every test selects 24 questions from a bank of 150 original pattern configurations.</p>
+    </section>
+
+    <section id="test-screen" class="screen hidden" aria-live="polite">
+      <header class="test-header">
+        <div>
+          <p class="eyebrow">KANGAROO CHALLENGE</p>
+          <p id="question-status" class="question-status">Question 1 of 24</p>
+        </div>
+        <div class="timer-wrap"><span aria-hidden="true">Ã¢ÂÂ±</span><strong id="timer">60:00</strong></div>
+      </header>
+      <div class="progress-track" aria-label="Test progress"><div id="progress-fill"></div></div>
+
+      <article class="question-card">
+        <div class="question-meta"><span id="point-value" class="point-badge">3 points</span><span id="pattern-label">Visual reasoning</span></div>
+        <h2 id="question-text">Loading questionÃ¢ÂÂ¦</h2>
+        <div id="illustration" class="illustration" aria-label="Question illustration"></div>
+        <div id="options" class="options" role="radiogroup" aria-label="Answer choices"></div>
+      </article>
+
+      <footer class="test-controls">
+        <button id="previous-button" class="text-button" type="button">Ã¢ÂÂ Previous</button>
+        <button id="next-button" class="primary-button" type="button">Next question Ã¢ÂÂ</button>
+      </footer>
+    </section>
+
+    <section id="result-screen" class="screen hidden">
+      <div class="hero-mark" aria-hidden="true">Ã°ÂÂÂ</div>
+      <p class="eyebrow">TEST COMPLETE</p>
+      <h1>Your Kangaroo Challenge result</h1>
+      <div class="score-orb"><strong id="score-value">0</strong><span>points</span></div>
+      <p id="result-summary" class="intro-copy"></p>
+      <div id="review-list" class="review-list"></div>
+      <div class="result-actions">
+        <button id="try-again" class="primary-button">Try another test</button>
+        <a class="secondary-button" href="index.html">Return to MathMind AI</a>
+      </div>
+    </section>
+  </main>
+  <script>
+"use strict";
+
+/*
+  Original Grade 3-4 Kangaroo-style practice bank.
+  15 reasoning families ÃÂ 10 configured variants = 150 patterns.
+  All artwork below is original SVG generated in the browser.
+*/
+const KANGAROO_PATTERN_COUNT = 150;
+const TOTAL_QUESTIONS = 24;
+const LETTERS = ["A", "B", "C", "D", "E"];
+const $ = (id) => document.getElementById(id);
+const shuffle = (items) => {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+const range = (count) => Array.from({ length: count }, (_, i) => i);
+const pointsFor = (index) => index < 8 ? 3 : index < 16 ? 4 : 5;
+const uniqueOptions = (answer, candidates) => shuffle([...new Set([String(answer), ...candidates.map(String)])]).slice(0, 5);
+const numberOptions = (answer, step = 1) => uniqueOptions(answer, [-2, -1, 1, 2, 3, -3].map((n) => Math.max(0, answer + n * step)));
+const colour = ["#5B8DEF", "#FF9F68", "#8D6CE8", "#37B98C", "#E5669B", "#F1BE4C"];
+
+const svg = (content, width = 520, height = 190) => `<svg viewBox="0 0 ${width} ${height}" role="img" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
+const text = (x, y, value, size = 16, fill = "#263550") => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Nunito, sans-serif" font-size="${size}" font-weight="800" fill="${fill}">${value}</text>`;
+const circle = (x, y, r, fill = "#5B8DEF") => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
+
+function drawCounter(data) {
+  let content = `<rect x="10" y="10" width="500" height="170" rx="22" fill="#f5f8ff"/>`;
+  for (let i = 0; i < data.count; i++) {
+    const x = 80 + (i % 8) * 52;
+    const y = 58 + Math.floor(i / 8) * 54;
+    content += data.shape === "star"
+      ? `<polygon points="${x},${y-20} ${x+6},${y-6} ${x+22},${y-6} ${x+9},${y+4} ${x+14},${y+20} ${x},${y+11} ${x-14},${y+20} ${x-9},${y+4} ${x-22},${y-6} ${x-6},${y-6}" fill="${data.colour}"/>`
+      : circle(x, y, 17, data.colour);
+  }
+  content += text(260, 160, data.caption, 18);
+  return svg(content);
+}
+
+function drawBalance(data) {
+  const { circles, stars, total } = data;
+  let left = "";
+  range(circles).forEach((i) => { left += circle(132 + i * 38, 89, 14, "#5B8DEF"); });
+  range(stars).forEach((i) => { const x = 132 + (circles + i) * 38; left += `<polygon points="${x},68 ${x+6},83 ${x+22},83 ${x+9},94 ${x+14},110 ${x},101 ${x-14},110 ${x-9},94 ${x-22},83 ${x-6},83" fill="#FF9F68"/>`; });
+  return svg(`<line x1="80" y1="116" x2="275" y2="116" stroke="#334155" stroke-width="6" stroke-linecap="round"/><path d="M177 116 L195 151 L159 151 Z" fill="#64748b"/><line x1="280" y1="116" x2="438" y2="116" stroke="#334155" stroke-width="6" stroke-linecap="round"/><rect x="335" y="78" width="78" height="55" rx="10" fill="#eaf0ff" stroke="#5B8DEF" stroke-width="3"/>${left}${text(374,113,total,25,"#2E5FEA")}${text(175,42,"Left side",14,"#64748b")}${text(374,42,"Total weight",14,"#64748b")}`);
+}
+
+function drawNumberLine(data) {
+  const { start, step, missing, count } = data;
+  let content = `<line x1="55" y1="100" x2="470" y2="100" stroke="#405271" stroke-width="4"/>`;
+  range(count).forEach((i) => {
+    const x = 65 + i * (395 / (count - 1)); const value = start + i * step;
+    content += `<line x1="${x}" y1="84" x2="${x}" y2="116" stroke="#405271" stroke-width="3"/>`;
+    content += text(x, 145, i === missing ? "?" : value, 19, i === missing ? "#E05A68" : "#263550");
+  });
+  return svg(content);
+}
+
+function drawGrid(data) {
+  const { width, height, x, y } = data; let lines = "";
+  for (let i = 0; i <= width; i++) lines += `<line x1="${110 + i * 38}" y1="20" x2="${110 + i * 38}" y2="${20 + height * 38}" stroke="#b9c8eb"/>`;
+  for (let i = 0; i <= height; i++) lines += `<line x1="110" y1="${20 + i * 38}" x2="${110 + width * 38}" y2="${20 + i * 38}" stroke="#b9c8eb"/>`;
+  const px = 110 + x * 38, py = 20 + (height - y) * 38;
+  return svg(`${lines}${circle(px,py,12,"#E5669B")}${text(px,py+5,"S",12,"white")}${text(260,178,"Start at S",15,"#64748b")}`, 520, 200);
+}
+
+function drawRectangle(data) {
+  const { width, height, unit } = data;
+  const w = Math.min(280, width * 32), h = Math.min(135, height * 32);
+  return svg(`<rect x="${260-w/2}" y="${95-h/2}" width="${w}" height="${h}" rx="8" fill="#dce8ff" stroke="#5B8DEF" stroke-width="4"/>${text(260,40,`${width} ${unit}`,18,"#2E5FEA")}${text(260,165,`${height} ${unit}`,18,"#2E5FEA")}`);
+}
+
+function drawSequence(data) {
+  const shapes = data.items.map((item, i) => {
+    const x = 60 + i * 75;
+    if (item === "?") return `${text(x,105,"?",34,"#E05A68")}`;
+    if (item === "circle") return circle(x,95,20,"#5B8DEF");
+    if (item === "square") return `<rect x="${x-19}" y="76" width="38" height="38" rx="5" fill="#FF9F68"/>`;
+    return `<polygon points="${x},70 ${x+23},113 ${x-23},113" fill="#37B98C"/>`;
+  }).join("");
+  return svg(`<rect x="18" y="42" width="484" height="108" rx="18" fill="#f5f8ff"/>${shapes}`);
+}
+
+function drawClock(data) {
+  const { hour, minute } = data; const cx = 260, cy = 95; const hourAngle = ((hour % 12) + minute / 60) * 30 - 90; const minuteAngle = minute * 6 - 90;
+  const end = (angle, length) => [cx + Math.cos(angle * Math.PI / 180) * length, cy + Math.sin(angle * Math.PI / 180) * length];
+  const [hx, hy] = end(hourAngle, 42), [mx, my] = end(minuteAngle, 62);
+  let ticks = ""; range(12).forEach((i) => { const a = (i * 30 - 90) * Math.PI / 180; ticks += text(cx + Math.cos(a)*78, cy + Math.sin(a)*78 + 5, i === 0 ? 12 : i, 13); });
+  return svg(`<circle cx="${cx}" cy="${cy}" r="84" fill="#fff" stroke="#5B8DEF" stroke-width="4"/>${ticks}<line x1="${cx}" y1="${cy}" x2="${hx}" y2="${hy}" stroke="#263550" stroke-width="7" stroke-linecap="round"/><line x1="${cx}" y1="${cy}" x2="${mx}" y2="${my}" stroke="#E5669B" stroke-width="4" stroke-linecap="round"/>${circle(cx,cy,6,"#263550")}`);
+}
+
+function drawPizza(data) {
+  const { slices, coloured } = data; const cx = 260, cy = 95, r = 76; let pieces = "";
+  range(slices).forEach((i) => { const a1 = -Math.PI/2 + i * 2*Math.PI/slices, a2 = a1 + 2*Math.PI/slices; const p1=[cx+r*Math.cos(a1),cy+r*Math.sin(a1)],p2=[cx+r*Math.cos(a2),cy+r*Math.sin(a2)]; pieces += `<path d="M ${cx} ${cy} L ${p1[0]} ${p1[1]} A ${r} ${r} 0 0 1 ${p2[0]} ${p2[1]} Z" fill="${i < coloured ? '#FFB15E' : '#fff4db'}" stroke="#9a6531" stroke-width="2"/>`; });
+  return svg(pieces);
+}
+
+function drawMagic(data) {
+  const { values, missing } = data; let boxes = "";
+  range(9).forEach((i) => { const x = 170 + (i % 3) * 60, y = 35 + Math.floor(i / 3)*50; boxes += `<rect x="${x}" y="${y}" width="58" height="48" fill="#fff" stroke="#7f9be1" stroke-width="2"/>${text(x+29,y+31,i === missing ? "?" : values[i],21,i === missing ? "#E05A68" : "#263550")}`; });
+  return svg(boxes);
+}
+
+function drawDie(data) {
+  const dots = { 1:[[0,0]], 2:[[-1,-1],[1,1]], 3:[[-1,-1],[0,0],[1,1]], 4:[[-1,-1],[1,-1],[-1,1],[1,1]], 5:[[-1,-1],[1,-1],[0,0],[-1,1],[1,1]], 6:[[-1,-1],[-1,0],[-1,1],[1,-1],[1,0],[1,1]] }; let faces="";
+  data.faces.forEach((value, index) => { const x=90+index*130,y=38; faces += `<rect x="${x}" y="${y}" width="100" height="100" rx="15" fill="#fff" stroke="#5775ca" stroke-width="3"/>`; dots[value].forEach(([dx,dy])=>faces+=circle(x+50+dx*24,y+50+dy*24,7,"#263550")); });
+  return svg(faces);
+}
+
+function drawRibbon(data) { let loops = ""; range(data.loops).forEach((i) => { const x=90+i*84; loops += `<ellipse cx="${x}" cy="94" rx="35" ry="48" fill="none" stroke="${colour[i%colour.length]}" stroke-width="11"/>`; }); return svg(`${loops}${text(260,174,"How many loops are there?",16,"#64748b")}`); }
+function drawCoins(data) { let coins=""; range(data.coins).forEach((i)=>{ const x=85+(i%7)*58,y=60+Math.floor(i/7)*62; coins+=`<circle cx="${x}" cy="${y}" r="22" fill="#f1be4c" stroke="#be8620" stroke-width="3"/>${text(x,y+6,data.value,13,"#724900")}`; }); return svg(coins); }
+function drawSeats(data) { let seats=""; range(data.total).forEach((i)=>{ const x=76+(i%8)*52,y=48+Math.floor(i/8)*57; const occupied=i<data.occupied; seats+=`<rect x="${x}" y="${y}" width="36" height="34" rx="6" fill="${occupied?'#5B8DEF':'#edf2ff'}" stroke="#6d87ce"/><path d="M${x+8} ${y+28} V${y+17} Q${x+18} ${y+7} ${x+28} ${y+17} V${y+28}" fill="${occupied?'#dce8ff':'#fff'}"/>`; }); return svg(seats); }
+function drawMap(data) { const { start, moves }=data; let x=115,y=140,path=`M ${x} ${y}`; moves.forEach(([dx,dy])=>{x+=dx*36;y-=dy*36;path+=` L ${x} ${y}`;}); let grid=""; range(9).forEach((i)=>{grid+=`<line x1="${78+i*36}" y1="32" x2="${78+i*36}" y2="176" stroke="#c6d3f4"/><line x1="78" y1="${32+i*18}" x2="366" y2="${32+i*18}" stroke="#c6d3f4"/>`;}); return svg(`${grid}<path d="${path}" fill="none" stroke="#E5669B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>${circle(115,140,10,"#37B98C")}${text(115,145,start,12,"white")}${circle(x,y,10,"#E5669B")}${text(x,y+5,"?",12,"white")}`); }
+function drawLock(data) { return svg(`<rect x="175" y="62" width="170" height="88" rx="16" fill="#e8efff" stroke="#5273cb" stroke-width="4"/><path d="M215 62 V43 A45 45 0 0 1 305 43 V62" fill="none" stroke="#5273cb" stroke-width="13" stroke-linecap="round"/>${data.digits.map((d,i)=>`<rect x="${198+i*48}" y="84" width="38" height="42" rx="7" fill="#fff"/>${text(217+i*48,112,d,20,d==='?'?'#E05A68':'#263550')}`).join("")}`); }
+
+const renderIllustration = (diagram) => ({ counter:drawCounter, balance:drawBalance, numberline:drawNumberLine, grid:drawGrid, rectangle:drawRectangle, sequence:drawSequence, clock:drawClock, pizza:drawPizza, magic:drawMagic, die:drawDie, ribbon:drawRibbon, coins:drawCoins, seats:drawSeats, map:drawMap, lock:drawLock }[diagram.type](diagram));
+
+function makeCounter(seed) { const count=6+(seed%10), shape=seed%2?"circle":"star"; return { category:"Visual counting", prompt:`How many ${shape === 'star' ? 'stars' : 'counters'} are shown?`, answer:count, options:numberOptions(count), diagram:{type:"counter",count,shape,colour:colour[seed%colour.length],caption:"Count carefully"} }; }
+function makeBalance(seed) { const circleWeight=2+(seed%6), starWeight=circleWeight+1+(seed%3), circles=2+(seed%2), stars=1; const total=circles*circleWeight+starWeight; return {category:"Balance reasoning",prompt:`The balance is level. What is the weight of one star?`,answer:starWeight,options:numberOptions(starWeight),diagram:{type:"balance",circles,stars,total}}; }
+function makeNumberLine(seed) { const step=1+(seed%4), start=seed%3, count=6+(seed%2), missing=2+(seed%3); const answer=start+missing*step; return {category:"Number patterns",prompt:"What number belongs at the question mark?",answer,options:numberOptions(answer,step),diagram:{type:"numberline",start,step,missing,count}}; }
+function makeGrid(seed) { const right=1+(seed%4), up=1+((seed+1)%3), startX=1+(seed%2), startY=1+(seed%3); const answer=`(${startX+right}, ${startY+up})`; return {category:"Grid movement",prompt:`Start at S. Move ${right} squares right and ${up} squares up. At which coordinate do you arrive?`,answer,options:uniqueOptions(answer,[`(${startX+right}, ${startY-up})`,`(${startX-right}, ${startY+up})`,`(${startX+up}, ${startY+right})`,`(${startX}, ${startY})`,`(${startX+right+1}, ${startY+up+1})`]),diagram:{type:"grid",width:8,height:4,x:startX,y:startY}}; }
+function makePerimeter(seed) { const width=3+(seed%6),height=2+((seed+2)%5),answer=2*(width+height); return {category:"Shape measurement",prompt:`The rectangle is ${width} units wide and ${height} units high. What is its perimeter?`,answer,options:numberOptions(answer,2),diagram:{type:"rectangle",width,height,unit:"units"}}; }
+function makeSequence(seed) { const types=["circle","square","triangle"]; const offset=seed%3; const items=range(6).map((i)=>types[(i+offset)%3]); const missing=3+(seed%2); const answer=items[missing]; items[missing]="?"; return {category:"Visual patterns",prompt:"Which shape should replace the question mark?",answer,options:shuffle(types.map((value)=>value[0].toUpperCase()+value.slice(1)).concat(["Star","Hexagon"])).slice(0,5),diagram:{type:"sequence",items},normalise:(value)=>value.toLowerCase()}; }
+function makeClock(seed) { const hour=1+(seed%11), minute=[0,15,30,45][seed%4]; const answer=`${hour}:${String(minute).padStart(2,"0")}`; const alternatives=[`${hour%12+1}:${String(minute).padStart(2,"0")}`,`${hour}:${String((minute+15)%60).padStart(2,"0")}`,`${hour === 1 ? 12 : hour-1}:${String(minute).padStart(2,"0")}`,`${hour}:${String((minute+30)%60).padStart(2,"0")}`]; return {category:"Time",prompt:"What time does this clock show?",answer,options:uniqueOptions(answer,alternatives),diagram:{type:"clock",hour,minute}}; }
+function makeFraction(seed) { const slices=[4,6,8,10][seed%4],coloured=1+(seed%(slices-1)),answer=`${coloured}/${slices}`; return {category:"Fractions",prompt:"What fraction of the pizza is shaded?",answer,options:uniqueOptions(answer,[`${slices-coloured}/${slices}`,`${coloured+1}/${slices}`,`${coloured}/${slices+2}`,`${slices}/${coloured}`,"1/2","1/1"]),diagram:{type:"pizza",slices,coloured}}; }
+function makeMagic(seed) { const base=1+(seed%3), values=[base+7,base,base+5,base+2,base+4,base+6,base+3,base+8,base+1]; const missing=(seed*2)%9,answer=values[missing]; return {category:"Number wall",prompt:"The numbers 1 to 9 are arranged once each. What number belongs in the missing square?",answer,options:numberOptions(answer),diagram:{type:"magic",values,missing}}; }
+function makeDie(seed) { const visible=[1+(seed%6),1+((seed+2)%6),1+((seed+4)%6)]; const answer=visible.reduce((a,b)=>a+b,0); return {category:"Dice",prompt:"Add the dots on the three visible faces of the dice. What total do you get?",answer,options:numberOptions(answer),diagram:{type:"die",faces:visible}}; }
+function makeRibbon(seed) { const loops=2+(seed%5); return {category:"Spatial counting",prompt:"How many complete loops are in the ribbon?",answer:loops,options:numberOptions(loops),diagram:{type:"ribbon",loops}}; }
+function makeCoins(seed) { const value=[2,5,10][seed%3],coins=3+(seed%9),answer=value*coins; return {category:"Money",prompt:`Each coin is worth ${value} points. What is the total value of all the coins?`,answer,options:numberOptions(answer,value),diagram:{type:"coins",value,coins}}; }
+function makeSeats(seed) { const total=12+(seed%3)*4, occupied=4+(seed%8),answer=total-occupied; return {category:"Counting",prompt:`There are ${total} seats. How many seats are empty?`,answer,options:numberOptions(answer),diagram:{type:"seats",total,occupied}}; }
+function makeMap(seed) { const moves=[[1,0],[0,1],[1,1],[-1,1]].slice(0,2+(seed%3)); const endX=1+moves.reduce((total,move)=>total+move[0],0),endY=moves.reduce((total,move)=>total+move[1],0); const answer=`(${endX}, ${endY})`; return {category:"Map routes",prompt:"Follow the pink route from S. Which coordinate is the finish?",answer,options:uniqueOptions(answer,[`(${endX+1}, ${endY})`,`(${endX}, ${endY+1})`,`(${endX-1}, ${endY})`,`(${endY}, ${endX})`]),diagram:{type:"map",start:"S",moves}}; }
+function makeLock(seed) { const first=1+(seed%7),second=first+1,third=second+1,answer=third; return {category:"Number code",prompt:"The lock code increases by 1 each time. What digit replaces the question mark?",answer,options:numberOptions(answer),diagram:{type:"lock",digits:[first,second,"?"]}}; }
+
+const factories=[makeCounter,makeBalance,makeNumberLine,makeGrid,makePerimeter,makeSequence,makeClock,makeFraction,makeMagic,makeDie,makeRibbon,makeCoins,makeSeats,makeMap,makeLock];
+const patternBank = factories.flatMap((factory,familyIndex)=>range(10).map((variant)=>({ id:`K${String(familyIndex+1).padStart(2,"0")}-${variant+1}`, create:()=>factory(variant + familyIndex*7) })));
+
+let state = { questions:[], answers:[], index:0, startedAt:0, timerId:null };
+
+function createTest() {
+  const selected = shuffle(patternBank).slice(0, TOTAL_QUESTIONS);
+  state.questions = selected.map((pattern,index)=>({ ...pattern.create(), id:pattern.id, points:pointsFor(index) }));
+  state.answers = Array(TOTAL_QUESTIONS).fill(null); state.index=0; state.startedAt=Date.now();
+}
+
+function renderQuestion() {
+  const question=state.questions[state.index];
+  $("question-status").textContent=`Question ${state.index+1} of ${TOTAL_QUESTIONS}`;
+  $("point-value").textContent=`${question.points} points`;
+  $("pattern-label").textContent=question.category;
+  $("question-text").textContent=question.prompt;
+  $("illustration").innerHTML=renderIllustration(question.diagram);
+  $("progress-fill").style.width=`${((state.index+1)/TOTAL_QUESTIONS)*100}%`;
+  $("previous-button").disabled=state.index===0;
+  $("next-button").textContent=state.index===TOTAL_QUESTIONS-1 ? "Finish test Ã¢ÂÂ" : "Next question Ã¢ÂÂ";
+  const answers=$("options"); answers.replaceChildren();
+  question.options.forEach((option,index)=>{
+    const button=document.createElement("button"); button.type="button"; button.className="option"; button.setAttribute("role","radio"); button.setAttribute("aria-checked", String(state.answers[state.index]===String(option)));
+    if(state.answers[state.index]===String(option)) button.classList.add("selected");
+    button.innerHTML=`<span class="option-letter">${LETTERS[index]}</span><span>${option}</span>`;
+    button.addEventListener("click",()=>{ state.answers[state.index]=String(option); renderQuestion(); }); answers.appendChild(button);
+  });
+}
+
+function startTimer() { clearInterval(state.timerId); state.timerId=setInterval(()=>{ const left=Math.max(0,3600-Math.floor((Date.now()-state.startedAt)/1000)); const minutes=String(Math.floor(left/60)).padStart(2,"0"),seconds=String(left%60).padStart(2,"0"); $("timer").textContent=`${minutes}:${seconds}`; if(left===0) finishTest(); },1000); $("timer").textContent="60:00"; }
+function isCorrect(question,answer) { const normalise=question.normalise || ((value)=>String(value).trim()); return normalise(answer)===normalise(question.answer); }
+function finishTest() {
+  clearInterval(state.timerId); $("test-screen").classList.add("hidden"); $("result-screen").classList.remove("hidden");
+  let correct=0, earned=24; const review=$("review-list"); review.replaceChildren();
+  state.questions.forEach((question,index)=>{ const correctAnswer=isCorrect(question,state.answers[index]); if(correctAnswer){correct++; earned+=question.points;} else if(state.answers[index]!==null){earned-=question.points/4;} const item=document.createElement("div"); item.className=`review-item ${correctAnswer?'correct':'wrong'}`; item.innerHTML=`<span>Question ${index+1}: ${correctAnswer?'Correct':'Answer: '+question.answer}</span><small>${correctAnswer?`+${question.points}`:state.answers[index]===null?'Not answered':'Ã¢ÂÂ'+(question.points/4).toFixed(2)}</small>`; review.appendChild(item); });
+  $("score-value").textContent=earned % 1 ? earned.toFixed(2) : earned; $("result-summary").textContent=`You answered ${correct} of ${TOTAL_QUESTIONS} questions correctly. Your score starts at 24 points, just like the contest format.`;
+}
+function startTest() { createTest(); $("intro-screen").classList.add("hidden"); $("result-screen").classList.add("hidden"); $("test-screen").classList.remove("hidden"); renderQuestion(); startTimer(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+$("start-test").addEventListener("click",startTest);
+$("try-again").addEventListener("click",startTest);
+$("previous-button").addEventListener("click",()=>{ if(state.index>0){state.index--;renderQuestion();} });
+$("next-button").addEventListener("click",()=>{ if(state.index===TOTAL_QUESTIONS-1) finishTest(); else {state.index++;renderQuestion();} });
+
+</script>
+</body>
+</html>
+
+
