@@ -1,1725 +1,727 @@
 // ==========================================
-// ALGEBRA QUESTION BANK - PART 1
-// Patterns 1-10 (Easy)
-// MathMind AI
+// ICSE GRADE 9 ALGEBRA QUESTION BANK
+// Original questions: expansions, factorisation,
+// simultaneous equations, surds, indices, identities
 // ==========================================
 
 function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function shuffle(arr) {
-    return [...arr].sort(() => Math.random() - 0.5);
-}
-
-function makeMCQ(correct) {
-    let options = [correct];
-
-    while (options.length < 4) {
-        let wrong = correct + rand(-10, 10);
-        if (wrong !== correct && !options.includes(wrong))
-            options.push(wrong);
+  }
+  
+  function shuffle(items) {
+    const copy = [...items];
+  
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = rand(0, i);
+      [copy[i], copy[j]] = [copy[j], copy[i]];
     }
-
+  
+    return copy;
+  }
+  
+  function makeMCQ(answer, distractors) {
+    const options = [answer, ...distractors].map(String);
+  
+    if (options.length !== 4 || new Set(options).size !== 4) {
+      throw new Error(`Invalid answer choices for: ${answer}`);
+    }
+  
     return shuffle(options);
-}
-
-const algebraPatterns = [
-
-/*--------------------------------------------------
-PATTERN 1
-Evaluate x+a
----------------------------------------------------*/
-() => {
-    const x = rand(2,20);
-    const a = rand(3,15);
-
+  }
+  
+  function numberMCQ(answer, deltas = [-3, -1, 1]) {
+    return makeMCQ(answer, deltas.map(delta => answer + delta));
+  }
+  
+  function signed(number) {
+    return number >= 0 ? `+ ${number}` : `− ${Math.abs(number)}`;
+  }
+  
+  function algebraQuestion(topic, question, answer, options, explanation, type = "direct") {
     return {
-        difficulty:"easy",
-        type:"direct",
-        question:`If x = ${x}, find x + ${a}.`,
-        answer:x+a,
-        options:makeMCQ(x+a)
+      difficulty: "hard",
+      type,
+      topic,
+      question,
+      answer: String(answer),
+      options,
+      explanation
     };
-},
-
-/*--------------------------------------------------
-PATTERN 2
-Evaluate ax
----------------------------------------------------*/
-() => {
-    const x = rand(2,12);
-    const a = rand(2,9);
-
-    return {
-        difficulty:"easy",
-        type:"direct",
-        question:`If x = ${x}, find ${a}x.`,
-        answer:a*x,
-        options:makeMCQ(a*x)
-    };
-},
-
-/*--------------------------------------------------
-PATTERN 3
-Evaluate ax+b
----------------------------------------------------*/
-() => {
-    const x = rand(2,15);
-    const a = rand(2,7);
-    const b = rand(2,20);
-
-    return {
-        difficulty:"easy",
-        type:"direct",
-        question:`If x = ${x}, find ${a}x + ${b}.`,
-        answer:a*x+b,
-        options:makeMCQ(a*x+b)
-    };
-},
-
-/*--------------------------------------------------
-PATTERN 4
-Two Variables
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,10);
-    const b=rand(2,10);
-
-    return{
-
-        difficulty:"easy",
-
-        type:"direct",
-
-        question:`If a=${a} and b=${b}, find a+b.`,
-
-        answer:a+b,
-
-        options:makeMCQ(a+b)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 5
-Two Variables Multiplication
----------------------------------------------------*/
-()=>{
-
-const a=rand(2,8);
-
-const b=rand(2,8);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`If a=${a} and b=${b}, find ab.`,
-
-answer:a*b,
-
-options:makeMCQ(a*b)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 6
-Missing Number
----------------------------------------------------*/
-()=>{
-
-const x=rand(5,20);
-
-const y=rand(5,20);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`Solve: □ + ${x} = ${x+y}`,
-
-answer:y,
-
-options:makeMCQ(y)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 7
-Simple Equation
----------------------------------------------------*/
-()=>{
-
-const x=rand(5,20);
-
-const b=rand(2,15);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`Solve x + ${b} = ${x+b}`,
-
-answer:x,
-
-options:makeMCQ(x)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 8
-Simple Equation
----------------------------------------------------*/
-()=>{
-
-const x=rand(2,15);
-
-const a=rand(2,8);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`Solve ${a}x = ${a*x}`,
-
-answer:x,
-
-options:makeMCQ(x)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 9
-Simple Equation
----------------------------------------------------*/
-()=>{
-
-const x=rand(3,15);
-
-const a=rand(2,7);
-
-const b=rand(2,20);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`Solve ${a}x + ${b} = ${a*x+b}`,
-
-answer:x,
-
-options:makeMCQ(x)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 10
-Identify Coefficient
----------------------------------------------------*/
-()=>{
-
-const a=rand(2,15);
-
-const b=rand(2,20);
-
-return{
-
-difficulty:"easy",
-
-type:"direct",
-
-question:`What is the coefficient of x in ${a}x + ${b}?`,
-
-answer:a,
-
-options:makeMCQ(a)
-
-}
-
-},
-
-/*--------------------------------------------------
-PATTERN 11
-Identify Constant
----------------------------------------------------*/
-() => {
-
-    const a = rand(2,15);
-    const b = rand(5,30);
-
-    return{
-        difficulty:"easy",
-        type:"direct",
-        question:`What is the constant term in ${a}x + ${b}?`,
-        answer:b,
-        options:makeMCQ(b)
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 12
-Identify Variable
----------------------------------------------------*/
-() => {
-
-    const vars=["x","y","a","b","m","n","p"];
-    const v=vars[rand(0,vars.length-1)];
-    const a=rand(2,12);
-    const b=rand(2,20);
-
-    return{
-
-        difficulty:"easy",
-
-        type:"direct",
-
-        question:`Identify the variable in ${a}${v} + ${b}.`,
-
-        answer:v,
-
-        options:shuffle([v,"x","5","Coefficient"])
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 13
-Combine Like Terms
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,10);
-    const b=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Simplify ${a}x + ${b}x.`,
-
-        answer:`${a+b}x`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 14
-Combine Like Terms (Subtraction)
----------------------------------------------------*/
-() => {
-
-    const a=rand(8,18);
-    const b=rand(2,7);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Simplify ${a}x - ${b}x.`,
-
-        answer:`${a-b}x`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 15
-Like or Unlike
----------------------------------------------------*/
-() => {
-
-    const terms=[
-        ["3x","7x","Like"],
-        ["5a","2a","Like"],
-        ["4x","4y","Unlike"],
-        ["2m","5n","Unlike"],
-        ["8p","3p","Like"],
-        ["6x","9z","Unlike"]
-    ];
-
-    const t=terms[rand(0,terms.length-1)];
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Are ${t[0]} and ${t[1]} like or unlike terms?`,
-
-        answer:t[2],
-
-        options:shuffle(["Like","Unlike","Cannot say","Both"])
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 16
-Collect Like Terms
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,8);
-    const b=rand(2,8);
-    const c=rand(2,8);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Simplify ${a}x + ${b} + ${c}x.` ,
-
-        answer:`${a+c}x + ${b}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 17
-Expand Brackets
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,6);
-    const b=rand(2,12);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Expand ${a}(x + ${b}).`,
-
-        answer:`${a}x + ${a*b}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 18
-Expand Brackets (Negative)
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,6);
-    const b=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Expand ${a}(x - ${b}).`,
-
-        answer:`${a}x - ${a*b}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 19
-Two-Step Equation
----------------------------------------------------*/
-() => {
-
-    const x=rand(3,15);
-    const a=rand(2,8);
-    const b=rand(2,20);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Solve ${a}x + ${b} = ${a*x+b}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 20
-Equation with Subtraction
----------------------------------------------------*/
-() => {
-
-    const x=rand(5,15);
-    const a=rand(2,8);
-    const b=rand(2,15);
-
-    return{
-
-        difficulty:"medium",
-
-        type:"direct",
-
-        question:`Solve ${a}x - ${b} = ${a*x-b}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-/*--------------------------------------------------
-PATTERN 21
-Simplify Three Like Terms
----------------------------------------------------*/
-() => {
-
-    const a = rand(2,10);
-    const b = rand(2,10);
-    const c = rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Simplify ${a}x + ${b}x + ${c}x.`,
-
-        answer:`${a+b+c}x`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 22
-Collect Like Terms
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,8);
-    const b=rand(2,8);
-    const c=rand(2,8);
-    const d=rand(2,8);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Simplify ${a}x + ${b} + ${c}x + ${d}.`,
-
-        answer:`${a+c}x + ${b+d}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 23
-Expand Brackets
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,8);
-    const b=rand(2,12);
-    const c=rand(2,12);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Expand ${a}(x + ${b}) + ${c}.`,
-
-        answer:`${a}x + ${a*b+c}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 24
-Expand Two Brackets
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,5);
-    const b=rand(2,8);
-    const c=rand(2,5);
-    const d=rand(2,8);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Expand ${a}(x+${b}) + ${c}(x+${d}).`,
-
-        answer:`${a+c}x + ${a*b+c*d}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 25
-Substitute Two Variables
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,10);
-    const y=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`If x=${x} and y=${y}, find 2x + 3y.`,
-
-        answer:2*x+3*y,
-
-        options:makeMCQ(2*x+3*y)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 26
-Equation with Division
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,12);
-    const a=rand(2,6);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Solve x ÷ ${a} = ${x/a}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 27
-Unknown Coefficient
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,9);
-    const x=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`Find the missing number: □x = ${a*x}, where x=${x}.`,
-
-        answer:a,
-
-        options:makeMCQ(a)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 28
-Compare Expressions
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`If x=${x}, which is greater: 3x+5 or 2x+9?`,
-
-        answer:(3*x+5>2*x+9)?"3x+5":"2x+9",
-
-        options:["3x+5","2x+9","Equal","Cannot say"]
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 29
-Evaluate Expression
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`If x=${x}, evaluate x² + 2x.`,
-
-        answer:x*x+2*x,
-
-        options:makeMCQ(x*x+2*x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 30
-Simple Identity
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,10);
-
-    return{
-
-        difficulty:"medium",
-        type:"direct",
-
-        question:`If x=${x}, evaluate (x+1)(x-1).`,
-
-        answer:(x+1)*(x-1),
-
-        options:makeMCQ((x+1)*(x-1))
-
-    }
-
-},
-/*--------------------------------------------------
-PATTERN 31
-Variables on Both Sides
----------------------------------------------------*/
-() => {
-
-    const x = rand(3,12);
-    const a = rand(2,6);
-    const b = rand(2,6);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Solve ${a}x + ${b} = ${a+1}x.`,
-
-        answer:b,
-
-        options:makeMCQ(b)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 32
-Age Problem
----------------------------------------------------*/
-() => {
-
-    const age = rand(8,20);
-    const plus = rand(3,8);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Rahul is ${plus} years older than Aman. Aman is ${age} years old. How old is Rahul?`,
-
-        answer:age+plus,
-
-        options:makeMCQ(age+plus)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 33
-Consecutive Numbers
----------------------------------------------------*/
-() => {
-
-    const x = rand(10,40);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`The first of two consecutive integers is ${x}. Find the next integer.`,
-
-        answer:x+1,
-
-        options:makeMCQ(x+1)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 34
-Rectangle Perimeter
----------------------------------------------------*/
-() => {
-
-    const x = rand(4,12);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`A rectangle has length ${x+4} cm and width ${x} cm. Find its perimeter.`,
-
-        answer:2*((x+4)+x),
-
-        options:makeMCQ(2*((x+4)+x))
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 35
-Rectangle Area
----------------------------------------------------*/
-() => {
-
-    const x = rand(3,10);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Length = ${x+5} cm and width = ${x} cm. Find the area.`,
-
-        answer:(x+5)*x,
-
-        options:makeMCQ((x+5)*x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 36
-Difference Puzzle
----------------------------------------------------*/
-() => {
-
-    const x = rand(15,40);
-    const d = rand(3,10);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`One number is ${d} more than another. The smaller number is ${x}. Find the larger number.`,
-
-        answer:x+d,
-
-        options:makeMCQ(x+d)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 37
-Multiply Then Add
----------------------------------------------------*/
-() => {
-
-    const x = rand(2,8);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Evaluate 5x + 8 when x = ${x}.`,
-
-        answer:5*x+8,
-
-        options:makeMCQ(5*x+8)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 38
-Subtract Expression
----------------------------------------------------*/
-() => {
-
-    const x = rand(5,15);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Evaluate 4x − 9 when x = ${x}.`,
-
-        answer:4*x-9,
-
-        options:makeMCQ(4*x-9)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 39
-Half of Expression
----------------------------------------------------*/
-() => {
-
-    const x = rand(4,16);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Find (2x + 6) ÷ 2 when x = ${x}.`,
-
-        answer:(2*x+6)/2,
-
-        options:makeMCQ((2*x+6)/2)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 40
-Equation Reasoning
----------------------------------------------------*/
-() => {
-
-    const x = rand(5,15);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Solve x + x = ${2*x}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-/*--------------------------------------------------
-PATTERN 41
-Solve 2-Step Equation
----------------------------------------------------*/
-() => {
-
-    const x = rand(3,15);
-    const a = rand(2,6);
-    const b = rand(5,20);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Solve ${a}x + ${b} = ${a*x+b}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 42
-Unknown Number
----------------------------------------------------*/
-() => {
-
-    const x=rand(20,60);
-    const a=rand(3,10);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`A number increased by ${a} equals ${x+a}. Find the number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 43
-Triple Number
----------------------------------------------------*/
-() => {
-
-    const x=rand(5,20);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Three times a number is ${3*x}. Find the number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 44
-Money Problem
----------------------------------------------------*/
-() => {
-
-    const x=rand(15,60);
-    const y=rand(5,20);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Emma has $${x}. She earns another $${y}. How much money does she have now?`,
-
-        answer:x+y,
-
-        options:makeMCQ(x+y)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 45
-Sharing Money
----------------------------------------------------*/
-() => {
-
-    const each=rand(8,25);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Four friends receive $${each} each. How much money do they receive altogether?`,
-
-        answer:each*4,
-
-        options:makeMCQ(each*4)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 46
-Consecutive Integers Sum
----------------------------------------------------*/
-() => {
-
-    const x=rand(10,40);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`Two consecutive integers are ${x} and ${x+1}. Find their sum.`,
-
-        answer:x+x+1,
-
-        options:makeMCQ(x+x+1)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 47
-Rectangle Formula
----------------------------------------------------*/
-() => {
-
-    const l=rand(10,25);
-    const w=rand(5,15);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`A rectangle has length ${l} cm and width ${w} cm. Find its perimeter.`,
-
-        answer:2*(l+w),
-
-        options:makeMCQ(2*(l+w))
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 48
-Square Formula
----------------------------------------------------*/
-() => {
-
-    const s=rand(4,18);
-
-    return{
-
-        difficulty:"hard",
-        type:"word",
-
-        question:`A square has side ${s} cm. Find its perimeter.`,
-
-        answer:4*s,
-
-        options:makeMCQ(4*s)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 49
-Expression Comparison
----------------------------------------------------*/
-() => {
-
-    const x=rand(3,12);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`If x=${x}, evaluate 4x−3.`,
-
-        answer:4*x-3,
-
-        options:makeMCQ(4*x-3)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 50
-Equation with Division
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,12);
-    const a=rand(2,6);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Solve x/${a} = ${x/a}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-/*--------------------------------------------------
-PATTERN 51
-Variables on Both Sides
----------------------------------------------------*/
-() => {
-
-    const x = rand(3,12);
-    const a = rand(2,6);
-    const b = rand(2,8);
-
-    return{
-        difficulty:"hard",
-        type:"direct",
-        question:`Solve ${a}x + ${b} = ${a+1}x + ${b-x}.`,
-        answer:x,
-        options:makeMCQ(x)
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 52
-Fraction Equation
----------------------------------------------------*/
-() => {
-
-    const x = rand(2,12);
-
-    return{
-
-        difficulty:"hard",
-        type:"direct",
-
-        question:`Solve x/2 = ${x/2}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 53
-Decimal Equation
----------------------------------------------------*/
-() => {
-
-    const x=rand(2,20);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"direct",
-
-        question:`Solve 0.5x = ${0.5*x}.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 54
-Consecutive Integers
----------------------------------------------------*/
-() => {
-
-    const x=rand(5,20);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`The sum of two consecutive integers is ${2*x+1}. Find the smaller integer.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 55
-Age Puzzle
----------------------------------------------------*/
-() => {
-
-    const age=rand(8,18);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`Five years from now, Riya will be ${age+5} years old. How old is she now?`,
-
-        answer:age,
-
-        options:makeMCQ(age)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 56
-Perimeter Equation
----------------------------------------------------*/
-() => {
-
-    const w=rand(5,12);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`The width of a rectangle is ${w} cm. The length is 4 cm more than the width. Find the perimeter.`,
-
-        answer:2*(w+(w+4)),
-
-        options:makeMCQ(2*(w+(w+4)))
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 57
-Area Equation
----------------------------------------------------*/
-() => {
-
-    const w=rand(4,10);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`The width of a rectangle is ${w} cm. The length is twice the width. Find the area.`,
-
-        answer:w*(2*w),
-
-        options:makeMCQ(w*(2*w))
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 58
-Pattern Recognition
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,6);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"direct",
-
-        question:`Complete the pattern: ${a}, ${2*a}, ${3*a}, ${4*a}, ?`,
-
-        answer:5*a,
-
-        options:makeMCQ(5*a)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 59
-Find Missing Coefficient
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,8);
-    const x=rand(3,12);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"direct",
-
-        question:`Find the missing coefficient: □x = ${a*x}, where x=${x}.`,
-
-        answer:a,
-
-        options:makeMCQ(a)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 60
-Expand Brackets
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,6);
-    const b=rand(2,8);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"direct",
-
-        question:`Expand ${a}(x+${b}).`,
-
-        answer:`${a}x + ${a*b}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 61
-Shopping Algebra
----------------------------------------------------*/
-() => {
-
-    const cost=rand(8,25);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`Each notebook costs $${cost}. What is the total cost of x notebooks?`,
-
-        answer:`${cost}x`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 62
-Taxi Fare
----------------------------------------------------*/
-() => {
-
-    const base=rand(3,8);
-    const km=rand(2,5);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`A taxi charges $${base} plus $${km} per kilometre. Write an expression for travelling x kilometres.`,
-
-        answer:`${km}x + ${base}`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 63
-Saving Money
----------------------------------------------------*/
-() => {
-
-    const save=rand(5,20);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`Emma saves $${save} every week. Write an expression for her savings after w weeks.`,
-
-        answer:`${save}w`
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 64
-Guess My Number
----------------------------------------------------*/
-() => {
-
-    const x=rand(10,30);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`I multiply my number by 4 and get ${4*x}. What is my number?`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 65
-Number Puzzle
----------------------------------------------------*/
-() => {
-
-    const x=rand(8,20);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`Twice a number plus 6 equals ${2*x+6}. Find the number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 66
-Table Pattern
----------------------------------------------------*/
-() => {
-
-    const a=rand(2,5);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"direct",
-
-        question:`Find the next value: ${a}, ${a+3}, ${a+6}, ${a+9}, ?`,
-
-        answer:a+12,
-
-        options:makeMCQ(a+12)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 67
-Bar Model Style
----------------------------------------------------*/
-() => {
-
-    const part=rand(8,20);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`Three equal parts together make ${part*3}. Find one part.`,
-
-        answer:part,
-
-        options:makeMCQ(part)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 68
-Logical Algebra
----------------------------------------------------*/
-() => {
-
-    const x=rand(5,15);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`A number plus itself equals ${2*x}. Find the number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 69
-Competition Style
----------------------------------------------------*/
-() => {
-
-    const x=rand(5,15);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`The sum of a number and the next number is ${2*x+1}. Find the smaller number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    }
-
-},
-
-/*--------------------------------------------------
-PATTERN 70
-Challenge Problem
----------------------------------------------------*/
-() => {
-
-    const x = rand(3,12);
-
-    return{
-
-        difficulty:"hard",
-
-        type:"word",
-
-        question:`A number is multiplied by 3 and then 7 is added. The result is ${3*x+7}. Find the number.`,
-
-        answer:x,
-
-        options:makeMCQ(x)
-
-    };
-
-}
-
-];
-
-// ==========================================
-// RANDOM ALGEBRA QUESTION
-// ==========================================
-
-function generateAlgebraQuestion(difficulty = null) {
-
-    let pool = algebraPatterns;
-
-    if (difficulty) {
-
-        pool = algebraPatterns.filter(
-            pattern => pattern().difficulty === difficulty
-        );
-
-        if (pool.length === 0) {
-            pool = algebraPatterns;
+  }
+  
+  function variantFractionEquation() {
+    return [
+      {
+        question: "(x + 12)/3 = (x + 6)/2",
+        answer: 6,
+        explain: "Cross-multiply: 2(x + 12) = 3(x + 6). Expanding gives 2x + 24 = 3x + 18, so x = 6."
+      },
+      {
+        question: "(x + 17)/3 = (x + 7)/2",
+        answer: 13,
+        explain: "Cross-multiply: 2(x + 17) = 3(x + 7). Therefore 2x + 34 = 3x + 21, so x = 13."
+      },
+      {
+        question: "(x + 16)/4 = (x + 4)/2",
+        answer: 8,
+        explain: "Cross-multiply: 2(x + 16) = 4(x + 4). Therefore 2x + 32 = 4x + 16, so x = 8."
+      }
+    ][rand(0, 2)];
+  }
+  
+  const algebraPatterns = [
+  
+    () => {
+      const a = rand(2, 9);
+      const answer = `x² + ${2 * a}x + ${a * a}`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (x + ${a})²`,
+        answer,
+        makeMCQ(answer, [
+          `x² + ${a}x + ${a * a}`,
+          `x² + ${2 * a}x + ${a}`,
+          `x² + ${a * a}`
+        ]),
+        `Use (a + b)² = a² + 2ab + b². Therefore, (x + ${a})² = ${answer}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 9);
+      const answer = `x² − ${2 * a}x + ${a * a}`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (x − ${a})²`,
+        answer,
+        makeMCQ(answer, [
+          `x² − ${a}x + ${a * a}`,
+          `x² + ${2 * a}x + ${a * a}`,
+          `x² − ${2 * a}x − ${a * a}`
+        ]),
+        "Use (a − b)² = a² − 2ab + b². The middle term is negative, but the last term is positive."
+      );
+    },
+  
+    () => {
+      const a = rand(2, 7);
+      const b = a + rand(1, 5);
+      const answer = `x² + ${a + b}x + ${a * b}`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (x + ${a})(x + ${b})`,
+        answer,
+        makeMCQ(answer, [
+          `x² + ${a + b}x + ${a + b}`,
+          `x² + ${a * b}x + ${a + b}`,
+          `x² + ${b - a}x + ${a * b}`
+        ]),
+        `Multiply every term: x·x + ${b}x + ${a}x + ${a * b} = ${answer}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 8);
+      const answer = `4x² + ${4 * a}x + ${a * a}`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (2x + ${a})²`,
+        answer,
+        makeMCQ(answer, [
+          `4x² + ${2 * a}x + ${a * a}`,
+          `2x² + ${4 * a}x + ${a * a}`,
+          `4x² + ${4 * a}x + ${a}`
+        ]),
+        `Use (a + b)². Here, 2(2x)(${a}) = ${4 * a}x.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 4);
+      const answer = `x³ + ${3 * a}x² + ${3 * a * a}x + ${a ** 3}`;
+  
+      return algebraQuestion(
+        "Cubic expansions",
+        `Expand and simplify: (x + ${a})³`,
+        answer,
+        makeMCQ(answer, [
+          `x³ + ${a}x² + ${a * a}x + ${a ** 3}`,
+          `x³ + ${3 * a}x² + ${3 * a}x + ${a ** 3}`,
+          `x³ + ${3 * a}x² + ${3 * a * a}x − ${a ** 3}`
+        ]),
+        "Use (a + b)³ = a³ + 3a²b + 3ab² + b³."
+      );
+    },
+  
+    () => algebraQuestion(
+      "Expansions",
+      "Expand and simplify: (x + y − z)²",
+      "x² + y² + z² + 2xy − 2xz − 2yz",
+      makeMCQ("x² + y² + z² + 2xy − 2xz − 2yz", [
+        "x² + y² + z² + 2xy + 2xz + 2yz",
+        "x² + y² − z² + 2xy − 2xz − 2yz",
+        "x² + y² + z² − 2xy − 2xz − 2yz"
+      ]),
+      "Square each term and then add twice each pairwise product. Products involving −z are negative."
+    ),
+  
+    () => {
+      const a = rand(2, 4);
+      const b = rand(2, 6);
+      const answer = `${a * a}x² − ${2 * a * b}xy + ${b * b}y²`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (${a}x − ${b}y)²`,
+        answer,
+        makeMCQ(answer, [
+          `${a * a}x² + ${2 * a * b}xy + ${b * b}y²`,
+          `${a * a}x² − ${a * b}xy + ${b * b}y²`,
+          `${a}x² − ${2 * a * b}xy + ${b}y²`
+        ]),
+        `Apply (A − B)² = A² − 2AB + B² with A = ${a}x and B = ${b}y.`
+      );
+    },
+  
+    () => {
+      const a = rand(4, 9);
+      const b = rand(2, a - 1);
+      const answer = `x² ${signed(a - b)}x − ${a * b}`;
+  
+      return algebraQuestion(
+        "Expansions",
+        `Expand and simplify: (x + ${a})(x − ${b})`,
+        answer,
+        makeMCQ(answer, [
+          `x² + ${a + b}x − ${a * b}`,
+          `x² ${signed(a - b)}x + ${a * b}`,
+          `x² ${signed(b - a)}x − ${a * b}`
+        ]),
+        `The x-coefficient is ${a} − ${b} = ${a - b}, while the constant product is −${a * b}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 7);
+      const b = rand(2, 9);
+      const answer = `(${a}x − ${b})(${a}x + ${b})`;
+  
+      return algebraQuestion(
+        "Factorisation",
+        `Factorise completely: ${a * a}x² − ${b * b}`,
+        answer,
+        makeMCQ(answer, [
+          `(${a}x − ${b})²`,
+          `(${a}x + ${b})²`,
+          `(${a}x − ${b})(${a}x − ${b})`
+        ]),
+        `Recognise A² − B² = (A − B)(A + B), where A = ${a}x and B = ${b}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 6);
+      const answer = `(x − ${a})(x² + ${a}x + ${a * a})`;
+  
+      return algebraQuestion(
+        "Factorisation",
+        `Factorise completely: x³ − ${a ** 3}`,
+        answer,
+        makeMCQ(answer, [
+          `(x − ${a})(x² − ${a}x + ${a * a})`,
+          `(x + ${a})(x² + ${a}x + ${a * a})`,
+          `(x − ${a})(x² + ${a * a})`
+        ]),
+        "Use A³ − B³ = (A − B)(A² + AB + B²)."
+      );
+    },
+  
+    () => {
+      const a = rand(2, 6);
+      const answer = `(x + ${a})(x² − ${a}x + ${a * a})`;
+  
+      return algebraQuestion(
+        "Factorisation",
+        `Factorise completely: x³ + ${a ** 3}`,
+        answer,
+        makeMCQ(answer, [
+          `(x + ${a})(x² + ${a}x + ${a * a})`,
+          `(x − ${a})(x² − ${a}x + ${a * a})`,
+          `(x + ${a})(x² − ${a * a})`
+        ]),
+        "Use A³ + B³ = (A + B)(A² − AB + B²)."
+      );
+    },
+  
+    () => algebraQuestion(
+      "Factorisation",
+      "Factorise completely: 8x³ + 27",
+      "(2x + 3)(4x² − 6x + 9)",
+      makeMCQ("(2x + 3)(4x² − 6x + 9)", [
+        "(2x − 3)(4x² + 6x + 9)",
+        "(2x + 3)(4x² + 6x + 9)",
+        "(8x + 3)(x² − 3x + 9)"
+      ]),
+      "8x³ + 27 = (2x)³ + 3³. Apply the sum of cubes identity."
+    ),
+  
+    () => {
+      const p = rand(2, 8);
+      const q = p + rand(1, 6);
+      const answer = `(x + ${p})(x + ${q})`;
+  
+      return algebraQuestion(
+        "Quadratic factorisation",
+        `Factorise: x² + ${p + q}x + ${p * q}`,
+        answer,
+        makeMCQ(answer, [
+          `(x − ${p})(x − ${q})`,
+          `(x + ${p + q})(x + ${p * q})`,
+          `(x + ${p})(x − ${q})`
+        ]),
+        `Find two numbers whose sum is ${p + q} and product is ${p * q}: ${p} and ${q}.`
+      );
+    },
+  
+    () => {
+      const p = rand(4, 10);
+      const q = rand(2, p - 1);
+      const answer = `(x + ${p})(x − ${q})`;
+  
+      return algebraQuestion(
+        "Quadratic factorisation",
+        `Factorise: x² + ${p - q}x − ${p * q}`,
+        answer,
+        makeMCQ(answer, [
+          `(x − ${p})(x + ${q})`,
+          `(x + ${p})(x + ${q})`,
+          `(x − ${p})(x − ${q})`
+        ]),
+        "The factors must have opposite signs because the constant term is negative."
+      );
+    },
+  
+    () => {
+      const a = rand(2, 4);
+      let c = rand(2, 5);
+      let b = rand(1, 5);
+      let d = rand(1, 5);
+  
+      while (c === a) c = rand(2, 5);
+      while (d === b) d = rand(1, 5);
+  
+      const middle = a * d + b * c;
+      const constant = b * d;
+      const answer = `(${a}x + ${b})(${c}x + ${d})`;
+  
+      return algebraQuestion(
+        "Quadratic factorisation",
+        `Factorise: ${a * c}x² + ${middle}x + ${constant}`,
+        answer,
+        makeMCQ(answer, [
+          `(${a}x − ${b})(${c}x − ${d})`,
+          `(${a}x + ${d})(${c}x + ${b})`,
+          `(${a * c}x + ${b})(${d}x + 1)`
+        ]),
+        `Split the middle term and group the terms to obtain ${answer}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 8);
+      let b = rand(2, 8);
+  
+      if (a === b) b++;
+  
+      const answer = `${a + b}(x + y)`;
+  
+      return algebraQuestion(
+        "Factorisation by grouping",
+        `Factorise: ${a}x + ${a}y + ${b}x + ${b}y`,
+        answer,
+        makeMCQ(answer, [
+          `${a - b}(x + y)`,
+          `${a + b}(x − y)`,
+          `${a * b}(x + y)`
+        ]),
+        `Group the terms: ${a}(x + y) + ${b}(x + y) = ${answer}.`
+      );
+    },
+  
+    () => {
+      const a = rand(2, 9);
+      const answer = `x + ${a}`;
+  
+      return algebraQuestion(
+        "Algebraic fractions",
+        `Simplify: (x² − ${a * a}) ÷ (x − ${a}), where x ≠ ${a}.`,
+        answer,
+        makeMCQ(answer, [
+          `x − ${a}`,
+          `x² + ${a * a}`,
+          `${a}x`
+        ]),
+        `Factor the numerator: x² − ${a * a} = (x − ${a})(x + ${a}). Cancel x − ${a}.`
+      );
+    },
+  
+    () => {
+      const answer = rand(5, 15);
+      const a = rand(3, 7);
+      const b = rand(2, 7);
+      const c = rand(3, 12);
+      const d = a - 1;
+      const e = answer - a * b + c;
+  
+      return algebraQuestion(
+        "Linear equations",
+        `Solve for x: ${a}(x − ${b}) + ${c} = ${d}x ${signed(e)}`,
+        String(answer),
+        numberMCQ(answer, [-4, -2, 2]),
+        `Expand the left side, collect x-terms on one side, and constants on the other. This gives x = ${answer}.`
+      );
+    },
+  
+    () => {
+      const x = variantFractionEquation();
+  
+      return algebraQuestion(
+        "Fractional equations",
+        `Solve for x: ${x.question}`,
+        String(x.answer),
+        numberMCQ(x.answer, [-4, -2, 3]),
+        x.explain
+      );
+    },
+  
+    () => {
+      let a, b, c, d;
+  
+      do {
+        a = rand(2, 6);
+        b = rand(1, 5);
+        c = rand(1, 5);
+        d = rand(2, 6);
+      } while (a * d === b * c);
+  
+      const x = rand(2, 9);
+      const y = rand(2, 9);
+  
+      const first = a * x + b * y;
+      const second = c * x + d * y;
+  
+      return algebraQuestion(
+        "Simultaneous equations",
+        `Solve the system: ${a}x + ${b}y = ${first} and ${c}x + ${d}y = ${second}. Find x.`,
+        String(x),
+        numberMCQ(x, [-3, -1, 2]),
+        `Use elimination or substitution. The solution is x = ${x}, y = ${y}.`
+      );
+    },
+  
+    () => {
+      const x = [
+        { total:12, adult:50, child:30, amount:500, answer:7 },
+        { total:15, adult:60, child:40, amount:780, answer:9 },
+        { total:20, adult:75, child:45, amount:1260, answer:12 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Simultaneous equations",
+        `At a school event, ${x.total} tickets are sold. An adult ticket costs ₹${x.adult} and a student ticket costs ₹${x.child}. The total collection is ₹${x.amount}. How many adult tickets were sold?`,
+        String(x.answer),
+        numberMCQ(x.answer, [-3, -1, 2]),
+        `Let adult tickets be a and student tickets be s. Use a + s = ${x.total} and ${x.adult}a + ${x.child}s = ${x.amount}.`,
+        "word"
+      );
+    },
+  
+    () => {
+      const x = [
+        { total:35, past:4, multiple:2, older:"Asha", younger:"Bina", answer:13 },
+        { total:42, past:5, multiple:3, older:"Rohan", younger:"Kunal", answer:13 },
+        { total:54, past:3, multiple:2, older:"Meera", younger:"Tara", answer:19 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Linear-equation applications",
+        `${x.older} and ${x.younger} have a combined present age of ${x.total} years. ${x.past} years ago, ${x.older} was ${x.multiple} times as old as ${x.younger}. What is ${x.younger}'s present age?`,
+        String(x.answer),
+        numberMCQ(x.answer, [-4, -2, 3]),
+        `Let ${x.younger}'s age be y. The other age is ${x.total} − y. Apply the age condition ${x.past} years ago.`,
+        "word"
+      );
+    },
+  
+    () => {
+      const x = [
+        { perimeter:38, difference:3, area:88 },
+        { perimeter:50, difference:5, area:150 },
+        { perimeter:64, difference:8, area:240 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Linear-equation applications",
+        `The length of a rectangle is ${x.difference} cm more than its width. Its perimeter is ${x.perimeter} cm. Find its area.`,
+        `${x.area} cm²`,
+        makeMCQ(`${x.area} cm²`, [
+          `${x.area - x.difference} cm²`,
+          `${x.area + x.difference} cm²`,
+          `${2 * x.area} cm²`
+        ]),
+        `Let the width be w cm, so the length is w + ${x.difference}. Solve 2[w + (w + ${x.difference})] = ${x.perimeter}.`,
+        "word"
+      );
+    },
+  
+    () => {
+      const x = [
+        {
+          q:"√72 − √8 + √18",
+          answer:"7√2",
+          wrong:["5√2","6√2","8√2"],
+          explain:"√72 = 6√2, √8 = 2√2, and √18 = 3√2. Therefore 6√2 − 2√2 + 3√2 = 7√2."
+        },
+        {
+          q:"√50 + √8 − √18",
+          answer:"4√2",
+          wrong:["2√2","3√2","6√2"],
+          explain:"√50 = 5√2, √8 = 2√2, and √18 = 3√2. Therefore 5√2 + 2√2 − 3√2 = 4√2."
+        },
+        {
+          q:"√98 − √8 + √32",
+          answer:"9√2",
+          wrong:["5√2","7√2","11√2"],
+          explain:"√98 = 7√2, √8 = 2√2, and √32 = 4√2. Therefore the result is 9√2."
         }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Surds",
+        `Simplify: ${x.q}`,
+        x.answer,
+        makeMCQ(x.answer, x.wrong),
+        x.explain
+      );
+    },
+  
+    () => {
+      const x = [
+        {
+          q:"1 ÷ (√5 − √2)",
+          answer:"(√5 + √2) ÷ 3",
+          wrong:["(√5 − √2) ÷ 3","√5 + √2","(√5 + √2) ÷ 7"],
+          explain:"Multiply numerator and denominator by √5 + √2. The denominator becomes 5 − 2 = 3."
+        },
+        {
+          q:"1 ÷ (√3 − √2)",
+          answer:"√3 + √2",
+          wrong:["√3 − √2","(√3 + √2) ÷ 5","(√3 − √2) ÷ 5"],
+          explain:"The conjugate gives denominator 3 − 2 = 1, so the result is √3 + √2."
+        },
+        {
+          q:"1 ÷ (√7 + √3)",
+          answer:"(√7 − √3) ÷ 4",
+          wrong:["(√7 + √3) ÷ 4","√7 − √3","(√7 − √3) ÷ 10"],
+          explain:"Multiply by √7 − √3. The denominator becomes 7 − 3 = 4."
+        }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Rationalisation",
+        `Rationalise the denominator: ${x.q}`,
+        x.answer,
+        makeMCQ(x.answer, x.wrong),
+        x.explain
+      );
+    },
+  
+    () => {
+      const x = [
+        {
+          q:"(2⁸ × 2⁵) ÷ 2⁹",
+          answer:16,
+          explain:"Add powers when multiplying and subtract powers when dividing: 2^(8 + 5 − 9) = 2⁴ = 16."
+        },
+        {
+          q:"(3⁶ × 3⁴) ÷ 3⁷",
+          answer:27,
+          explain:"3^(6 + 4 − 7) = 3³ = 27."
+        },
+        {
+          q:"(5⁵ × 5³) ÷ 5⁶",
+          answer:25,
+          explain:"5^(5 + 3 − 6) = 5² = 25."
+        }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Indices",
+        `Evaluate: ${x.q}`,
+        String(x.answer),
+        numberMCQ(x.answer, [-x.answer / 2, -1, 1]),
+        x.explain
+      );
+    },
+  
+    () => {
+      const x = [
+        {
+          q:"(x³y²)² ÷ (x⁴y)",
+          answer:"x²y³",
+          wrong:["x⁶y⁴","x²y","x⁴y³"],
+          explain:"First square: x⁶y⁴. Then subtract powers while dividing: x^(6−4)y^(4−1) = x²y³."
+        },
+        {
+          q:"(a²b³)³ ÷ (a⁴b⁵)",
+          answer:"a²b⁴",
+          wrong:["a⁶b⁹","a²b⁶","a⁴b⁴"],
+          explain:"The numerator is a⁶b⁹. Dividing gives a²b⁴."
+        },
+        {
+          q:"(m⁴n²)² ÷ (m⁵n³)",
+          answer:"m³n",
+          wrong:["m⁸n⁴","m³n³","mn"],
+          explain:"The numerator is m⁸n⁴. Dividing gives m³n."
+        }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Indices",
+        `Simplify: ${x.q}`,
+        x.answer,
+        makeMCQ(x.answer, x.wrong),
+        x.explain
+      );
+    },
+  
+    () => {
+      const n = rand(3, 6);
+      const answer = n * n - 2;
+  
+      return algebraQuestion(
+        "Algebraic identities",
+        `If x + 1/x = ${n}, find x² + 1/x².`,
+        String(answer),
+        numberMCQ(answer, [-3, -1, 2]),
+        `Square x + 1/x: x² + 2 + 1/x² = ${n * n}. Therefore x² + 1/x² = ${answer}.`
+      );
+    },
+  
+    () => {
+      const x = [
+        { sum:11, product:24, answer:73 },
+        { sum:13, product:36, answer:97 },
+        { sum:17, product:60, answer:169 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Algebraic identities",
+        `If a + b = ${x.sum} and ab = ${x.product}, find a² + b².`,
+        String(x.answer),
+        numberMCQ(x.answer, [-8, -4, 4]),
+        `Use a² + b² = (a + b)² − 2ab = ${x.sum}² − 2(${x.product}) = ${x.answer}.`
+      );
+    },
+  
+    () => {
+      const x = [
+        { difference:4, product:21, answer:58 },
+        { difference:5, product:18, answer:61 },
+        { difference:7, product:12, answer:73 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Algebraic identities",
+        `If p − q = ${x.difference} and pq = ${x.product}, find p² + q².`,
+        String(x.answer),
+        numberMCQ(x.answer, [-6, -2, 3]),
+        `Use (p − q)² = p² + q² − 2pq. Thus p² + q² = ${x.difference}² + 2(${x.product}) = ${x.answer}.`
+      );
+    },
+  
+    () => {
+      const x = [
+        { sum:78, answer:28 },
+        { sum:96, answer:34 },
+        { sum:132, answer:46 }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Linear-equation applications",
+        `The sum of three consecutive even integers is ${x.sum}. Find the largest integer.`,
+        String(x.answer),
+        numberMCQ(x.answer, [-4, -2, 2]),
+        `Let the integers be n − 2, n, and n + 2. Their sum is 3n = ${x.sum}; then add 2 to find the largest integer.`,
+        "word"
+      );
+    },
+  
+    () => {
+      const x = [
+        {
+          q:"x/3 + x/4 = 14",
+          answer:24,
+          explain:"Multiply by 12: 4x + 3x = 168, so 7x = 168 and x = 24."
+        },
+        {
+          q:"x/5 + x/2 = 21",
+          answer:30,
+          explain:"Multiply by 10: 2x + 5x = 210, so x = 30."
+        },
+        {
+          q:"x/6 + x/3 = 18",
+          answer:36,
+          explain:"Multiply by 6: x + 2x = 108, so x = 36."
+        }
+      ][rand(0, 2)];
+  
+      return algebraQuestion(
+        "Fractional equations",
+        `Solve for x: ${x.q}`,
+        String(x.answer),
+        numberMCQ(x.answer, [-6, -3, 3]),
+        x.explain
+      );
     }
-
-    const question = pool[rand(0, pool.length - 1)];
-
-    return question();
-
-}
-
-// ==========================================
-// GET EXPLANATION
-// ==========================================
-
-function getAlgebraExplanation(question) {
-
+  ];
+  
+  // ==========================================
+  // RANDOM ALGEBRA QUESTION
+  // ==========================================
+  
+  function generateAlgebraQuestion(difficulty = null) {
+    let pool = algebraPatterns;
+  
+    if (difficulty) {
+      const matchingPatterns = algebraPatterns.filter(
+        pattern => pattern().difficulty === difficulty
+      );
+  
+      if (matchingPatterns.length) {
+        pool = matchingPatterns;
+      }
+    }
+  
+    return pool[rand(0, pool.length - 1)]();
+  }
+  
+  // ==========================================
+  // GET EXPLANATION
+  // ==========================================
+  
+  function getAlgebraExplanation(question) {
     return question.explanation || "No explanation available.";
-
-}
-
-// ==========================================
-// EXPORTS
-// ==========================================
-
-window.generateAlgebraQuestion = generateAlgebraQuestion;
-window.getAlgebraExplanation = getAlgebraExplanation;
-window.algebraPatterns = algebraPatterns;
+  }
+  
+  // ==========================================
+  // EXPORTS
+  // ==========================================
+  
+  window.generateAlgebraQuestion = generateAlgebraQuestion;
+  window.getAlgebraExplanation = getAlgebraExplanation;
+  window.algebraPatterns = algebraPatterns;
