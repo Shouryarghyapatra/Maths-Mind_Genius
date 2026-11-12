@@ -1,400 +1,427 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MathMind AI</title>
+  <meta name="description" content="MathMind AI adaptive mathematics practice">
+  <title>MathMind AI | Learn. Think. Solve.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="app">
+  <div class="orb orb-one"></div>
+  <div class="orb orb-two"></div>
 
-    <aside class="sidebar" id="sidebar">
-      <div class="logo">
-        <div class="logo-icon">∑</div>
-        MathMind<span>AI</span>
-      </div>
+  <header class="site-header">
+    <a href="#" class="brand" id="brandHome">
+      <span class="brand-mark">∑</span>
+      MathMind<span>AI</span>
+    </a>
 
-      <p class="nav-title">Workspace</p>
-      <a class="nav-link active" href="#student"><i>▦</i> Dashboard</a>
-      <a class="nav-link" href="#student"><i>⌁</i> Learning journey</a>
-      <a class="nav-link" href="#student"><i>◈</i> Practice zone</a>
-      <a class="nav-link" href="#student"><i>◌</i> Insights</a>
+    <nav>
+      <button class="nav-button active" data-go-home>Home</button>
+      <button class="nav-button" data-scroll="how-it-works">How it works</button>
+    </nav>
 
-      <p class="nav-title">Support</p>
-      <a class="nav-link" href="#"><i>?</i> Help centre</a>
-      <button class="nav-link" id="themeButton"><i>☼</i> Appearance</button>
+    <div class="header-status">
+      <span class="status-dot"></span>
+      <span id="headerGreeting">Ready to learn</span>
+    </div>
+  </header>
 
-      <div class="streak-box">
-        <strong>✦ 7 day streak</strong>
-        <p>Your consistency is building real confidence.</p>
-        <a href="#student">View my journey →</a>
-      </div>
+  <main class="app-shell">
 
-      <div class="profile">
-        <div class="avatar">AP</div>
-        <div>
-          <strong>Aarav Patel</strong>
-          <small>Grade 7 learner</small>
-        </div>
-      </div>
-    </aside>
+    <!-- HOME / TEST SETUP -->
+    <section id="homeScreen" class="screen active">
 
-    <main>
-      <header class="topbar">
-        <div class="top-left">
-          <button class="menu" id="menuButton">☰</button>
-          <div>
-            <p class="date">Wednesday, 12 November</p>
-            <p class="page-name">Learning dashboard</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Adaptive mathematics practice</p>
+
+          <h1>
+            Small steps.<br>
+            <span>Serious confidence.</span>
+          </h1>
+
+          <p class="hero-text">
+            Choose a topic, set your challenge, and practise with fresh
+            questions generated for you every time.
+          </p>
+
+          <div class="hero-points">
+            <span>✦ 10 subjects</span>
+            <span>◌ Fresh questions</span>
+            <span>✓ Instant feedback</span>
           </div>
         </div>
 
-        <div class="user">
-          <button class="notification">♧</button>
-          <div class="avatar">AP</div>
-          Aarav
-        </div>
-      </header>
-
-      <section class="switcher">
-        <div>
-          <p class="eyebrow">Your learning space</p>
-          <h1>A clearer view of every <span>breakthrough.</span></h1>
-        </div>
-
-        <div class="tabs">
-          <button class="tab active" data-view="student">Student</button>
-          <button class="tab" data-view="parent">Parent</button>
-          <button class="tab" data-view="educator">Educator</button>
-        </div>
-      </section>
-
-      <!-- STUDENT VIEW -->
-      <section class="view active" id="student">
-        <div class="welcome">
-          <div>
-            <p class="eyebrow">Good afternoon, Aarav ✦</p>
-            <h2>Ready to make today count?</h2>
-            <p class="sub-text">You’re one focused session away from your next level.</p>
-          </div>
-
-          <button class="btn practice-btn">Start a quick practice →</button>
-        </div>
-
-        <div class="hero-grid">
-          <article class="focus-card">
-            <span class="pill">Recommended next</span>
-
-            <div class="lesson">
-              <div class="lesson-icon">∠</div>
-              <div>
-                <p class="tiny">GEOMETRY · 12 MIN</p>
-                <h3>Angles in parallel lines</h3>
-                <p>Turn your growing confidence into fluency with one more challenge.</p>
-              </div>
-            </div>
-
-            <div class="focus-footer">
-              <div class="progress"><span></span></div>
-              <small>68% complete</small>
-              <button>→</button>
-            </div>
-          </article>
-
-          <article class="card streak-card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">This week</p>
-                <h3>Keep the momentum</h3>
-              </div>
-              <div class="flame">🔥</div>
-            </div>
-
-            <div class="days">
-              <span class="done">M</span>
-              <span class="done">T</span>
-              <span class="done">W</span>
-              <span class="done">T</span>
-              <span class="today">F</span>
-              <span>S</span>
-              <span>S</span>
-            </div>
-
-            <div class="streak-bottom">
-              <div><strong>7</strong><small>day streak</small></div>
-              <div><strong>1,240</strong><small>XP earned</small></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="stats">
-          <article class="stat-card">
-            <div class="stat-icon blue">◴</div>
-            <div><p>Focused time</p><h3>5h 42m</h3><small>↑ 18% this week</small></div>
-          </article>
-
-          <article class="stat-card">
-            <div class="stat-icon purple">✓</div>
-            <div><p>Questions solved</p><h3>86</h3><small>↑ 12 this week</small></div>
-          </article>
-
-          <article class="stat-card">
-            <div class="stat-icon yellow">◎</div>
-            <div><p>Average accuracy</p><h3>82%</h3><small>↑ 6% this month</small></div>
-          </article>
-
-          <article class="stat-card">
-            <div class="stat-icon mint">✦</div>
-            <div><p>Current level</p><h3>Level 12</h3><small>340 XP to level 13</small></div>
-          </article>
-        </div>
-
-        <div class="content-grid">
-          <article class="card chart-card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">Your progress</p>
-                <h2>Learning momentum</h2>
-              </div>
-              <button class="ghost">Last 8 weeks⌄</button>
-            </div>
-
-            <div class="chart">
-              <svg viewBox="0 0 700 205" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#705cf5" stop-opacity=".25"/>
-                    <stop offset="100%" stop-color="#705cf5" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-
-                <path class="chart-area" d="M0 170 C70 150,85 155,125 139 S190 145,230 118 S300 129,350 92 S410 105,460 70 S550 86,610 43 S655 44,700 20 L700 205 L0 205 Z"/>
-                <path class="chart-line" d="M0 170 C70 150,85 155,125 139 S190 145,230 118 S300 129,350 92 S410 105,460 70 S550 86,610 43 S655 44,700 20"/>
-                <circle class="chart-dot" cx="700" cy="20" r="6"/>
-              </svg>
-
-              <div class="chart-label">82% accuracy</div>
-
-              <div class="months">
-                <span>Sep 23</span>
-                <span>Oct 7</span>
-                <span>Oct 21</span>
-                <span>Nov 4</span>
-                <span>Today</span>
-              </div>
-            </div>
-
-            <p class="chart-note">Your accuracy has improved <strong>30%</strong> since September. Beautiful work.</p>
-          </article>
-
-          <article class="card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">Skills snapshot</p>
-                <h2>Topic mastery</h2>
-              </div>
-              <button class="ghost">•••</button>
-            </div>
-
-            <div class="skill">
-              <div><span><i class="dot purple-dot"></i>Algebraic thinking</span><strong>88%</strong></div>
-              <p><span style="width:88%;background:#7964ef"></span></p>
-            </div>
-
-            <div class="skill">
-              <div><span><i class="dot blue-dot"></i>Geometry</span><strong>76%</strong></div>
-              <p><span style="width:76%;background:#4d8ff4"></span></p>
-            </div>
-
-            <div class="skill">
-              <div><span><i class="dot orange-dot"></i>Fractions</span><strong>64%</strong></div>
-              <p><span style="width:64%;background:#f4af50"></span></p>
-            </div>
-
-            <div class="skill">
-              <div><span><i class="dot mint-dot"></i>Data analysis</span><strong>91%</strong></div>
-              <p><span style="width:91%;background:#2dbba8"></span></p>
-            </div>
-
-            <a class="view-link" href="#">See detailed skill map <span>→</span></a>
-          </article>
-        </div>
-      </section>
-
-      <!-- PARENT VIEW -->
-      <section class="view" id="parent">
-        <div class="welcome">
-          <div>
-            <p class="eyebrow">Parent overview · Aarav Patel</p>
-            <h2>Progress you can see, support you can give.</h2>
-            <p class="sub-text">A calm weekly view of learning habits and growth.</p>
-          </div>
-
-          <button class="btn">Download weekly report ↗</button>
-        </div>
-
-        <div class="parent-grid">
-          <article class="parent-hero">
+        <form id="setupForm" class="setup-card" novalidate>
+          <div class="setup-heading">
             <div>
-              <span class="pill green-pill">On track</span>
-              <h2>Aarav is building a strong learning rhythm.</h2>
-              <p>He completed four focused sessions this week and is gaining confidence in algebraic reasoning.</p>
+              <p class="eyebrow">Start a practice</p>
+              <h2>Build your session</h2>
             </div>
 
-            <div class="ring">
-              <strong>82%</strong>
-              <small>average accuracy</small>
-            </div>
-          </article>
-
-          <article class="card time-card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">This week</p>
-                <h2>Healthy learning time</h2>
-              </div>
-              <strong class="purple-text">5h 42m</strong>
-            </div>
-
-            <div class="bars">
-              <i style="height:48%"></i>
-              <i style="height:72%"></i>
-              <i style="height:55%"></i>
-              <i style="height:82%"></i>
-              <i class="active-bar" style="height:68%"></i>
-              <i style="height:23%"></i>
-              <i style="height:12%"></i>
-            </div>
-
-            <div class="day-names">
-              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
-            </div>
-          </article>
-        </div>
-
-        <div class="parent-bottom">
-          <article class="card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">Where support helps</p>
-                <h2>Learning opportunities</h2>
-              </div>
-              <span class="pill">2 areas</span>
-            </div>
-
-            <div class="opportunity">
-              <b class="pink-icon">½</b>
-              <div>
-                <strong>Fractions & decimals</strong>
-                <p>Needs a little more confidence converting between forms.</p>
-                <a href="#">See a simple activity →</a>
-              </div>
-            </div>
-
-            <div class="opportunity">
-              <b class="blue-icon">∠</b>
-              <div>
-                <strong>Geometry vocabulary</strong>
-                <p>Practise naming angle pairs to reinforce this week’s lesson.</p>
-                <a href="#">See a simple activity →</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="celebration">
-            <span>🏆</span>
-            <p class="eyebrow">Celebrate the effort</p>
-            <h2>“I kept trying even when it was hard.”</h2>
-            <p>Aarav earned the <b>Persistent Problem Solver</b> badge after correcting three tricky questions.</p>
-            <button class="btn">Send a high five ✦</button>
-          </article>
-        </div>
-      </section>
-
-      <!-- EDUCATOR VIEW -->
-      <section class="view" id="educator">
-        <div class="welcome">
-          <div>
-            <p class="eyebrow">Class 7B · Educator insight</p>
-            <h2>See every learner, then know where to act.</h2>
-            <p class="sub-text">A live, actionable view of skill development across the class.</p>
+            <span class="setup-icon">✦</span>
           </div>
 
-          <button class="btn">Assign targeted practice →</button>
+          <label class="field-label" for="studentName">
+            Your name <small>Optional</small>
+          </label>
+
+          <input
+            id="studentName"
+            class="field"
+            type="text"
+            maxlength="28"
+            placeholder="e.g. Aarav"
+          >
+
+          <div class="field-row">
+            <div>
+              <label class="field-label" for="difficulty">Difficulty</label>
+
+              <select id="difficulty" class="field">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="field-label" for="questionCount">Questions</label>
+
+              <select id="questionCount" class="field">
+                <option value="5">5 questions</option>
+                <option value="10" selected>10 questions</option>
+                <option value="15">15 questions</option>
+                <option value="20">20 questions</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div>
+              <label class="field-label" for="category">Question type</label>
+
+              <select id="category" class="field">
+                <option value="mixed" selected>Mixed practice</option>
+                <option value="direct">Direct questions</option>
+                <option value="word">Word problems</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="field-label" for="timerChoice">Timer</label>
+
+              <select id="timerChoice" class="field">
+                <option value="0" selected>No timer</option>
+                <option value="45">45 seconds</option>
+                <option value="60">60 seconds</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <section class="topic-section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Choose a subject</p>
+            <h2>What would you like to practise?</h2>
+          </div>
+
+          <p class="topic-help">You can change this before every session.</p>
         </div>
 
-        <div class="teacher-stats">
-          <article><p>Class mastery</p><strong>68%</strong><small>↑ 5.4%</small></article>
-          <article><p>Active learners</p><strong>28 / 31</strong><small>This week</small></article>
-          <article><p>Questions completed</p><strong>486</strong><small>↑ 13%</small></article>
-          <article><p>Need a nudge</p><strong>6</strong><small class="red-text">Prioritise today</small></article>
+        <div
+          id="topicGrid"
+          class="topic-grid"
+          role="radiogroup"
+          aria-label="Choose a maths topic"
+        >
+          <button class="topic-card selected" type="button" data-topic="addition">
+            <span class="topic-icon lavender">＋</span>
+            <b>Addition</b>
+            <small>Number fluency</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="subtraction">
+            <span class="topic-icon blue">−</span>
+            <b>Subtraction</b>
+            <small>Smart strategies</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="multiplication">
+            <span class="topic-icon orange">×</span>
+            <b>Multiplication</b>
+            <small>Build speed</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="division">
+            <span class="topic-icon mint">÷</span>
+            <b>Division</b>
+            <small>Share & solve</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="fractions">
+            <span class="topic-icon pink">½</span>
+            <b>Fractions</b>
+            <small>Parts & wholes</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="decimals">
+            <span class="topic-icon sky">.5</span>
+            <b>Decimals</b>
+            <small>Place value</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="percentages">
+            <span class="topic-icon yellow">%</span>
+            <b>Percentages</b>
+            <small>Everyday maths</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="ratio">
+            <span class="topic-icon plum">:</span>
+            <b>Ratio & proportion</b>
+            <small>Compare quantities</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="factors">
+            <span class="topic-icon coral">#</span>
+            <b>Factors & multiples</b>
+            <small>Number patterns</small>
+          </button>
+
+          <button class="topic-card" type="button" data-topic="algebra">
+            <span class="topic-icon navy">x</span>
+            <b>Algebra</b>
+            <small>Find the unknown</small>
+          </button>
+
+          <button class="topic-card mixed-topic" type="button" data-topic="mixed">
+            <span class="topic-icon rainbow">✦</span>
+            <b>Mixed challenge</b>
+            <small>All subjects</small>
+          </button>
         </div>
 
-        <div class="teacher-grid">
-          <article class="card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">Student mastery heat map</p>
-                <h2>Skills across your class</h2>
-              </div>
-              <button class="ghost">Last 30 days⌄</button>
-            </div>
+        <div class="start-row">
+          <p id="selectionText">Addition · Medium · 10 questions</p>
 
-            <div class="heatmap">
-              <div></div>
-              <b>Number<br>Sense</b><b>Algebraic<br>Thinking</b><b>Geometry</b>
-              <b>Data<br>Analysis</b><b>Fractions</b><b>Problem<br>Solving</b>
-
-              <strong>Aarav P.</strong><i class="h4"></i><i class="h5"></i><i class="h3"></i><i class="h4"></i><i class="h2"></i><i class="h5"></i>
-              <strong>Mia R.</strong><i class="h3"></i><i class="h4"></i><i class="h5"></i><i class="h3"></i><i class="h2"></i><i class="h4"></i>
-              <strong>Noah S.</strong><i class="h5"></i><i class="h3"></i><i class="h4"></i><i class="h3"></i><i class="h1"></i><i class="h3"></i>
-              <strong>Isha K.</strong><i class="h4"></i><i class="h2"></i><i class="h3"></i><i class="h5"></i><i class="h3"></i><i class="h4"></i>
-              <strong>Liam T.</strong><i class="h2"></i><i class="h3"></i><i class="h2"></i><i class="h4"></i><i class="h5"></i><i class="h3"></i>
-            </div>
-
-            <div class="legend">
-              Needs support <i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><i class="h5"></i> Advanced
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow">Class performance</p>
-                <h2>Average mastery by skill</h2>
-              </div>
-              <button class="ghost">•••</button>
-            </div>
-
-            <div class="bar-chart">
-              <div><i style="height:63%"></i><span>Number</span></div>
-              <div><i style="height:83%"></i><span>Algebra</span></div>
-              <div><i style="height:58%"></i><span>Geometry</span></div>
-              <div><i style="height:70%"></i><span>Data</span></div>
-              <div><i style="height:49%"></i><span>Fractions</span></div>
-              <div><i style="height:76%"></i><span>Problem</span></div>
-            </div>
-
-            <div class="ai-note">
-              <span>✦</span>
-              <p><b>AI insight:</b> Fractions is the clearest opportunity. A 10-minute targeted warm-up could help 6 learners.</p>
-            </div>
-          </article>
+          <button id="startButton" class="primary-button" type="button">
+            Start practice <span>→</span>
+          </button>
         </div>
       </section>
 
-      <footer>MathMind AI · Built with care for curious minds</footer>
-    </main>
-  </div>
+      <section id="how-it-works" class="how-grid">
+        <article>
+          <span>01</span>
+          <h3>Choose your focus</h3>
+          <p>Select one subject or combine all of them in a mixed challenge.</p>
+        </article>
 
-  <div class="toast" id="toast">Your personalised practice is ready!</div>
+        <article>
+          <span>02</span>
+          <h3>Think it through</h3>
+          <p>Every practice session uses fresh generated questions.</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Learn from feedback</h3>
+          <p>See the answer and explanation immediately after each attempt.</p>
+        </article>
+      </section>
+    </section>
+
+    <!-- QUIZ SCREEN -->
+    <section id="quizScreen" class="screen" aria-live="polite">
+      <div class="quiz-topbar">
+        <button class="back-button" type="button" data-go-home>
+          ← Exit practice
+        </button>
+
+        <div class="quiz-title">
+          <strong id="quizTopic">Addition practice</strong>
+          <span id="quizStudent">Focus mode</span>
+        </div>
+
+        <div id="timerBox" class="timer hidden">
+          ⌛ <span id="timer">00:00</span>
+        </div>
+      </div>
+
+      <div class="quiz-layout">
+        <section class="question-panel">
+          <div class="question-progress">
+            <div>
+              <span id="questionNumber">Question 1</span>
+              <span id="questionCountText">of 10</span>
+            </div>
+
+            <span id="progressPercent">10%</span>
+          </div>
+
+          <div class="progress-line">
+            <span id="progressFill"></span>
+          </div>
+
+          <div class="question-meta">
+            <span id="questionTopicBadge">Addition</span>
+            <span id="questionCategoryBadge">Direct question</span>
+          </div>
+
+          <p class="prompt-label">Solve this problem</p>
+
+          <h1 id="questionText">Loading your question…</h1>
+
+          <div id="mcqArea" class="answer-area hidden">
+            <p class="answer-label">Choose an answer</p>
+            <div id="options" class="options"></div>
+          </div>
+
+          <div id="textArea" class="answer-area">
+            <label class="answer-label" for="answerInput">Your answer</label>
+
+            <div class="input-row">
+              <input
+                id="answerInput"
+                class="answer-input"
+                autocomplete="off"
+                placeholder="Type your answer"
+              >
+
+              <button id="submitButton" type="button" class="submit-button">
+                Check answer
+              </button>
+            </div>
+          </div>
+
+          <div id="feedback" class="feedback hidden">
+            <span id="feedbackIcon"></span>
+
+            <div>
+              <strong id="feedbackTitle"></strong>
+              <p id="feedbackText"></p>
+            </div>
+          </div>
+
+          <div class="question-actions">
+            <button id="hintButton" class="text-action" type="button">
+              Need a hint?
+            </button>
+
+            <button id="skipButton" class="text-action" type="button">
+              Skip question
+            </button>
+
+            <button id="nextButton" class="next-button hidden" type="button">
+              Next question →
+            </button>
+          </div>
+        </section>
+
+        <aside class="session-panel">
+          <p class="eyebrow">Session snapshot</p>
+
+          <div class="session-stat">
+            <span class="session-icon purple-bg">★</span>
+            <div>
+              <small>Score</small>
+              <strong id="scoreStat">0</strong>
+            </div>
+          </div>
+
+          <div class="session-stat">
+            <span class="session-icon orange-bg">♨</span>
+            <div>
+              <small>Current streak</small>
+              <strong id="streakStat">0</strong>
+            </div>
+          </div>
+
+          <div class="session-stat">
+            <span class="session-icon blue-bg">◎</span>
+            <div>
+              <small>Accuracy</small>
+              <strong id="accuracyStat">—</strong>
+            </div>
+          </div>
+
+          <div class="session-tip">
+            <span>✦</span>
+            <p id="tipText">Read carefully, then take one step at a time.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- RESULT SCREEN -->
+    <section id="resultScreen" class="screen">
+      <div class="result-card">
+        <div class="result-icon">✦</div>
+
+        <p class="eyebrow">Practice complete</p>
+        <h1 id="resultHeadline">Nice work!</h1>
+        <p id="resultMessage" class="result-message"></p>
+
+        <div class="result-score">
+          <strong id="finalScore">0/10</strong>
+          <span id="finalAccuracy">0% accuracy</span>
+        </div>
+
+        <div class="result-stats">
+          <div>
+            <strong id="finalStreak">0</strong>
+            <span>best streak</span>
+          </div>
+
+          <div>
+            <strong id="finalXp">0</strong>
+            <span>XP earned</span>
+          </div>
+
+          <div>
+            <strong id="finalTopic">Addition</strong>
+            <span>topic practised</span>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button id="retryButton" class="primary-button" type="button">
+            Practise again →
+          </button>
+
+          <button class="secondary-button" type="button" data-go-home>
+            Choose a new topic
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- Keep your subject question-bank files in this exact order -->
+  <script src="addition.js"></script>
+  <script src="subtraction.js"></script>
+  <script src="multiplication.js"></script>
+  <script src="division.js"></script>
+  <script src="fractions.js"></script>
+  <script src="decimals.js"></script>
+  <script src="percentages.js"></script>
+  <script src="ratio-proportion.js"></script>
+  <script src="factors-multiples.js"></script>
+  <script src="algebra.js"></script>
 
   <script src="dashboard.js"></script>
 </body>
