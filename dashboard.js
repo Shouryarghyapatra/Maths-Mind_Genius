@@ -1,612 +1,668 @@
-const $ = (selector) => document.querySelector(selector);
-const $$ = (selector) => [...document.querySelectorAll(selector)];
+/* ==========================================================
+   MATHMIND PROGRESS DASHBOARD
+========================================================== */
 
-const topics = {
-  addition: {
-    label: "Addition",
-    generator: () => window.generateAdditionQuestion
-  },
+const mmProgressKey = "mathmind-progress-v1";
 
-  subtraction: {
-    label: "Subtraction",
-    generator: () => window.generateSubtractionQuestion
-  },
-
-  multiplication: {
-    label: "Multiplication",
-    generator: () => window.generateMultiplicationQuestion
-  },
-
-  division: {
-    label: "Division",
-    generator: () => window.generateDivisionQuestion
-  },
-
-  fractions: {
-    label: "Fractions",
-    generator: () => window.generateFractionQuestion
-  },
-
-  decimals: {
-    label: "Decimals",
-    generator: () => window.generateDecimalsQuestion
-  },
-
-  percentages: {
-    label: "Percentages",
-    generator: () => window.generatePercentageQuestion
-  },
-
-  ratio: {
-    label: "Ratio & Proportion",
-    generator: () => window.generateRatioQuestion
-  },
-
-  factors: {
-    label: "Factors & Multiples",
-    generator: () => window.generateFactorsMultiplesQuestion
-  },
-
-  algebra: {
-    label: "Algebra",
-    generator: () => window.generateAlgebraQuestion
-  }
-};
-
-const state = {
-  selectedTopic: "addition",
-  topic: "addition",
-  difficulty: "medium",
-  category: "mixed",
-  total: 10,
-  timerSeconds: 0,
-  questions: [],
-  index: 0,
-  score: 0,
-  streak: 0,
-  bestStreak: 0,
-  answered: false,
-  usedPatterns: {},
-  timerId: null,
-  secondsLeft: 0,
-  student: ""
-};
-
-const tips = [
-  "Read carefully, then take one step at a time.",
-  "Use scratch paper if a problem has several steps.",
-  "Check whether your answer makes sense before submitting.",
-  "A tricky question is just a chance to think more slowly."
+const mmTopics = [
+  "addition",
+  "subtraction",
+  "multiplication",
+  "division",
+  "fractions",
+  "decimals",
+  "percentages",
+  "ratio",
+  "factors",
+  "algebra"
 ];
 
-function titleCase(value) {
-  return value
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+function mmTopicName(topicId) {
+  return topics[topicId] ? topics[topicId].label : topicId;
 }
 
-function randomize(items) {
-  return [...items].sort(() => Math.random() - 0.5);
+function mmShortName(topicId) {
+  const names = {
+    addition: "Add",
+    subtraction: "Sub",
+    multiplication: "Multiply",
+    division: "Divide",
+    fractions: "Fractions",
+    decimals: "Decimals",
+    percentages: "%",
+    ratio: "Ratio",
+    factors: "Factors",
+    algebra: "Algebra"
+  };
+
+  return names[topicId];
 }
 
-function setScreen(screenId) {
-  $$(".screen").forEach((screen) => {
-    screen.classList.remove("active");
-  });
+function mmReadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(mmProgressKey));
 
-  $(`#${screenId}`).classList.add("active");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-function toast(message) {
-  const box = $("#toast");
-
-  box.textContent = message;
-  box.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer = setTimeout(() => {
-    box.classList.remove("show");
-  }, 3600);
-}
-
-function updateSelectionText() {
-  const difficulty = $("#difficulty").value;
-  const count = $("#questionCount").value;
-
-  const topic =
-    state.selectedTopic === "mixed"
-      ? "Mixed challenge"
-      : topics[state.selectedTopic].label;
-
-  $("#selectionText").textContent =
-    `${topic} · ${titleCase(difficulty)} · ${count} questions`;
-}
-
-function chooseTopic(topic) {
-  state.selectedTopic = topic;
-
-  $$(".topic-card").forEach((card) => {
-    card.classList.toggle("selected", card.dataset.topic === topic);
-  });
-
-  updateSelectionText();
-}
-
-function categoryForQuestion() {
-  if (state.category !== "mixed") {
-    return state.category;
-  }
-
-  return Math.random() < 0.5 ? "direct" : "word";
-}
-
-function topicForQuestion() {
-  if (state.topic !== "mixed") {
-    return state.topic;
-  }
-
-  return randomize(Object.keys(topics))[0];
-}
-
-function generateQuestion() {
-  const topicId = topicForQuestion();
-  const category = categoryForQuestion();
-  const engine = topics[topicId].generator();
-
-  if (typeof engine !== "function") {
-    throw new Error(
-      `${topics[topicId].label} is not available. Check that its question-bank file has the correct filename.`
-    );
-  }
-
-  const key = `${topicId}-${category}`;
-  const used = state.usedPatterns[key] || [];
-
-  const raw =
-    topicId === "algebra"
-      ? engine(state.difficulty)
-      : engine(state.difficulty, category, used);
-
-  if (!raw || raw.question === undefined || raw.answer === undefined) {
-    throw new Error(
-      `The ${topics[topicId].label} question engine did not return a usable question.`
-    );
-  }
-
-  if (Number.isInteger(raw.patternIndex)) {
-    state.usedPatterns[key] = [...used, raw.patternIndex];
+    if (saved && Array.isArray(saved.sessions)) {
+      return saved;
+    }
+  } catch (error) {
+    console.log("No saved dashboard data yet.");
   }
 
   return {
-    ...raw,
-    topic: topicId,
-    category: raw.type || category,
-    answer: String(raw.answer)
+    sessions: []
   };
 }
 
-function normalise(value) {
-  return String(value)
-    .trim()
-    .toLowerCase()
-    .replace(/[\s,]/g, "")
-    .replace(/−/g, "-");
+function mmWriteProgress(progress) {
+  localStorage.setItem(mmProgressKey, JSON.stringify(progress));
 }
 
-function answerMatches(given, expected) {
-  const typed = normalise(given);
-  const correct = normalise(expected);
+function mmSaveCurrentSession() {
+  const progress = mmReadProgress();
 
-  if (typed === correct) {
-    return true;
-  }
-
-  const typedNumber = Number(typed);
-  const correctNumber = Number(correct);
-
-  return (
-    Number.isFinite(typedNumber) &&
-    Number.isFinite(correctNumber) &&
-    Math.abs(typedNumber - correctNumber) < 0.00001
+  const accuracy = Math.round(
+    (state.score / state.total) * 100
   );
-}
 
-function generatedOptions(question) {
-  if (Array.isArray(question.options) && question.options.length >= 2) {
-    return randomize([...new Set(question.options.map(String))]);
-  }
-
-  const answer = Number(question.answer);
-
-  if (!Number.isFinite(answer)) {
-    return null;
-  }
-
-  const decimals = String(question.answer).includes(".") ? 2 : 0;
-
-  const step = decimals
-    ? 0.1
-    : Math.max(1, Math.round(Math.abs(answer) * 0.18));
-
-  const options = new Set([String(question.answer)]);
-  const offsets = [-2, -1, 1, 2, 3, -3];
-
-  offsets.forEach((offset) => {
-    const value = answer + step * offset;
-
-    options.add(
-      decimals
-        ? String(Number(value.toFixed(2)))
-        : String(Math.round(value))
-    );
+  progress.sessions.unshift({
+    id: Date.now(),
+    topic: state.topic,
+    score: state.score,
+    total: state.total,
+    accuracy: accuracy,
+    bestStreak: state.bestStreak,
+    date: new Date().toLocaleDateString(undefined, {
+      month: "short",
+      day: "numeric"
+    })
   });
 
-  return randomize([...options].slice(0, 4));
+  progress.sessions = progress.sessions.slice(0, 30);
+
+  mmWriteProgress(progress);
 }
 
-function updateSessionStats() {
-  const attempted = state.index + (state.answered ? 1 : 0);
+function mmTopicSummary(progress, topicId) {
+  const sessions = progress.sessions.filter((session) => {
+    return session.topic === topicId || session.topic === "mixed";
+  });
 
-  const accuracy = attempted
-    ? Math.round((state.score / attempted) * 100)
-    : 0;
+  if (!sessions.length) {
+    return {
+      sessions: 0,
+      accuracy: null
+    };
+  }
 
-  $("#scoreStat").textContent = state.score;
-  $("#streakStat").textContent = state.streak;
-  $("#accuracyStat").textContent = attempted ? `${accuracy}%` : "—";
+  const totalAccuracy = sessions.reduce((sum, session) => {
+    return sum + session.accuracy;
+  }, 0);
+
+  return {
+    sessions: sessions.length,
+    accuracy: Math.round(totalAccuracy / sessions.length)
+  };
 }
 
-function stopTimer() {
-  clearInterval(state.timerId);
-  state.timerId = null;
+function mmLevel(accuracy) {
+  if (accuracy === null || accuracy === undefined) {
+    return "mm-empty";
+  }
+
+  if (accuracy < 40) {
+    return "mm-level-1";
+  }
+
+  if (accuracy < 60) {
+    return "mm-level-2";
+  }
+
+  if (accuracy < 75) {
+    return "mm-level-3";
+  }
+
+  if (accuracy < 90) {
+    return "mm-level-4";
+  }
+
+  return "mm-level-5";
 }
 
-function formatTime(seconds) {
-  return `00:${String(Math.max(0, seconds)).padStart(2, "0")}`;
-}
-
-function startTimer() {
-  stopTimer();
-
-  const timerBox = $("#timerBox");
-
-  if (!state.timerSeconds) {
-    timerBox.classList.add("hidden");
+function mmCreateDashboard() {
+  if (document.getElementById("progressDashboard")) {
     return;
   }
 
-  state.secondsLeft = state.timerSeconds;
+  const dashboard = document.createElement("section");
 
-  $("#timer").textContent = formatTime(state.secondsLeft);
+  dashboard.id = "progressDashboard";
+  dashboard.className = "screen";
 
-  timerBox.classList.remove("hidden");
+  dashboard.innerHTML = `
+    <div class="mm-dashboard-top">
+      <button class="back-button" id="mmBackToResults" type="button">
+        ← Back to results
+      </button>
 
-  state.timerId = setInterval(() => {
-    state.secondsLeft -= 1;
+      <div class="mm-dashboard-title">
+        <p class="eyebrow">Personal learning analytics</p>
+        <h1>Your progress dashboard</h1>
+      </div>
 
-    $("#timer").textContent = formatTime(state.secondsLeft);
+      <button class="mm-clear" id="mmClearData" type="button">
+        Clear history
+      </button>
+    </div>
 
-    if (state.secondsLeft <= 0) {
-      stopTimer();
+    <section class="mm-welcome">
+      <div>
+        <p class="eyebrow">Learning overview</p>
+        <h2 id="mmGreeting">Every practice makes you stronger.</h2>
+        <p id="mmSubtext">
+          Your dashboard updates after every completed session.
+        </p>
+      </div>
 
-      if (!state.answered) {
-        submitAnswer("");
-      }
-    }
-  }, 1000);
-}
+      <button class="primary-button" id="mmNewPractice" type="button">
+        Start another practice <span>→</span>
+      </button>
+    </section>
 
-function showFeedback(isCorrect, question, forcedMessage = "") {
-  const feedback = $("#feedback");
+    <section class="mm-stats">
+      <article class="mm-stat">
+        <span class="mm-stat-icon mm-purple">◴</span>
+        <div>
+          <p>Practice sessions</p>
+          <strong id="mmSessions">0</strong>
+          <small>all time</small>
+        </div>
+      </article>
 
-  feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
+      <article class="mm-stat">
+        <span class="mm-stat-icon mm-blue">✓</span>
+        <div>
+          <p>Questions completed</p>
+          <strong id="mmQuestions">0</strong>
+          <small>all time</small>
+        </div>
+      </article>
 
-  $("#feedbackIcon").textContent = isCorrect ? "✓" : "!";
-  $("#feedbackTitle").textContent = isCorrect
-    ? "That’s correct!"
-    : "Not quite this time.";
+      <article class="mm-stat">
+        <span class="mm-stat-icon mm-yellow">◎</span>
+        <div>
+          <p>Average accuracy</p>
+          <strong id="mmAccuracy">—</strong>
+          <small>across sessions</small>
+        </div>
+      </article>
 
-  const explanation =
-    question.explanation ||
-    `The correct answer is ${question.answer}.`;
+      <article class="mm-stat">
+        <span class="mm-stat-icon mm-mint">♨</span>
+        <div>
+          <p>Best streak</p>
+          <strong id="mmStreak">0</strong>
+          <small>correct answers</small>
+        </div>
+      </article>
+    </section>
 
-  $("#feedbackText").textContent = forcedMessage || explanation;
+    <section class="mm-main-grid">
+      <article class="mm-ai-card">
+        <div class="mm-ai-icon">✦</div>
 
-  $("#nextButton").classList.remove("hidden");
-}
+        <p class="eyebrow">AI insight</p>
 
-function lockResponses() {
-  $("#answerInput").disabled = true;
-  $("#submitButton").disabled = true;
-  $("#skipButton").disabled = true;
-  $("#hintButton").disabled = true;
+        <h2 id="mmInsightTitle">Your next opportunity</h2>
 
-  $$(".option").forEach((button) => {
-    button.disabled = true;
-  });
-}
+        <p id="mmInsightText">
+          Complete a practice session to unlock personalised guidance.
+        </p>
 
-function submitAnswer(value) {
-  if (state.answered) {
-    return;
-  }
+        <button class="mm-ai-button" id="mmInsightPractice" type="button">
+          Start practising →
+        </button>
 
-  const question = state.questions[state.index];
-  const isCorrect = answerMatches(value, question.answer);
+        <div class="mm-ai-orb"></div>
+      </article>
 
-  state.answered = true;
+      <article class="mm-panel">
+        <div class="mm-panel-head">
+          <div>
+            <p class="eyebrow">Student mastery heat map</p>
+            <h2>Topics vs recent sessions</h2>
+          </div>
 
-  stopTimer();
-  lockResponses();
+          <span class="mm-badge">Live data</span>
+        </div>
 
-  if (isCorrect) {
-    state.score += 1;
-    state.streak += 1;
-    state.bestStreak = Math.max(state.bestStreak, state.streak);
-  } else {
-    state.streak = 0;
-  }
+        <div class="mm-heatmap-scroll">
+          <div id="mmHeatmap" class="mm-heatmap"></div>
+        </div>
 
-  $$(".option").forEach((button) => {
-    if (answerMatches(button.dataset.answer, question.answer)) {
-      button.classList.add("correct");
-    }
+        <div class="mm-legend">
+          <span>Needs support</span>
+          <i class="mm-level-1"></i>
+          <i class="mm-level-2"></i>
+          <i class="mm-level-3"></i>
+          <i class="mm-level-4"></i>
+          <i class="mm-level-5"></i>
+          <span>Mastered</span>
+        </div>
+      </article>
+    </section>
 
-    if (button.dataset.answer === String(value) && !isCorrect) {
-      button.classList.add("wrong");
-    }
-  });
+    <section class="mm-chart-grid">
+      <article class="mm-panel mm-performance">
+        <div class="mm-panel-head">
+          <div>
+            <p class="eyebrow">Performance overview</p>
+            <h2>Average mastery by topic</h2>
+          </div>
 
-  updateSessionStats();
+          <span class="mm-badge mm-purple-badge">All time</span>
+        </div>
 
-  const timeMessage =
-    state.timerSeconds > 0 && state.secondsLeft <= 0
-      ? `Time is up. ${
-          question.explanation ||
-          `The correct answer is ${question.answer}.`
-        }`
-      : "";
+        <div id="mmBars" class="mm-bars"></div>
+      </article>
 
-  showFeedback(isCorrect, question, timeMessage);
-}
+      <article class="mm-panel mm-trajectory">
+        <div class="mm-panel-head">
+          <div>
+            <p class="eyebrow">Growth trajectory</p>
+            <h2>Accuracy across sessions</h2>
+          </div>
 
-function renderQuestion() {
-  state.answered = false;
+          <span class="mm-badge mm-purple-badge">Your trend</span>
+        </div>
 
-  const question = state.questions[state.index];
-  const number = state.index + 1;
-  const progress = Math.round((number / state.total) * 100);
+        <div id="mmGrowth" class="mm-growth"></div>
+      </article>
+    </section>
+  `;
 
-  const options = generatedOptions(question);
+  document.querySelector("main").appendChild(dashboard);
 
-  $("#questionNumber").textContent = `Question ${number}`;
-  $("#questionCountText").textContent = `of ${state.total}`;
-  $("#progressPercent").textContent = `${progress}%`;
-  $("#progressFill").style.width = `${progress}%`;
+  const resultActions = document.querySelector(".result-actions");
 
-  $("#questionText").textContent = question.question;
+  const dashboardButton = document.createElement("button");
 
-  $("#questionTopicBadge").textContent =
-    topics[question.topic].label;
+  dashboardButton.id = "mmDashboardButton";
+  dashboardButton.type = "button";
+  dashboardButton.className = "secondary-button";
+  dashboardButton.textContent = "View progress dashboard";
 
-  $("#questionCategoryBadge").textContent =
-    question.category === "word"
-      ? "Word problem"
-      : "Direct question";
+  resultActions.insertBefore(
+    dashboardButton,
+    resultActions.firstChild
+  );
 
-  $("#feedback").className = "feedback hidden";
+  dashboardButton.addEventListener("click", mmShowDashboard);
 
-  $("#nextButton").classList.add("hidden");
-
-  $("#answerInput").value = "";
-  $("#answerInput").disabled = false;
-  $("#submitButton").disabled = false;
-  $("#skipButton").disabled = false;
-  $("#hintButton").disabled = false;
-
-  $("#tipText").textContent = randomize(tips)[0];
-
-  if (options) {
-    $("#textArea").classList.add("hidden");
-    $("#mcqArea").classList.remove("hidden");
-
-    $("#options").innerHTML = "";
-
-    options.forEach((option) => {
-      const button = document.createElement("button");
-
-      button.type = "button";
-      button.className = "option";
-      button.dataset.answer = option;
-      button.textContent = option;
-
-      button.addEventListener("click", () => {
-        submitAnswer(option);
-      });
-
-      $("#options").appendChild(button);
+  document
+    .getElementById("mmBackToResults")
+    .addEventListener("click", () => {
+      setScreen("resultScreen");
     });
-  } else {
-    $("#mcqArea").classList.add("hidden");
-    $("#textArea").classList.remove("hidden");
 
-    setTimeout(() => {
-      $("#answerInput").focus();
-    }, 150);
-  }
+  document
+    .getElementById("mmNewPractice")
+    .addEventListener("click", goHome);
 
-  updateSessionStats();
-  startTimer();
+  document
+    .getElementById("mmInsightPractice")
+    .addEventListener("click", goHome);
+
+  document
+    .getElementById("mmClearData")
+    .addEventListener("click", () => {
+      const confirmed = window.confirm(
+        "Clear all saved MathMind progress from this browser?"
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      localStorage.removeItem(mmProgressKey);
+
+      mmRenderDashboard();
+    });
 }
 
-function finishQuiz() {
-  stopTimer();
+function mmRenderHeatmap(progress) {
+  const heatmap = document.getElementById("mmHeatmap");
 
-  const accuracy = Math.round((state.score / state.total) * 100);
+  const recentSessions = [...progress.sessions]
+    .slice(0, 5)
+    .reverse();
 
-  const xp = state.score * 20 + state.bestStreak * 5;
+  const rows = recentSessions.length
+    ? recentSessions
+    : [null, null, null, null, null];
 
-  const topicName =
-    state.topic === "mixed"
-      ? "Mixed challenge"
-      : topics[state.topic].label;
+  let markup = `<div></div>`;
 
-  let headline = "Every question helps you grow.";
-  let message =
-    "Review the explanations, then try another round when you’re ready.";
+  mmTopics.forEach((topicId) => {
+    markup += `
+      <div class="mm-heat-topic">
+        ${mmShortName(topicId)}
+      </div>
+    `;
+  });
 
-  if (accuracy >= 90) {
-    headline = "Outstanding work!";
-    message = "You showed excellent focus and mathematical confidence.";
-  } else if (accuracy >= 70) {
-    headline = "Great progress!";
-    message = "You showed focus and strong problem-solving today.";
-  } else if (accuracy >= 45) {
-    headline = "You kept going!";
-    message = "That persistence is how real confidence is built.";
-  }
+  rows.forEach((session, index) => {
+    markup += `
+      <div class="mm-heat-label">
+        ${session ? session.date : `Session ${index + 1}`}
+      </div>
+    `;
 
-  $("#resultHeadline").textContent = headline;
-  $("#resultMessage").textContent = message;
-  $("#finalScore").textContent = `${state.score}/${state.total}`;
-  $("#finalAccuracy").textContent = `${accuracy}% accuracy`;
-  $("#finalStreak").textContent = state.bestStreak;
-  $("#finalXp").textContent = xp;
-  $("#finalTopic").textContent = topicName;
+    mmTopics.forEach((topicId) => {
+      const applies =
+        session &&
+        (session.topic === topicId || session.topic === "mixed");
 
-  $(".result-score").style.setProperty("--score", `${accuracy}%`);
+      const level = applies
+        ? mmLevel(session.accuracy)
+        : "mm-empty";
 
-  setScreen("resultScreen");
+      const title = applies
+        ? `${mmTopicName(topicId)}: ${session.accuracy}%`
+        : "No data yet";
+
+      markup += `
+        <span
+          class="mm-heat-cell ${level}"
+          title="${title}"
+        ></span>
+      `;
+    });
+  });
+
+  heatmap.innerHTML = markup;
 }
 
-function nextQuestion() {
-  if (!state.answered) {
+function mmRenderBars(progress) {
+  const bars = document.getElementById("mmBars");
+
+  bars.innerHTML = mmTopics
+    .map((topicId, index) => {
+      const summary = mmTopicSummary(progress, topicId);
+
+      const value = summary.accuracy;
+
+      const height = value === null
+        ? 7
+        : Math.max(10, value);
+
+      const color = `mm-bar-${(index % 5) + 1}`;
+
+      return `
+        <div class="mm-bar-group">
+          <strong>${value === null ? "—" : `${value}%`}</strong>
+
+          <div class="mm-bar-track">
+            <span
+              class="${color}"
+              style="height:${height}%"
+            ></span>
+          </div>
+
+          <small>${mmShortName(topicId)}</small>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function mmRenderGrowth(progress) {
+  const growth = document.getElementById("mmGrowth");
+
+  const sessions = [...progress.sessions]
+    .slice(0, 8)
+    .reverse();
+
+  if (!sessions.length) {
+    growth.innerHTML = `
+      <div class="mm-empty-chart">
+        <span>⌁</span>
+        <p>
+          Your growth line will appear after your first
+          completed practice.
+        </p>
+      </div>
+    `;
+
     return;
   }
 
-  state.index += 1;
+  const width = 620;
+  const height = 170;
+  const padding = 18;
 
-  if (state.index >= state.total) {
-    finishQuiz();
-  } else {
-    renderQuestion();
-  }
+  const step =
+    sessions.length === 1
+      ? 0
+      : (width - padding * 2) / (sessions.length - 1);
+
+  const points = sessions.map((session, index) => {
+    const x = sessions.length === 1
+      ? width / 2
+      : padding + index * step;
+
+    const y =
+      height -
+      padding -
+      (session.accuracy / 100) * (height - padding * 2);
+
+    return {
+      x,
+      y,
+      accuracy: session.accuracy,
+      date: session.date
+    };
+  });
+
+  const line = points
+    .map((point, index) => {
+      return `${index ? "L" : "M"}${point.x},${point.y}`;
+    })
+    .join(" ");
+
+  const area = `
+    ${line}
+    L${points[points.length - 1].x},${height - padding}
+    L${points[0].x},${height - padding}
+    Z
+  `;
+
+  const circles = points
+    .map((point) => {
+      return `
+        <circle
+          cx="${point.x}"
+          cy="${point.y}"
+          r="5"
+        ></circle>
+      `;
+    })
+    .join("");
+
+  const labels = points
+    .map((point) => `<span>${point.date}</span>`)
+    .join("");
+
+  growth.innerHTML = `
+    <div class="mm-axis">
+      <span>100</span>
+      <span>75</span>
+      <span>50</span>
+      <span>25</span>
+      <span>0</span>
+    </div>
+
+    <div class="mm-graph">
+      <svg
+        viewBox="0 0 ${width} ${height}"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient
+            id="mmGrowthFill"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="1"
+          >
+            <stop
+              offset="0%"
+              stop-color="#24b6a3"
+              stop-opacity=".25"
+            ></stop>
+
+            <stop
+              offset="100%"
+              stop-color="#24b6a3"
+              stop-opacity="0"
+            ></stop>
+          </linearGradient>
+        </defs>
+
+        <path class="mm-growth-area" d="${area}"></path>
+        <path class="mm-growth-line" d="${line}"></path>
+
+        <g class="mm-growth-points">
+          ${circles}
+        </g>
+      </svg>
+
+      <div class="mm-growth-labels">
+        ${labels}
+      </div>
+    </div>
+  `;
 }
 
-function beginQuiz() {
-  state.topic = state.selectedTopic;
-  state.difficulty = $("#difficulty").value;
-  state.category = $("#category").value;
-  state.total = Number($("#questionCount").value);
-  state.timerSeconds = Number($("#timerChoice").value);
-  state.student = $("#studentName").value.trim();
+function mmRenderDashboard() {
+  const progress = mmReadProgress();
+  const sessions = progress.sessions;
 
-  state.questions = [];
-  state.index = 0;
-  state.score = 0;
-  state.streak = 0;
-  state.bestStreak = 0;
-  state.usedPatterns = {};
+  const totalQuestions = sessions.reduce((sum, session) => {
+    return sum + session.total;
+  }, 0);
 
-  try {
-    for (let index = 0; index < state.total; index += 1) {
-      state.questions.push(generateQuestion());
+  const averageAccuracy = sessions.length
+    ? Math.round(
+        sessions.reduce((sum, session) => {
+          return sum + session.accuracy;
+        }, 0) / sessions.length
+      )
+    : null;
+
+  const bestStreak = sessions.reduce((best, session) => {
+    return Math.max(best, session.bestStreak);
+  }, 0);
+
+  const studentName = state.student || "there";
+
+  document.getElementById("mmGreeting").textContent =
+    sessions.length
+      ? `Strong work, ${studentName}. Here’s what your practice is showing.`
+      : "Every practice makes you stronger.";
+
+  document.getElementById("mmSubtext").textContent =
+    sessions.length
+      ? `You have completed ${sessions.length} session${
+          sessions.length === 1 ? "" : "s"
+        }. Keep building your momentum.`
+      : "Complete your first test to unlock your learning analytics.";
+
+  document.getElementById("mmSessions").textContent =
+    sessions.length;
+
+  document.getElementById("mmQuestions").textContent =
+    totalQuestions;
+
+  document.getElementById("mmAccuracy").textContent =
+    averageAccuracy === null
+      ? "—"
+      : `${averageAccuracy}%`;
+
+  document.getElementById("mmStreak").textContent =
+    bestStreak;
+
+  const triedTopics = mmTopics
+    .map((topicId) => {
+      return {
+        topicId,
+        ...mmTopicSummary(progress, topicId)
+      };
+    })
+    .filter((topic) => topic.accuracy !== null)
+    .sort((first, second) => {
+      return first.accuracy - second.accuracy;
+    });
+
+  const insightTitle =
+    document.getElementById("mmInsightTitle");
+
+  const insightText =
+    document.getElementById("mmInsightText");
+
+  const insightButton =
+    document.getElementById("mmInsightPractice");
+
+  if (!triedTopics.length) {
+    insightTitle.textContent = "Your next opportunity";
+    insightText.textContent =
+      "Complete a practice session to unlock personalised guidance.";
+    insightButton.textContent = "Start practising →";
+  } else {
+    const focus = triedTopics[0];
+    const focusName = mmTopicName(focus.topicId);
+
+    if (focus.accuracy >= 85) {
+      insightTitle.textContent =
+        `${focusName} is a real strength.`;
+
+      insightText.textContent =
+        `You are averaging ${focus.accuracy}% in ${focusName}. Try a mixed challenge to stretch that confidence.`;
+
+      insightButton.textContent =
+        "Try mixed challenge →";
+    } else {
+      insightTitle.textContent =
+        `${focusName} is your next growth area.`;
+
+      insightText.textContent =
+        `You are currently averaging ${focus.accuracy}% here. A focused 5-question practice could make a difference.`;
+
+      insightButton.textContent =
+        `Practise ${focusName} →`;
     }
-  } catch (error) {
-    console.error(error);
-    toast(error.message);
-    return;
   }
 
-  const topicName =
-    state.topic === "mixed"
-      ? "Mixed challenge"
-      : topics[state.topic].label;
-
-  $("#quizTopic").textContent = `${topicName} practice`;
-
-  $("#quizStudent").textContent = state.student
-    ? `${state.student}’s focus session`
-    : "Focus mode";
-
-  $("#headerGreeting").textContent = state.student
-    ? `Good luck, ${state.student}`
-    : "Practice ready";
-
-  setScreen("quizScreen");
-
-  renderQuestion();
+  mmRenderHeatmap(progress);
+  mmRenderBars(progress);
+  mmRenderGrowth(progress);
 }
 
-function goHome() {
-  stopTimer();
-  setScreen("homeScreen");
+function mmShowDashboard() {
+  mmRenderDashboard();
+  setScreen("progressDashboard");
 }
 
-/* Events */
+/* Save every completed test, then show the normal result screen. */
 
-$$(".topic-card").forEach((card) => {
-  card.addEventListener("click", () => {
-    chooseTopic(card.dataset.topic);
-  });
-});
+const mmOriginalFinishQuiz = finishQuiz;
 
-[$("#difficulty"), $("#questionCount")].forEach((field) => {
-  field.addEventListener("change", updateSelectionText);
-});
+finishQuiz = function () {
+  mmSaveCurrentSession();
 
-$("#startButton").addEventListener("click", beginQuiz);
+  mmOriginalFinishQuiz();
 
-$("#submitButton").addEventListener("click", () => {
-  submitAnswer($("#answerInput").value);
-});
+  mmRenderDashboard();
+};
 
-$("#answerInput").addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    submitAnswer($("#answerInput").value);
-  }
-});
-
-$("#nextButton").addEventListener("click", nextQuestion);
-
-$("#skipButton").addEventListener("click", () => {
-  submitAnswer("");
-});
-
-$("#hintButton").addEventListener("click", () => {
-  const question = state.questions[state.index];
-
-  const hint =
-    question.category === "word"
-      ? "Underline the important numbers and decide which operation the story needs."
-      : "Work one operation at a time, then check your answer.";
-
-  toast(hint);
-});
-
-$("#retryButton").addEventListener("click", beginQuiz);
-
-$$("[data-go-home]").forEach((button) => {
-  button.addEventListener("click", goHome);
-});
-
-$("#brandHome").addEventListener("click", (event) => {
-  event.preventDefault();
-  goHome();
-});
-
-$$("[data-scroll]").forEach((button) => {
-  button.addEventListener("click", () => {
-    document
-      .getElementById(button.dataset.scroll)
-      .scrollIntoView({ behavior: "smooth" });
-  });
-});
-
-updateSelectionText();
+mmCreateDashboard();
